@@ -1,0 +1,139 @@
+<include file="Public:header_new" />
+<script src="__PUBLIC__/Home/js/datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/ico.css" />
+<div class="usernewout">
+    <p class="titlenotice"><a style="color:#73bee4;" href="/Article/detail/id/{$notice_info['id']}">{:L('公告：')}{$notice_info['title']|msubstr=0,100,'utf-8',false}</a>
+    </p>
+    <div class="usncont">
+        <!-- 左侧导航 -->
+        <include file="Issue:left" />
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>ICO {:L('项目列表')}</h1>
+            <div class="main1">
+                <div class="title">
+                    <p class="tit_p1">HEADLINES</p>
+                    <p class="tit_p2"><span></span>{:L('头条项目')}</p>
+                </div>
+                <div class="header-pos">
+                    <if condition="$show eq 1">
+                        <div class="headline fl">
+                            <div class="pic">
+                                <a href="{:U('Issue/buy?id='.$tuijian['id'])}">
+                                <img src="__UPLOAD__/public/{$tuijian.image}">
+                            </a>
+                            </div>
+                            <div class="item_main">
+                                <div class="item4">
+                                    <p style="font-size:24px;font-family:'微软雅黑'">
+                                        <a href="{:U('Issue/buy?id='.$tuijian['id'])}">{$tuijian.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b class="red" style="color:red;font-size: 20px;">{$tuijian.duihuan}</b>
+                                    </p>
+                                    <p style="color:#888;font-size:16px;">{$tuijian.content}...</p>
+                                </div>
+                                <div class="item2">
+                                    <span style="font-size:16px;color:#888;">{:L('已认购：')}{$tuijian.deal}</span>
+                                    <div class="pro_progress_num">
+                                        <span class="progress_corner"></span>
+                                        <span class="progress_figure">
+                                                               {$tuijian.zhuangtai}
+                                                                </span>
+                                    </div>
+                                    <div class="item1_jdt">
+                                        <div class="c-666 pt15px pb5px">
+                                            <span>{:L('众筹进度')}</span>
+                                            <span class="txt-percent fmoney" title="0" id="special_txt_percent_845_1">{$tuijian.bili}%</span> &nbsp; &nbsp; &nbsp;<span style="color:blue">{:L('开始时间')}:{$tuijian.beginTime}</span> &nbsp; &nbsp; &nbsp;<span style="color:red">{:L('结束时间')}:{$tuijian.endTime}</span>
+                                        </div>
+                                        <div class="pb2m-info-bar radius10px">
+                                            <div class="pb2m-info-percent" title="0" id="special_845_1" style="width:{$tuijian.bili}%;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="/Issue/buy/id/{$tuijian.id}" class="btn1">{:L('立即参与')}</a>
+                                    <span style="font-size: 20px;margin-left: 11%">&nbsp; &nbsp; &nbsp;{:L('支付币种')}:</span><span style="color:red;font-size: 20px;">{$tuijian.buycoin}</span>
+                                    <a href="/Issue/buy/id/{$tuijian.id}" class="btn2">{:L('查看详情')}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <else/>
+                        <span style="font-size: 20px;">{:L('暂无项目')}</span>
+                    </if>
+                </div>
+                <!--    <span class="m1_pre"></span>
+       <span class="m1_nex"></span> -->
+            </div>
+            <div class="warp">
+                <div class="main3 main_deal_list_index">
+                    <div class="title">
+                        <p class="tit_p1">ICO PROJECTS</p>
+                        <p class="tit_p2"><span></span>ICO{:L('项目')}</p>
+                    </div>
+                    <ul class="itemlist1">
+                        <volist name="list" id="vo" key="k">
+                            <li <if condition="$k neq 0"> class="mg"</if>
+                                >
+                                <div class="css3btn">
+                                    <img src="__UPLOAD__/public/{$vo.image}" alt="{$vo.name}">
+                                    <div class="ovrly"></div>
+                                    <div class="buttonsxq">
+                                        <a href="/Issue/buy/id/{$vo.id}" class="fa fa-search ">
+
+                                    </a>
+                                    </div>
+                                </div>
+                                <div class="licont">
+                                    <p class="wz1">
+                                        <a href="/Issue/buy/id/{$vo.id}">{$vo.name}</a> &nbsp;&nbsp;
+                                        <b class="red" style="color:red;font-size: 16px;">{$vo.duihuan}</b>
+                                    </p>
+                                    <p class="wz2">{$vo.content2}...</p>
+                                    <div class="c-666 pt15px pb5px">
+                                        <span>{:L('众筹进度')}</span>
+                                        <span class="txt-percent fmoney" title="{$vo.bili}" id="txt_percent_845_1">{$vo.bili}</span> %
+                                        <if condition="$vo.statuss eq 1">
+                                            &nbsp; &nbsp; &nbsp;<span style="color:red">{:L('结束时间')}:{$vo.endTime}</span>
+                                            <!-- <span style="color:blue">开始时间:{$vo.beginTime}</span> -->
+                                            <elseif condition="$vo.statuss eq 2" /> &nbsp; &nbsp; &nbsp;<span style="color:blue">{:L('已经结束')}</span>
+                                            <else/> &nbsp; &nbsp; &nbsp; <span style="color:blue">{:L('开始时间')}:{$vo.beginTime}</span>
+                                        </if>
+                                    </div>
+                                    <div class="pb2m-info-bar radius10px">
+                                        <div class="pb2m-info-percent" title="{$vo.bili}" id="845_1" style="width: {$vo.bili}%;"></div>
+                                    </div>
+                                    <!-- <if condition="$vo.statuss eq 1"> -->
+                                    <a href="/Issue/buy/id/{$vo.id}" class="btn1">{:L('立即参与')}</a>
+                                    <span style="font-size: 14px;margin-left: 3%">&nbsp; &nbsp; &nbsp;{:L('支付币种')}:</span><span style="color:red;font-size: 14px;">{$vo.buycoin}</span>
+                                    <a href="/Issue/buy/id/{$vo.id}" class="btn2">{:L('查看详情')}</a>
+                                    <!-- <else/> -->
+                                    <!-- </if> -->
+                                </div>
+                                <div class="deal-angle-warp deal-angle-warp-before">{$vo.zhuangtai}</div>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+                <div class="pages">{$page}</div>
+                <script>
+                $('.ewm').hover(function() {
+                    $('.sidebox_ewm_hide').css('visibility', 'visible');
+                }, function() {
+                    $('.sidebox_ewm_hide').css('visibility', 'hidden');
+                })
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<script>
+window.onload = function() {
+    var Lheight = $(".usnc_left").outerHeight();
+    var Rheight = $(".usnc_right").outerHeight();
+    var Tall = Lheight > Rheight ? Lheight : Rheight
+    $(".usnc_left").outerHeight(Tall);
+    $(".usnc_right").outerHeight(Tall);
+}
+$('#Issue_box').addClass('on');
+$('#Issue_index').addClass('on');
+</script>
+<include file="Public:footer" />

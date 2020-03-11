@@ -1,0 +1,43 @@
+<include file="Public:header"/>
+
+<div class="main">
+	<div class="container-divider"></div>
+</div>
+
+<div class="container">
+	<nav class="sub-nav">
+		<ol>{:GetPosStr($info['cid'],$info['id'])}</ol>
+		
+		<form role="search" class="search" method="get" action="{:U('Support/index/search/')}">
+			<img class="icon" src="__PUBLIC__/Home/ecshe_img/soso.png" />
+			<input type="search" name="so" placeholder="{:L('搜索')}" autocomplete="off" value="{$keyword}">
+		</form>
+	</nav>
+
+	<div class="article-container">
+		<section class="article-sidebar">
+			<h3 class="sidenav-title">{:L('此组别内的文章')}</h3>
+			<ul>
+				<li><a class="on">{$data.title}</a></li>
+				<volist name="lists" id="vo">
+					<li><a href="{:U('Support/index/articles/cid/'.$vo['pid'].'/id/'.$vo['id'])}">{$vo['title']}</a></li>
+				</volist>
+			</ul>
+		</section>
+		<article class="article">
+			<header class="article-header">
+				<h1 class="article-title">{$data.title}</h1>
+				<p class="times">{:L('文章更新时间：')}{$data.endtime|date="Y-m-d H:i:s",###}</p>
+			</header>
+			<div class="article-content">
+				{$data['content']}
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+				<p>{$info['jieweibs']}</p>
+				<p>{$data.endtime|date="Y年m月d日",###}</p>
+			</div>
+		</article>
+	</div>
+</div>
+
+<include file="Public:footer" />

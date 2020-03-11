@@ -1,0 +1,16 @@
+<div class="usnc_left">
+    <div class="ulmenubox">
+        <h4><img src="__PUBLIC__/Home/news/images/uswicon1.png">{:L('buy_currency')}</h4>
+        <ul>
+            <volist name="C['PTP_MARKET']" id="vo">
+            <li <eq name="market" value="$vo">class="on"</eq>><a href="{:U('Ptpbc/index/market/'.$vo)}">{:L($vo)}</a></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="ulmenubox">
+        <h4><img src="__PUBLIC__/Home/news/images/safeicon3.png">{:L('merchants')}</h4>
+        <ul>
+            <li id="finance_mytj" <eq name="ACTION_NAME" value="apply">class="on"</eq> ><a href="{:U('Ptpbc/apply')}">{:L('apply_to_merchants')}</a></li>
+        </ul>
+    </div>
+</div>

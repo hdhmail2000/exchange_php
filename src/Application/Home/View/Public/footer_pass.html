@@ -1,0 +1,98 @@
+<script type="text/javascript" src="__PUBLIC__/Home/ecshe_js/swiper-4.3.3.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/ecshe_js/swiper.animate1.0.3.min.js"></script>
+<script>
+	$(function() {
+		var isShowLanguage= false;
+		var mySwiper = new Swiper('.swiper-container', {
+			loop: true,
+			observer: true,
+			grabCursor: true,
+			autoHeight: true,
+			preventClicks: false,
+			preventLinksPropagation: true,
+			paginationClickable: true,
+			slidesPerView : 4,
+			slidesPerGroup : 4,
+			spaceBetween : 30,
+			autoplay: {
+				delay: 8000,
+				disableOnInteraction: false,
+			},
+			pagination: {
+				el: '.swiper-pagination',
+				type: 'bullets',
+				observer: true,
+				clickable :true,
+			},
+			on: {
+				init: function() {
+					swiperAnimateCache(this); //隐藏动画元素 
+					swiperAnimate(this); //初始化完成开始动画
+				},
+				slideChangeTransitionEnd: function() {
+					swiperAnimate(this); //每个slide切换结束时也运行当前slide动画
+				}
+			}
+		})
+
+		$(".language").click(function() {
+			if(isShowLanguage) {
+				$(".language-box").hide();
+				isShowLanguage = false;
+				return false;
+			}
+			$(".language-box").show();
+			isShowLanguage = true;
+		})
+		
+
+		$(".uuser").mouseover(function (){  
+            $(".uuser-box").show();
+			isShowLanguage = true;
+        }).mouseout(function (){  
+            $(".uuser-box").hide();
+			isShowLanguage = false;
+        });  
+			
+		$(".menu-tabs .language-box p").click(function() {
+			$(".language-box").hide();
+			isShowLanguage = false;
+		})
+		
+/*		$(".menu-tabs .uuser-box p").click(function() {
+			$(".uuser-box").hide();
+			isShowLanguage = false;
+		})*/
+		
+		$(".uuser-box").hover(function() {
+			$(".uuser-box").show();
+			isShowLanguage = true;
+		}, function () {
+        	$(".uuser-box").hide();
+			isShowLanguage = false;
+        })
+
+		$(".swiper-container").mouseover(function() {
+			mySwiper.autoplay.stop();
+		}).mouseleave(function() {
+			mySwiper.autoplay.start();
+		})
+
+		document.getElementsByTagName("body")[0].addEventListener("click", function() {
+			if($(".menu-tabs .language-box").css("display")=="block") {
+				$(".language-box").hide();
+				setTimeout(function() {
+					isShowLanguage = false;
+				},300)
+			}
+			if($(".menu-tabs .uuser-box").css("display")=="block") {
+				$(".uuser-box").hide();
+				setTimeout(function() {
+					isShowLanguage = false;
+				},300)
+			}
+		}, true);
+	})
+</script>
+</body>
+</html>

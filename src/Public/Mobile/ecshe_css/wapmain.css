@@ -1,0 +1,1152 @@
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,p{margin:0;padding:0;}
+img{border:0;}ul,li{list-style-type:none;}
+.tc{text-align:center;}.tl{text-align:left;}.tr{text-align:right;}
+.fl{float:left;}.fr{float:right;}.cl{clear:both;}.fb{font-weight:bold;}.fnb{font-weight:200;margin-left:-1px;}
+
+.bg-fff{background-color:#fff!important;}
+.buy{color:#f1280f;}.sell{color:#3dc18e;}
+.btn-up{background:#f1280f;}.btn-down{background:#3dc18e;}
+.red{color:#f1280f;}.green{color:#3dc18e;}.blue{color:#1273f8;}
+
+
+/* MUI弹窗 : toast控件重写div样式 */
+.mui-toast-container {
+    bottom: 50%;
+}
+.mui-toast-message {
+    background: url(../rh_img/tips001.png) no-repeat center 10px #000;   /*toast的背景图片*/
+    opacity: 0.7;/*toast中背景色的透明度*/
+        color: #FFFFFF; /*toast中字体颜色*/
+    width: 180px; /*toast宽度*/
+    padding: 55px 10px 10px 10px;/*toast中文字的位置*/
+}
+
+
+.cur-padding-bottom {
+	padding-bottom: 100px;
+}
+.cur-box {
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+
+.mui-bar {
+	box-shadow: 0 0 1px #494949d9;
+}
+.mui-bar-box {
+	position: fixed;
+    z-index: 10;
+    right: 0;
+    left: 0;
+	padding-right: 10px;
+	padding-left: 10px;
+    border-bottom: 0;
+}
+
+.mui-bar-bg {
+    background-color: #313e51;
+	box-shadow: 0 0 0 #fff;
+}
+.mui-bar-bg h1 {
+	color: #fff;
+}
+.mui-bar-bg h1 i.icons {
+	margin-left: 0.375rem;
+	font-size: 0.75rem;
+	vertical-align: middle;
+}
+.mui-bar-bg a {
+	color: #fff;
+}
+
+.mui-content {
+	background-color: #fff;
+}
+.mui-content .mui-bar {
+	height: auto;
+}
+.mui-content .mui-bar .mui-segmented-control {
+	top: 0;
+}
+
+.mui-content .mui-scroll-wrapper {
+	height: 38px;
+}
+.mui-content .mui-scroll{
+	height: auto!important;
+}
+.mui-content .mui-scroll a.mui-control-item {
+	line-height: 30px;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	color: #96a1b6;
+}
+.mui-content .mui-scroll a.mui-active {
+	color: #fff!important;
+	background: #43516b!important;
+	border-radius: 1.25rem;
+}
+
+/** 通用：底部导航条 **/
+.mui-bar-tab {
+	height: 55px;
+	background: #fff;
+	border-top: 1px solid #e8e8e8;
+	box-shadow: 0 -2px 10px -3px #d6d6d6;
+}
+.mui-bar-tab a {
+	color: #8f9eab;
+}
+.mui-bar-tab a .mui-icon {
+	color: #d2d7dc;
+	font-size:22px;
+}
+.mui-bar-tab a.mui-active {
+	color: #4088e1;
+}
+.mui-bar-tab a.mui-active .mui-icon {
+	color: #5397eb;
+}
+.mui-bar-tab a .mui-tab-label {
+	margin-top: 2px;
+}
+
+
+/** 行情：币种列表 **/
+.coins_list:before {
+	background-color: #ededed;
+}
+.coins_list:after {
+	background-color: #ededed;
+}
+.coins_list .mui-table-view-cell:after {
+	left: 0;
+	background-color: #ededed;
+}
+
+.table-head {
+	width: 100%;
+	height: 35px;
+    line-height: 35px;
+	overflow: hidden;
+}
+.table-head li {
+	float: left;
+    font-size: 0.875rem;
+    color: #6d7379;
+	box-sizing: border-box;
+}
+.coins_list li dt{
+	box-sizing: border-box;
+}
+.coins_list li dt.market {
+	text-align: left;
+	line-height: 20px;
+}
+.coins_list li dt.market .imgs {
+	line-height: 2.2rem;
+	margin-right: 8px;
+}
+.coins_list li dt.market .imgs img {
+	vertical-align: middle;
+}
+.coins_list li dt.market .cname {
+	overflow: hidden;
+}
+.coins_list li dt.market .cname p {
+	font-weight: 500;
+}
+.coins_list li dt.market .cname p .coin_name {
+	font-size: 1rem;
+	color: #273e57;
+}
+.coins_list li dt.market .cname p span:last-child {
+	font-size: 0.75rem;
+	color: #a7a9b7;
+}
+.coins_list li dt.market .cname p:last-child {
+	font-size: 0.75rem;
+	color: #8f9eab;
+}
+.coins_list li dt.deal {
+	text-align: right;
+	line-height: 20px;
+}
+.coins_list li dt.deal div {}
+.coins_list li dt.deal p:first-child {
+	font-size: 1rem;
+	font-weight: 550;
+	color: #273e57;
+}
+.coins_list li dt.deal p:last-child {
+	font-size: 0.75rem;
+	color: #8f9eab;
+}
+.coins_list li dt.float {
+	margin-top: 2.5px;
+	margin-left: 10px;
+}
+.coins_list li dt.float span {
+	display: inline-block;
+	width: 4.7rem;
+	height: 2.125rem;
+	line-height: 2.125rem;
+    text-align: center;
+    font-size: 0.8rem;
+	font-weight: 500;
+    color: #fff;
+    border-radius: 0.3125rem;
+	
+	transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s; /* Firefox 4 */
+	-webkit-transition-duration: 0.5s; /* Safari 和 Chrome */
+	-o-transition-duration: 0.5s; /* Opera */
+}
+
+
+/** 交易：风格一 **/
+.marketinfo {
+	margin-top: 15px;
+}
+.marketinfo .price-show {
+	overflow: hidden;
+	margin-bottom: 15px;	
+}
+.marketinfo .price-show h3 {
+	display: inline-block;
+	margin-right: 0.1875rem;
+	font-size: 1.1875rem;
+	font-weight: 600;
+	color: #273e57;
+}
+.marketinfo .price-show span {
+	display: inline-block;
+	font-size: 0.75rem;
+    color: #636a76;
+}
+.marketinfo .float {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.table-entrust {
+	padding-bottom: 15px;
+	border-bottom: 1px solid #e3e3e3;
+}
+.table-entrust ul.table-head li {
+	width: 33.33%;
+	font-size: 0.75rem;
+}
+.table-entrust .table-list {
+	overflow: hidden;
+}
+.table-entrust .table-list dl.coinlist-left {
+	width: 50%;
+	overflow: hidden;
+	font-size: 0.75rem;
+	box-sizing: border-box;
+}
+.table-entrust .table-list dl.coinlist-left .fr {
+	padding-right: 8px;
+}
+.table-entrust .table-list dl.coinlist-right {
+	width: 50%;
+	overflow: hidden;
+	font-size: 0.75rem;
+	box-sizing: border-box;
+}
+.table-entrust .table-list dl.coinlist-right .fl {
+	padding-left: 8px;
+}
+.table-entrust .table-list dl dd {
+	position: relative;
+	margin-bottom: 3px;
+	height: 30px;
+	line-height: 30px;
+}
+i.turntable_bg_red{
+	position: absolute;
+	top: 0;
+	right: 0px;
+	display: block;
+    height: 30px;
+    background: rgba(255,59,59,0.1);
+}
+i.turntable_bg_green{
+	position: absolute;
+	top: 0;
+	left: 0px;
+	display: block;
+    height: 30px;
+    background: rgba(41,194,120,0.1);
+}
+
+.form-box {
+	
+}
+.form-box .form-info {
+	overflow: hidden;
+	margin: 15px 0 10px 0;
+}
+.form-box .form-info .form-tab {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+}
+.form-box .form-info .form-tab a {
+	width: 50%;
+	text-align: center;
+	color: #313e51;
+	font-size: 1rem;
+	font-weight: 500;
+	background-color: #e0e0e0;
+}
+.form-box .form-info .form-tab a:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.form-box .form-info .form-tab a:last-child {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+.form-box .form-info .form-tab a.mui-active {
+	color: #fff;
+	background-color: #5397eb;
+}
+
+.form-box .form-trade .info {
+	margin-top: -5px;
+	margin-bottom: 5px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 14px;
+	color: #313e51;
+}
+.form-box .form-trade .info .fr {
+	font-weight: 500;
+}
+
+.form-box .form-trade .mui-numbox {
+	margin-bottom: 10px;
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	border: 1px solid #e1e1e1;
+	background: inherit;
+}
+.form-box .form-trade .mui-numbox .mui-numbox-input {
+	height: 45px;
+	line-height: 45px;
+	border-left: 1px solid #e1e1e1!important;
+	border-right: 1px solid #e1e1e1!important;
+}
+.form-box .form-trade .mui-numbox .num-left {
+	position: absolute;
+	left: 50px;
+	z-index: 1;
+	padding-right: 15px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #c7c7c7;
+	background-color: #fff;
+}
+.form-box .form-trade .mui-numbox .unit-right {
+	position: absolute;
+	right: 50px;
+	z-index: 1;
+	padding-left: 15px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #c7c7c7;
+	background-color: #fff;
+}
+
+.mui-input-row-g {
+	margin-bottom: 10px;
+	border: 1px solid #e1e1e1;
+	border-radius: 3px;
+}
+.mui-input-row-g input::-webkit-input-placeholder {
+	color: #c7c7c7;
+}
+.mui-input-row-g label,.mui-input-row-g input {
+	height: 45px;
+	line-height: 25px;
+	font-size: 14px;
+}
+
+.form-box .form-trade .mui-btn-red {
+	width: 100%;
+	height: 50px;
+	font-size: 1rem;
+	color: #fff;
+    background: #ff4932;
+	border-color: #ff4932;
+}
+.form-box .form-trade .mui-btn-red:active {
+	background: #d22d18;
+}
+.form-box .form-trade .mui-btn-green {
+	width: 100%;
+	height: 50px;
+	font-size: 1rem;
+	color: #fff;
+    background: #28c475;
+	border-color: #1ca560;
+}
+.form-box .form-trade .mui-btn-green:active {
+	background: #1ca560;
+}
+
+.trade_entrust {
+	margin-top: 25px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+	font-weight: 500;
+    background: #eee;
+}
+.trade_entrust .fr {
+    color: #007aff;
+}
+
+.trade_entrust_list {
+	width: 100%;
+	font-size: 0.75rem;
+	border-bottom: 1px solid #eee;
+	box-sizing: border-box;
+}
+.trade_entrust_list .title {
+	color: #a7a7a7 ;
+}
+.trade_entrust_list dl {
+	width: 100%;
+}
+.trade_entrust_list dt{
+    height: 40px;
+    line-height: 40px;
+}
+.trade_entrust_list dt span {
+    display: inline-block;
+}
+
+
+/** 发现 **/
+.valuation {
+	margin: 0 10px;
+	height: 120px;
+	border-radius: 8px;
+	background: linear-gradient(to right, #4286da, #4e66b5);
+	text-align: center;
+}
+.valuation p {
+	color: #fff;
+}
+.valuation .title {
+	padding-top: 25px;
+}
+.valuation .title,.valuation .pricecny {
+	font-size: 14px;
+	font-weight: 500;
+	color: #afc9f9;
+}
+.valuation .price {
+	padding: 3px 0 6px 0;
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.mui-content .mui-grid-9 {
+	background-color: #fff;
+}
+.mui-content .mui-grid-9 a .mui-media-body {
+	font-weight: 450;
+}
+
+/** 我的 **/
+.myinfo {
+	padding: 0 15px;
+	overflow: hidden;
+	background-color: #313e51;
+}
+.myinfo .accounts {
+	margin-top: 15px;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+.myinfo .accounts .name-min {
+	font-size: 0.875rem;
+	color: #96a1b6;
+}
+.myinfo .accounts .name-max {
+	line-height: 30px;
+	padding-top: 5px;
+	font-size: 1.75rem;
+	font-weight: 400;
+	color: #fff;
+}
+.myinfo .accounts .name-max .btn{
+	display: block;
+	margin-top: -3px;
+	padding: 2px 10px;
+	line-height: 30px;
+	font-size: 0.8125rem;
+	color: #3193ff;
+	border: 1px solid #3193ff;
+}
+
+.coins_list_my:before {
+	background-color: #dbdddf;
+}
+.coins_list_my:after {
+	background-color: #dbdddf;
+}
+.coins_list_my .mui-table-view-cell:after {
+	background-color: #dbdddf;
+}
+
+.coins_list_my li {
+    line-height: 30px;
+}
+.coins_list_my li a {
+	font-size: 0.95rem;
+	font-weight: 450;
+	color: #273e57!important;
+}
+
+/** 我的资产 **/
+.valuation_assets {
+	margin: 0 10px;
+	height: 100px;
+	border-radius: 8px;
+	text-align: center;
+}
+.valuation_assets p {
+	color: #fff;
+}
+.valuation_assets .title {
+	padding-top: 10px;
+}
+.valuation_assets .title,.valuation_assets .pricecny {
+	font-size: 16px;
+	font-weight: 500;
+	color: #9ea1ab;
+}
+.valuation_assets .pricecny {
+	font-size: 14px;
+	color: #f0b043;
+}
+.valuation_assets .price {
+	padding: 15px 0 6px 0;
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.myassets-coinlist {}
+.myassets-coinlist li {
+	margin-bottom: 20px;
+}
+.myassets-coinlist li a {
+	display: block;
+	position: relative;
+	height: 100px;
+	margin: 0 15px;
+	padding: 0 15px;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 5px;
+    -moz-box-shadow:0px 0px 12px #d9d9d9;
+	-webkit-box-shadow:0px 0px 12px #d9d9d9;
+	box-shadow:0px 0px 12px #d9d9d9;
+}
+.myassets-coinlist li .coinname {
+	line-height: 100px;
+	vertical-align: middle;
+}
+.myassets-coinlist li .coinname .imgs img {
+	margin-right: 8px;
+	vertical-align: middle;
+}
+.myassets-coinlist li .coinname .name {
+	font-size: 18px;
+	font-weight: 500;
+	color: #353a3f;
+}
+.myassets-coinlist li .coinname .smallicon {
+	position: absolute;
+	top: 54px;
+	left: 44px;
+	border-radius: 50%;
+	border: 3px solid #fff;
+}
+
+.myassets-coinlist li .coinnum {
+	padding-top: 12px;
+}
+.myassets-coinlist li .coinnum p {
+	font-size: 0.8125rem;
+	color: #9d9da1;
+}
+.myassets-coinlist li .coinnum p.price {
+	line-height: 30px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	color: #353a3f;
+}
+
+
+/** C2C **/
+.form-exchange {
+	padding: 0 15px;
+}
+
+.form-exchange .mui-input-row {
+	margin-top: 10px;
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	border: 1px solid #e1e1e1;
+	background: inherit;
+}
+.form-exchange .mui-input-row .unit-right {
+	position: absolute;
+	right: 0;
+	z-index: 1;
+	padding: 0 15px;
+	background-color: #fff;
+}
+.form-exchange .mui-input-row input {
+	font-size: 15px;
+	font-weight: 500;
+}
+.form-exchange .mui-input-row label, .form-exchange .mui-input-row .unit-right {
+	font-size: 14px;
+	font-weight: 500;
+	color: #454545;
+}
+
+.form-exchange .buy-count {
+	margin-top: -10px;
+	height: 45px;
+	line-height: 45px;
+    font-size: 14px;
+    color: #181818;
+}
+.form-exchange .buy-count b {
+    font-size: 15px;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.form-exchange .mui-btn-red {
+	width: 100%;
+	height: 50px;
+	font-size: 1rem;
+	color: #fff;
+    background: #ff4932;
+	border-color: #ff4932;
+}
+.form-exchange .mui-btn-red:active {
+	background: #d22d18;
+}
+.form-exchange .mui-btn-green {
+	width: 100%;
+	height: 50px;
+	font-size: 1rem;
+	color: #fff;
+    background: #28c475;
+	border-color: #1ca560;
+}
+.form-exchange .mui-btn-green:active {
+	background: #1ca560;
+}
+
+.trade_record {
+	margin-top: 30px;
+	overflow: hidden;
+	border-top: 8px solid #efefef;
+}
+.trade_record .titlehead {
+	height: 45px;
+	line-height: 45px;
+	padding: 0 15px;
+	font-size: 16px;
+	font-weight: 500;
+	box-shadow: 0 0 1px #494949d9;
+}
+.trade_record .titlehead a.fr {
+	font-size: 14px;
+}
+.trade_record .titlehead a.fr i {
+	margin-right: 2.5px;
+	vertical-align: middle;
+}
+
+.trade_record .list-exchange {
+	padding: 0 15px;
+}
+.trade_record .list-exchange li {
+	padding: 15px 0;
+	width: 100%;
+	overflow: hidden;
+	border-bottom: 1px solid #e2e2e2;
+}
+.trade_record .list-exchange li .column-info {
+	overflow: hidden;
+	height: 35px;
+	line-height: 35px;
+	font-weight: 500;
+}
+.trade_record .list-exchange li .column-info h3 {
+	display: inline-block;
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+.trade_record .list-exchange li .column-info span {
+	display: inline-block;
+	font-weight: 500;
+}
+.trade_record .list-exchange li .column-info span.time {
+	margin-left: 5px;
+	font-size: 0.75rem;
+	color: #b5b5b5;
+}
+.trade_record .list-exchange li .column-info span.state {
+	font-size: 0.875rem;
+}
+.trade_record .list-exchange li .column-info span.state i {
+	margin-right: 5px;
+	font-size: 0.8125rem;
+}
+.trade_record .list-exchange li .column-info span.state s {
+	margin:0 5px;
+	text-decoration: none;
+}
+
+.trade_record .list-exchange li .stream-info {
+	overflow: hidden;
+}
+.trade_record .list-exchange li .stream-info div {
+	float: left;
+	width: 33.33%;
+	font-weight: 500;
+}
+.trade_record .list-exchange li .stream-info div p {
+	font-size: 13px;
+	color: #000;
+}
+.trade_record .list-exchange li .stream-info div p.title {
+	color: #b5b5b5;
+}
+
+/** 银行卡 **/
+.form-bank {
+	padding: 0 15px;
+}
+.form-bank .mui-btn-default {
+	margin-top: 20px;
+	width: 100%;
+	height: 40px;
+	font-size: 1rem;
+	color: #fff;
+    background: #28c475;
+	border-color: #1ca560;
+}
+.form-bank .mui-btn-default:active {
+	background: #1ca560;
+}
+
+.form-bank .tips {
+	margin-top:-10px;line-height:35px;
+}
+
+.myuser-banklist {}
+.myuser-banklist li {
+	position: relative;
+	margin: 0 15px;
+	margin-bottom: 20px;
+	height: 145px;
+	padding: 0 15px;
+	
+	box-sizing: border-box;
+	border-radius:15px;
+	background-color: #fff;
+	background: linear-gradient(to right bottom, #3f46af 5%, #79c5f9 80%);
+    -moz-box-shadow:0px 0px 12px #a9a9a9;
+	-webkit-box-shadow:0px 0px 12px #a9a9a9;
+	box-shadow:0px 0px 12px #a9a9a9;
+}
+.myuser-banklist li .btn-delete {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	text-align: center;
+}
+.myuser-banklist li p {
+	padding-left: 10px;
+	line-height: 35px;
+	font-size: 0.8125rem;
+	color: #fff;
+	box-sizing: border-box;
+}
+.myuser-banklist li h3 {
+	padding-left: 10px;
+	line-height: 35px;
+	font-size: 1.375rem;
+	letter-spacing: 0.0625rem;
+	color: #fff;
+}
+.myuser-banklist li h3.title {
+	padding-top: 20px;
+	font-weight: 500;
+}
+.myuser-banklist li h3.number {
+	font-weight: 550;
+}
+
+/** C2C付款信息页面 **/
+.payinfo-head {
+	margin: 30px 0 20px 0;
+	text-align: center;
+}
+.payinfo-head i {
+	font-size: 50px;
+	color: #eec104;
+}
+.payinfo-head p {
+	line-height: 35px;
+	font-size: 15px;
+	color: #000;
+}
+.payinfo-head p.money {
+	margin-top: 10px;
+	font-size: 30px;
+	font-weight: 500;
+}
+
+.form-payinfo {
+	padding: 0 15px;
+}
+.form-payinfo .mui-btn-default {
+	margin-top: 20px;
+	width: 100%;
+	height: 40px;
+	font-size: 1rem;
+	color: #fff;
+    background: #28c475;
+	border-color: #1ca560;
+}
+.form-payinfo .mui-btn-default:active {
+	background: #1ca560;
+}
+.form-payinfo .tips {
+	margin-top:-10px;line-height:35px;
+}
+
+.form-payinfo .mui-input-row-g {
+	background-color: #f2f2f2;
+}
+.form-payinfo .mui-input-row-g label {
+	width: 32%;
+	padding: 11px 10px;
+	color: #7f7f7f;
+}
+.form-payinfo .mui-input-row-g .inputs {
+	height: 40px;
+	line-height: 25px;
+	font-size: 12px;
+	padding: 10px 0;
+}
+.form-payinfo .mui-input-row-g .btn {
+	position: absolute;
+	top: 7px;
+	right: 7px;
+	z-index: 1;
+	height: 30px;
+	line-height: 15px;
+}
+
+.form-payinfo .mui-input-row-h {
+	margin-bottom: 0px;
+	border-radius: 3px;
+}
+.form-payinfo .mui-input-row-h input::-webkit-input-placeholder {
+	color: #c7c7c7;
+}
+.form-payinfo .mui-input-row-h label,.form-payinfo .mui-input-row-h input {
+	height: 30px;
+	font-size: 14px;
+}
+.form-payinfo .mui-input-row-h label {
+	width: 32%;
+	padding: 11px 10px;
+}
+.form-payinfo .mui-input-row-h .inputs {
+	height: 30px;
+	line-height: 15px;
+	font-size: 14px;
+	padding: 10px 0;
+}
+
+.payinfo_record {
+	margin-top: 30px;
+	overflow: hidden;
+	border-top: 8px solid #efefef;
+}
+.payinfo_record .titlehead {
+	height: 45px;
+	line-height: 45px;
+	padding: 0 15px;
+	font-size: 16px;
+	font-weight: 500;
+	box-shadow: 0 0 1px #494949d9;
+}
+.payinfo_record .titlehead a.fr {
+	font-size: 14px;
+}
+.payinfo_record .titlehead a.fr i {
+	margin-right: 2.5px;
+	vertical-align: middle;
+}
+.payinfo_record .content {
+	margin: 20px 0 50px 0;
+	padding: 0 15px;
+}
+.payinfo_record .content p {
+	line-height: 25px;
+	font-size: 15px;
+	font-weight: 400;
+	color: #212121;
+}
+
+/** 我的资产详情页 **/
+.coin-show-info {
+	padding: 0 15px;
+	overflow: hidden;
+}
+.coin-show-info div {
+	float: left;
+	width: 33.33%;
+	font-weight: 500;
+}
+.coin-show-info div p {
+	font-size: 13px;
+	font-weight: 500;
+	color: #000;
+}
+.coin-show-info div p.title {
+	color: #b5b5b5;
+}
+
+
+/** 登录 **/
+.mui-content .mylogin {
+	padding: 0 20px;
+	overflow: hidden;
+}
+
+.mui-content .mylogin p.title {
+	margin-top: 35px;
+}
+.mui-content .mylogin p.title b {
+	height: 30px;
+	font-size: 28px;
+	font-weight: 400;
+	color: #fff;
+}
+.mui-content .mylogin .text-s {
+	font-size: 17px;
+	color: #9daabe;
+}
+.mui-content .mylogin .text-s a {
+	color: #6184cc;
+}
+
+.mui-content .mylogin .login-input-group {
+	margin-top: 30px;
+}
+.mui-content .mylogin .login-input-group label {
+	display: block;
+	float: none;
+	padding-left: 0;
+	color: #fff;
+}
+.mui-content .mylogin .login-input-group input.mui-input-clear {
+	float: none;
+	width: 100%;
+	height: 60px;
+	padding-left: 0;
+	font-size: 1.0625rem;
+	font-weight: 500;
+	color: #fff;
+	background: inherit;
+	border: none;
+	border-bottom: 2px solid #65758c;
+	border-radius: 0;
+}
+.mui-content .mylogin .login-input-group input::-webkit-input-placeholder {
+	font-size: 1.0625rem;
+	font-weight: 500;
+	color: #596474;
+}
+.mui-content .mylogin .login-input-group input.mui-input-clear:focus {
+	border-bottom: 2px solid #6184cc;
+	transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s; /* Firefox 4 */
+	-webkit-transition-duration: 0.5s; /* Safari 和 Chrome */
+	-o-transition-duration: 0.5s; /* Opera */
+}
+
+.mui-content .mylogin .login-input-group .mui-icon {
+	top: 20px;
+	color: #778496;
+}
+.mui-content .mylogin .login-input-group .mui-icon-clear {
+	display: none;
+}
+.mui-content .mylogin .login-input-group .mui-button-row .mui-btn {
+	width: 100%;
+	height: 50px;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #fff;
+    background: #6184cc;
+	border-color: #6184cc;
+	border-radius: 25px;
+}
+.mui-content .mylogin .login-input-group .mui-button-row .mui-btn:active {
+	border-color: #7197e5;
+}
+
+.mui-content .mylogin .btn-right {
+	position: absolute;
+	top: 10px;
+	right: 0;
+	z-index: 2;
+}
+.mui-content .mylogin .btn-right .mui-btn {
+	width:inherit;
+	background-color: #313e51;
+}
+
+.mui-content .mylogin .mui-input-row label {
+	position: absolute;
+	top: 10px;
+	width:inherit;
+	font-size: 1.0625rem;
+	font-weight: 500;
+	color: #596474;
+	cursor: default;
+	pointer-events: none;
+}
+.mui-content .mylogin .input--label--akira {
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+}
+.mui-content .mylogin .input--filled .input--label--akira {
+	-webkit-transform: translate3d(0, -20px, 0);
+	transform: translate3d(0, -20px, 0);
+	font-size: 0.8125rem;
+	
+}
+
+.mui-content .mylogin .login-input-group .mui-button-row .protocol {
+	margin-top: 8px;
+	line-height: 35px;
+	font-size: 0.75rem;
+	color: #9daabe;
+}
+.mui-content .mylogin .login-input-group .mui-button-row .protocol a {
+	color: #6184cc;
+}
+
+.mui-content .mylogin .login-input-group .tel-tel input[type="tel"] {
+	padding-left: 115px;
+}
+.mui-content .mylogin .login-input-group .tel-tel label {
+	left: 115px;
+}
+
+.flag-container {
+	position:absolute;top:0;bottom:0;left:0;padding:1px;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.flag-container .selected-flag {
+	position: relative;
+	display: table;
+	padding: 0 0 0 8px;
+	width: 100px;
+	height: 80%;
+	color: #ffff;
+	z-index: 1;
+	text-align: center;
+}
+.flag-container .iti-flag {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+	width: 20px;
+    box-shadow: 0px 0px 1px 0px #888;
+    background-repeat: no-repeat;
+    background-color: #DBDBDB;
+}
+
+.flag-container .selected-dial-code {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+.flag-container .iti-arrow{
+	position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid #fff;
+}
+
+/** 通用提示 **/
+.TipsInfo {
+	margin: 60px 0 20px 0;
+	text-align: center;
+}
+.TipsInfo i {
+	font-size: 50px;
+	color: #28c475;
+}
+.TipsInfo p {
+	line-height: 35px;
+	font-size: 15px;
+	color: #000;
+}
+.TipsInfo p.money {
+	margin-top: 25px;
+	font-size: 25px;
+	font-weight: 600;
+}
+.TipsInfo .mui-btn {
+	position:absolute;
+	left: 50%;
+	bottom: 100px;
+	margin-left: -100px;
+	width: 200px;
+	line-height: 40px;
+    font-size: 1rem;
+	color: #fff;
+    background: #28c475;
+    border-color: #1ca560;
+}
+.TipsInfo .mui-btn:active {
+	background: #1ca560;
+}
+
+

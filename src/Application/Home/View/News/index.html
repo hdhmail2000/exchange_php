@@ -1,0 +1,27 @@
+<include file="Public:header_new"/>
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/news.css">
+
+<div class="crumbs">
+	<ul>
+		<li class="on"><a href="/">{:L('首页')}</a><span>&gt;</span></li>
+		<li>资讯通知</li>
+	</ul>
+</div>
+
+<div class="box_main_news">
+	<div class="column_title">
+		<h2>资讯通知</h2>
+	</div>
+	<ul>
+		<volist name="news_list" id="vo">
+		<li>
+			<a href="{:U('Article/detail','id='.$vo['id'])}">
+				<h3>【公告】{$vo.content|msubstr=0,100,'utf-8'}</h3>
+				<span>{$vo.addtime|addtime}</span>
+			</a>
+		</li>
+		</volist>
+	</ul>
+	<div class="pages">{$page}</div>
+</div>
+<include file="Public:footer"/>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="{:U('Trade/trade_coin_list')}"></a></span>
+             {$xnbxs}/{$rmbxs} {:L('行情')}
+        </div>
+        <div class="tadtop">
+            <div class="tadtitle">
+                <div class="tadleft">
+                   <a href="{:U('Trade/trade_page',array('market'=>$coin_info['name']))}" style="color:#fff;font-size:0.65rem"> <img src="/Upload/coin/{$coinxx['img']}"> {$xnbxs}/{$rmbxs}
+                    <span style="font-size: 1rem;text-align: center;color:#f0b90b;font-weight:900" id="blink">{:L('立即交易')}</span></a>
+                    <script language="javascript">
+                function changeColor() {
+                    var color = "#f00|#0f0";
+                    color = color.split("|");
+                    document.getElementById("blink").style.color = color[parseInt(Math.random() * color.length)];
+                }
+                setInterval("changeColor()", 500);
+            </script>
+                </div>
+                <div class="tadright" >
+                    <span class="price" style="font-size: 0.6rem;" id="market_new_price">{$data['price_new']}(¥{$data['rmb']})</span>
+                  <!--   <if condition="$data['state'] eq 1">
+                        <span class="percent red" id="market_change">+{$data['zd']}%</span>
+                    <elseif condition="$data['state'] eq 2"/>
+                        <span class="percent green" id="market_change">{$data['zd']}%</span>
+                    <else />
+                        <span class="percent red" id="market_change">{$data['zd']}%</span>
+                    </if> -->
+                </div>
+            </div>
+            <table class="tadtable">
+                <tr>
+                    <th>{:L('日最高价')}</th>
+                    <th>{:L('日最低价')}</th>
+                    <th>{:L('日成交量')}</th>
+                    <th>{:L('日涨跌')}</th>
+                </tr>
+                <tr>
+                    <td id="market_max_price">{$data['max_pri']}</td>
+                    <td id="market_min_price">{$data['min_pri']}</td>
+                    <td id="market_volume">{$data['nums']}</td>
+                    <td>
+                        <if condition="$data['state'] eq 1">
+                        <span class="percent red" id="market_change">+{$data['zd']}%</span>
+                    <elseif condition="$data['state'] eq 2"/>
+                        <span class="percent green" id="market_change">{$data['zd']}%</span>
+                    <else />
+                        <span class="percent red" id="market_change">{$data['zd']}%</span>
+                    </if>
+                </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="apibox" style="padding-bottom: 30px;text-align: center;padding-top: 20px;">
+            <div class="grapbd">
+                <ul>
+                    <li style="height:100%;">
+                      <!--行情图-->
+                      <div id="kline">
+                       <div id="paint_chart" style="height: 100%">
+                        <iframe style="border-style: none;" border="0" width="111%" height="400" id="market_chart" src="/Trade/specialty?market={$coin_info['name']}"></iframe>
+                       </div>
+                      </div>
+                      <!--行情图结束-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+<div  style="padding-bottom: 1.7rem;text-align: center;height: 0.5rem;">
+            <a href="{:U('Trade/specialtyall',array('market'=>$coin_info['name']))}" style="margin: 20px;font-size: 14px;color: white;">
+                {:L('点击查看')}{$coinxx['title']}{:L('专业版K线图')}
+            </a>
+        </div>
+        <div class="business" style="width: 100%;margin-top: 0px;">
+            <div class="saletable" style="width: 49%;float:left;">
+            <div class="saletable_top">
+                <table>
+                    <tr>
+                        <th width="33%" style="font-size: 10px;">{:L('买')}{:L('价格')}</th>
+                        <th width="33%" style="font-size: 10px;">{:L('数量')}</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="saletable_bot">
+
+                <table class="red" id="buylist">
+                </table>
+            </div>
+        </div>
+
+        <div class="saletable" style="width: 49%;float:right;">
+            <div class="saletable_top">
+                <table>
+                    <tr>
+                        <th width="33%" style="font-size: 10px;">{:L('卖')}{:L('价格')}</th>
+                        <th width="33%" style="font-size: 10px;">{:L('数量')}</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="saletable_bot">
+                <table class="green" id="selllist">
+                </table>
+
+            </div>
+        </div>
+        </div>
+        <div class="dealbox">
+            <h4><img src="__PUBLIC__/Mobile/images/tradeicon1.png">{:L('成交记录')}</h4>
+            <div class="bustitle">
+                <table>
+                    <tr>
+                        <th width="15%">{:L('买/卖')}</th>
+                        <th width="41%">{:L('成交时间')}</th>
+                        <th width="22%">{:L('卖出价格')}</th>
+                        <!-- <th width="22%">{:L('成交量')}</th> -->
+                    </tr>
+                </table>
+            </div>
+            <div class="busbox">
+                <table class="busdts" id="orderlist">
+                </table>
+            </div>
+        </div>
+        <include file="Public:footer" />
+    </div>
+<script type="text/javascript">
+	var market="{$coin_info['name']}";
+	// 成交记录
+	function getTradelog(){
+		$.getJSON("/Ajax/getTradelog?market="+market+"&t="+Math.random(),function(data){
+			if(data){
+				if(data['tradelog']){
+					var list='';
+					var type='';
+					var typename='';
+					for( var i in data['tradelog']){
+						if(data['tradelog'][i]['type']==1){
+							list+='<tr><td width="15%"><span class="red">{:L('买')}</span></td><td width="41%">'+data['tradelog'][i]['addtime']+'</td><td width="22%"><span class="white">'+data['tradelog'][i]['price']+'</span></td><!--td width="22%"><span class="white">'+data['tradelog'][i]['num'].toFixed(2)+'</span></td--></tr>';
+						}else{
+							list+='<tr><td width="15%"><span class="green">{:L('卖')}</span></td><td width="41%">'+data['tradelog'][i]['addtime']+'</td><td width="22%"><span class="white">'+data['tradelog'][i]['price']+'</span></td><!--td width="22%"><span class="white">'+data['tradelog'][i]['num'].toFixed(2)+'</span></td--></tr>';
+						}
+					}
+					$("#orderlist").html(list);
+				}
+			}
+		});
+
+		// 5秒更新一次
+		setTimeout('getTradelog()',5000);
+	}
+function getJsonTop() {
+	$.get("/Ajax/getJsonTop?market="+market+"&t=" + Math.random(), function (data) {
+	var data = JSON.parse(data);
+
+		if (data) {
+			// console.log(data);
+			if (data['info']['new_price']) {
+				$("#market_new_price").html(data['info']['new_price']+'(¥'+data['info']['rmb']+')');
+			}
+			if (data['info']['buy_price']) {
+				$("#market_buy_price").html(data['info']['buy_price']);
+				$("#sell_best_price").html(data['info']['buy_price']);
+			}
+			if (data['info']['sell_price']) {
+				$("#market_sell_price").html(data['info']['sell_price']);
+				$("#buy_best_price").html(data['info']['sell_price']);
+			}
+			if (data['info']['max_price']) {
+				$("#market_max_price").html(data['info']['max_price']);
+			}
+			if (data['info']['min_price']) {
+				$("#market_min_price").html(data['info']['min_price']);
+			}
+			if (data['info']['volume']) {
+				if (data['info']['volume'] > 10000) {
+					data['info']['volume'] = (data['info']['volume'] / 10000).toFixed(2) + "{:L('万')}"
+				}
+				if (data['info']['volume'] > 100000000) {
+					data['info']['volume'] = (data['info']['volume'] / 100000000).toFixed(2) + "{:L('亿')}"
+				}
+				$("#market_volume").html(data['info']['volume']);
+			}
+			if (data['info']['change']) {
+				// $fir=(data['info']['change']).substr(0,1);
+				 var str=data['info']['change'];
+				 str=str.toString();
+				// console.log(typeof str);
+				$fir=str.substr(0,1);
+				if($fir == '-'){
+				$market_change=data['info']['change'];
+				}else{
+				$market_change="+"+data['info']['change'];
+				   }
+				$("#market_change").html($market_change + "%");
+			}
+
+
+		}
+	});
+	setTimeout('getJsonTop()', 1000);
+  }
+
+	// 买卖委托全站
+	function getDepth(){
+
+		$.getJSON("/Ajax/getDepth?market="+market+"&trade_moshi=1&t="+Math.random(),function(data){
+			// 判断有无数据
+			if(data){
+
+				if(data['depth']){
+					var list='';
+					var sellk=data['depth']['sell'].length;
+					if(data['depth']['sell']){
+						for(i=data['depth']['sell'].length-1; i>=0; i--){
+
+					if (data['depth']['sell'][i][1] > 10000) {
+						var cjl = (data['depth']['sell'][i][1] / 10000).toFixed(2) + "{:L('万')}"
+					}else   if (data['depth']['sell'][i][1] > 100000000) {
+						var cjl = (data['depth']['sell'][i][1] / 100000000).toFixed(2) + "{:L('亿')}"
+					}else{
+						var cjl = data['depth']['sell'][i][1].toFixed(2)
+					}
+
+							list+='<tr><td width="50%">'+data['depth']['sell'][i][0].toFixed(4)+'</td><td width="50%">'+cjl+'</td></tr>';
+						}
+
+					}
+					// 卖出委托
+					$("#selllist").html(list);
+
+					list='';
+					if(data['depth']['buy']){
+						for(i=0; i<data['depth']['buy'].length; i++){
+
+			  if (data['depth']['buy'][i][1] > 10000) {
+					var cjl = (data['depth']['buy'][i][1] / 10000).toFixed(2) + "{:L('万')}"
+				}else  if (data['depth']['buy'][i][1] > 100000000) {
+					var cjl = (data['depth']['buy'][i][1] / 100000000).toFixed(2) + "{:L('亿')}"
+				}else{
+					 var cjl=data['depth']['buy'][i][1].toFixed(2)
+				}
+
+
+						   list+='<tr><td width="33%">'+data['depth']['buy'][i][0].toFixed(4)+'</td><td width="34%">'+cjl+'</td></tr>';
+						}
+
+					}
+					// 买入委托
+					$("#buylist").html(list);
+				}
+
+			}
+		});
+		setTimeout('getDepth()',2000);
+	}
+
+	$(function(){
+		// 执行成交记录函数
+		getTradelog();
+		getDepth();
+		getJsonTop();
+	});
+
+</script>
+</body>
+</html>

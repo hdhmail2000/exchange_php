@@ -1,0 +1,667 @@
+@charset "utf-8";
+/* CSS Document */
+
+input::-webkit-input-placeholder { font-size: 13px;color: #8b97ab;}
+input:-moz-placeholder { font-size: 13px;color: #8b97ab;}
+input:-ms-input-placeholder { font-size: 13px;color: #8b97ab;}
+
+
+.trade-box {
+	float: left;
+	margin-top: 20px;
+}
+
+.buy-box {
+	position: relative;
+	float: left;
+	background: #283046;
+	width: 280px;
+	padding: 24px 14px 20px 14px;
+}
+.buy-box .buy-title {
+	font-size: 14px;
+	    color: #ffffff;
+}
+.buy-box .buy-title span {
+	font-size: 14px;
+	color: #f1280f;
+	margin-left: 5px;
+	font-weight: 600;
+}
+
+.sell-box .buy-title span {
+	font-size: 14px;
+	color: #3dc18e;
+	margin-left: 5px;
+	font-weight: 600;
+}
+
+.buy-box input {
+	width: 67%;
+	height: 40px;
+	border: solid #e8e8e8 1px;
+	border-radius: 5px;
+	padding-left: 3%;
+	padding-right: 30%;
+	margin: 10px 0;
+}
+
+.buy-box .buy-count {
+	font-size: 14px;
+	    color: #ffffff;
+	margin-top: 10px
+}
+
+.buy-box .buy-count b {
+	font-size: 14px;
+	color: #f1280f;
+	margin-left: 5px;
+	font-weight: 600;
+}
+
+
+.buy-box .buy-count span:first-child {
+	float: left;
+}
+
+.buy-box .buy-count span:last-child {
+	float: right;
+}
+
+.buy-box .btn-buy {
+	width: 100%;
+	height: 40px;
+	font-size: 15px;
+	color: #fff;
+	background: #319e5c;
+	border: none;
+	outline: none;
+	border-radius: 6px;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+.buy-box .chain-name1 {
+	color: #ffffff;
+	position: absolute;
+	right: 30px;
+	top: 65px;
+}
+
+.buy-box .chain-name2 {
+	color: #878787;
+	position: absolute;
+	right: 30px;
+	top: 130px;
+}
+
+/*Buy*/
+.sell-box .buy-title b {
+	color: #3dc18e!important;
+}
+.sell-box .buy-count b {
+	color: #3dc18e!important;
+}
+.sell-box .btn-buy {
+	background: #b83a3a!important;
+}
+
+
+
+.C2C_mian_box{
+	margin: 0 auto;
+	margin-top: 53px;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	width: 1200px;
+	overflow: hidden;
+	    background-color: #1f2636;
+}
+
+.C2C_mian_box .column{
+	height: 60px;
+	line-height: 60px;
+	padding: 0 25px;
+	border-bottom: #283046 1px solid;
+}
+.C2C_mian_box .column h2{
+	float: left;
+	min-width: 100px;
+	padding: 0 10px;
+	color: #424ec5;
+	font-size: 20px;
+	font-weight: 500;
+	text-align: center;
+	border-bottom: #424ec5 2px solid;
+}
+.C2C_mian_box .column .navs{
+	display: inline-block;
+	float: right;
+}
+.C2C_mian_box .column .navs a{
+	color: #f1280f;
+	font-size: 14px;
+	margin-left: 25px;
+}
+
+.C2C_mian_box .clear{
+	padding: 0 25px;
+	margin-top: 10px;
+}
+.C2C_mian_box .clear .buy-box{
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.C2C_mian_box .clear .buy-box .chain-name1{
+	top: 70px;
+	left: 40px;
+	width: 120px;
+	font-size: 14px;
+}
+.C2C_mian_box .clear .buy-box .chain-name2{
+	top: 140px;
+	left: 40px;
+	width: 120px;
+	font-size: 14px;
+}
+
+.C2C_mian_box .clear .buy-box input{
+	width: 100%;
+	height: 50px;
+	font-size: 16px;
+	font-weight: bold;
+	        border: solid #1f2636 1px;
+		    background-color: #232c40;
+	border-radius: 5px;
+	padding-right: 22px;
+	margin: 10px 0;
+	text-align: right;
+	color: #f1280f;
+	box-sizing: border-box;
+}
+.C2C_mian_box .clear .sell-box input{
+	color: #3dc18e;
+}
+.C2C_mian_box .clear .buy-box input.prohibit{
+	background-color: #313a56;
+	cursor: not-allowed;
+}
+
+.C2C_hint{
+	padding: 25px 40px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	width: 1200px;
+	overflow: hidden;
+	    background-color: #1f2636;
+	box-sizing: border-box;
+}
+.C2C_hint p{
+	line-height: 30px;
+	font-size: 14px;
+        color: #ffffff;
+}
+.C2C_hint .title{
+	line-height: 40px;
+	font-size: 16px;
+    color: #424ec5;
+}
+
+.C2C_order_list{
+	padding: 0 40px;
+	margin: 0 auto;
+	margin-bottom: 53px;
+	width: 1200px;
+	overflow: hidden;
+	    background-color: #1f2636;
+	box-sizing: border-box;
+}
+
+.C2C_order_list .table-head{
+	height: 60px;
+	line-height: 60px;
+	border-bottom: solid 1px #eceff0;
+}
+.C2C_order_list .table-head li {
+	float: left;
+	font-size: 14px;
+	    color: #ffffff;
+}
+.C2C_order_list .table-head li i{
+	margin: auto 7px;
+}
+
+.C2C_order_list .table-list{
+	overflow: hidden;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #ffffff;
+}
+.C2C_order_list .table-list li{
+	line-height: 60px;
+	overflow: hidden;
+	font-size: 13px;
+}
+.C2C_order_list .table-list li:nth-of-type(odd){
+	background: #283046;
+}
+.C2C_order_list .table-list li:hover{
+	background: #2a3040;
+}
+.C2C_order_list .table-list li i {
+	margin: auto 7px;
+}
+.C2C_order_list .table-list .otype{
+	margin-top: 5px;
+	line-height: 25px;
+	font-size: 12px;
+	color: #adbbc1;
+}
+.C2C_order_list .table-list .otype b{
+	color: #6d7b82;
+	font-weight: 500;
+}
+
+
+
+.icon_yhk{
+	background: url("../ecshe_img/icon_yhk.jpg") no-repeat;
+	background-size: 17px 100%;
+	padding-left: 22px;
+}
+.icon_yhkqx{
+	background: url("../ecshe_img/icon_yhkqx.jpg") no-repeat;
+	background-size: 17px 100%;
+	padding-left: 22px;
+}
+.icon_time{
+	background: url("../ecshe_img/icon_time.jpg") no-repeat;
+	background-size: 17px 100%;
+	padding-left: 22px;
+	color: #1273f8!important;
+}
+
+/* Bank */
+.bank_list{margin-top: 10px;overflow: hidden;}
+.bank_list ul{
+	overflow: hidden;
+	min-height: 500px;
+	padding: 2rem;
+	box-sizing: border-box;
+}
+.bank_list ul li{
+	position: relative;
+	display: inline-block;
+	width: 265px;
+	margin: 0 1rem 1rem 0;
+    height: 9rem;
+	text-align: center;
+	background: #fff4de;
+	border-radius: 1rem;
+}
+.bank_list ul li h3{
+	margin-top: 2.5rem;
+	font-size: 1.3rem;
+	font-weight: 500;
+}
+.bank_list ul li p{
+	margin-top: 1.3rem;
+	font-size: 1rem;
+}
+.bank_list .deletes {
+	position: absolute;
+	display: block;
+	width: 15px;
+	height: 15px;
+	bottom: 15px;
+	right: 10px;
+	background: url(../ecshe_img/icon_delete.png) no-repeat;
+	background-size: 100% 100%;
+}
+
+.bank_list ul li.newbtn{
+	background-color: #f1f1f1;
+	color: #7b808c;
+}
+.bank_list ul li.newbtn p{
+	margin-top: 0.8rem;
+	font-size: 1.2rem;
+	font-weight: 300;
+}
+
+/* Floating window */
+.float_win_pay {
+	margin: 0 auto;
+	min-width: 450px;
+	min-height: 200px;
+	padding-bottom: 15px;
+    background: #fff;
+    border-radius: 10px;
+}
+.float_win_pay .tan_title {
+	padding: 0 40px;
+    height: 60px;
+	background-color: #394aa9;
+	border-radius: 10px 10px 0 0;
+}
+.float_win_pay .tan_title h4 {
+    font-weight: normal;
+    color: #fff;
+	font-size: 20px;
+    line-height: 60px;
+    float: left;
+}
+.float_win_pay .tan_title .close-btn {
+    display: block;
+    float: right;
+    line-height: 60px;
+	color: #fff;
+	font-size: 1.2rem;
+	font-weight: 600;
+    cursor: pointer;
+	border-radius: 1rem;
+	transition: all 0.2s ease-in-out;
+}
+
+.float_win_pay .payment_content{
+	min-width: 450px;
+	margin: 30px 0 0 0;
+	padding: 0 40px;
+}
+.float_win_pay .payment_content ul li{
+	margin-bottom: 17px;
+}
+.float_win_pay .payment_content ul li .label-1{
+	display: inline-block;
+	padding-right: 15px;
+	width: 30%;
+	height: 42px;
+    line-height: 42px;
+    font-size: 14px;
+	text-align: right;
+	box-sizing: border-box;
+}
+.float_win_pay .payment_content ul li .input-1{
+	padding-left: 10px;
+    padding-right: 10px;
+	width: 65.5%;
+	height: 42px;
+    line-height: 42px;
+	font-size: 16px;
+	color: #333;
+	border:1px solid #D4D4D4;
+    border-radius: 3px;
+	transition: all,.3s;
+	box-sizing: border-box;
+}
+.float_win_pay .payment_content ul li .input-2{
+	padding-left: 10px;
+    padding-right: 10px;
+	width: 65.5%;
+	height: 42px;
+    line-height: 42px;
+	font-size: 16px;
+	color: #8c8c8c;
+	background-color: #f1f1f1;
+	border:1px solid #D4D4D4;
+    border-radius: 3px;
+	transition: all,.3s;
+	box-sizing: border-box;
+	cursor: not-allowed;
+}
+.float_win_pay .payment_content ul li .vcode-1{
+	display: inline-block;
+	padding-left: 10px;
+    padding-right: 10px;
+	width: 35%;
+	height: 42px;
+    line-height: 42px;
+	font-size: 16px;
+	color: #333;
+	border:1px solid #D4D4D4;
+    border-radius: 3px;
+	transition: all,.3s;
+}
+.float_win_pay .payment_content ul li .btns{
+	margin: 0 auto;
+	display: block;
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	background-color: #4f64dc;
+	border: 1px solid #6378f1;
+	border-radius: 1000px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	cursor: pointer;
+}
+.float_win_pay .payment_content ul li .btns:hover{
+	color: #fff;
+	background-color: #6378f1;
+	border: 1px solid #6378f1;
+}
+.float_win_pay .payment_content ul li .code-num{
+	display: inline-block;
+	margin-left: 10px;
+	width: 26%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 13px;
+	color: #fff;
+	background-color: #4f64dc;
+	border: none;
+	outline: none;
+	border-radius: 4px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	cursor: pointer;
+}
+.float_win_pay .payment_content ul li .code-num:hover{
+	color: #fff;
+	background-color: #6378f1;
+}
+.float_win_pay .payment_content ul li p.forget{
+	font-size: 14px;
+}
+.float_win_pay .payment_content ul li p.forget a{
+	color: #0093ff;
+}
+
+
+.float_win_table .payment_content{
+	margin-top: 20px;
+}
+.float_win_table .payment_content p {
+	font-size: 14px;
+	line-height: 25px;
+}
+.float_win_table .payment_content table{
+	font-size: 14px;
+	border-spacing: 0;
+	border-collapse: collapse;
+	margin: 15px 0;
+}
+.float_win_table .payment_content table td{
+	border: 1px solid #f3da91;
+    background-color: #fff;
+    text-align: left;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 15px;
+	color: #666;
+}
+.float_win_table .payment_content table th{
+	border: 1px solid #f3da91;
+    background-color: #fffbef;
+    text-align: right;
+    height: 40px;
+    line-height: 40px;
+    padding-right: 15px;
+	color: #666;
+}
+
+
+#withdrawCnyAddress {
+    padding: 0 20px;
+    width: 760px;
+    height: 530px;
+    background: #fff;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+#withdrawCnyAddress .tan_title {
+    width: 760px;
+    height: 60px;
+    border-bottom: 1px solid #eee;
+}
+
+#withdrawCnyAddress .tan_title h4 {
+    font-weight: normal;
+    color: #666;
+    line-height: 60px;
+    float: left;
+}
+
+#withdrawCnyAddress .tan_title .closebut {
+    display: block;
+    float: right;
+    line-height: 60px;
+    cursor: pointer;
+}
+
+#withdrawCnyAddress .tan_title .closebut img {
+    vertical-align: middle;
+}
+
+#withdrawCnyAddress .PopLayer {
+    margin-top: 20px;
+}
+
+#withdrawCnyAddress .PopLayer li {
+    margin-bottom: 10px;
+}
+
+#withdrawCnyAddress .PopLayer li span {
+    font-size: 14px;
+    color: #666;
+    line-height: 35px;
+    vertical-align: top;
+    margin-right: 5px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 90px;
+    text-align: right;
+}
+
+#withdrawCnyAddress .PopLayer li .cztxinput {
+    width: 340px;
+    height: 33px;
+    border: 1px solid #ccc;
+    text-indent: 10px;
+    font-size: 14px;
+    color: #999;
+}
+
+#withdrawCnyAddress .PopLayer li #bank_bank {
+    width: 342px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+    outline: none;
+}
+
+#withdrawCnyAddress .PopLayer li #bank_bankprov {
+    width: 169px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+    outline: none;
+}
+
+#withdrawCnyAddress .PopLayer li #bank_bankcity {
+    width: 169px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+    outline: none;
+}
+
+#withdrawCnyAddress .PopLayer li .reg_floatr {
+    color: #73bee4;
+}
+
+#withdrawCnyAddress .PopLayer li #btn {
+    display: block;
+    width: 342px;
+    height: 40px;
+    background: #73bee4;
+    margin-left: 98px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+}
+
+#withdrawCnyAddress .PopLayer li .khname {
+    font-size: 14px;
+    color: #73bee4;
+    font-weight: 900;
+}
+
+
+
+.float_win_bank {
+    padding: 0 40px;
+    width: 500px;
+	min-height: 200px;
+	padding-bottom: 20px;
+   background: #1c2231;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+.float_win_bank .tan_title {
+	display: block;
+	min-height: 2rem;
+	padding: 2rem 3rem;
+	text-align: center;
+	font-weight: 500;
+	    color: #fff;
+}
+.float_win_bank .btn {
+	display: block;
+	width: 100%;
+	text-align: center;
+	height: 3rem;
+    line-height: 3rem;
+	margin: 0 0 1rem;
+	color: #fff;
+	font-size: 1rem;
+}
+
+.float_win_bank .btn_1 {
+	background-color:#059aff;
+}
+.float_win_bank .btn_1:hover {
+	background-color:#0d93ef;
+}
+.float_win_bank .btn_2 {
+	background-color:#DBDBDB;
+	color: #000;
+}
+.float_win_bank .btn_2:hover {
+	background-color:#c5c4c4;
+}
+
+
+

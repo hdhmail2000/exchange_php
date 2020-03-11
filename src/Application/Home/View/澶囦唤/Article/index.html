@@ -1,0 +1,87 @@
+<include file="Public:header_new"/>
+
+        <div class="newmain">
+            <div class="nwmleft">
+                <h2>{:L($Article_first_info['title'])}</h2>
+                <ul class="nwlist">
+                  <volist name="article_list" id="vo">
+                    <li>
+                        <h3><a href="{:U('Article/detail','id='.$vo['id'])}">{$vo.title|msubstr=0,44,'utf-8'}</a></h3>
+                        <p class="time">{:L('发表时间：')}{$vo.addtime|addtime}</p>
+                        <p class="desc">
+                            <a href="{:U('Article/detail','id='.$vo['id'])}">
+                                {$vo.content|msubstr=0,100,'utf-8'}
+                            </a>
+                        </p>
+                    </li>
+                  </volist>
+                </ul>
+                <div class="pages">{$page}</div>
+                <div class="clear"></div>
+                <!-- <span class="morelist">
+                    <a href="#">
+                        加载更多
+                    </a>
+                </span> -->
+
+            </div>
+            <div class="nwmright" >
+                <h3><img src="__PUBLIC__/Home/news/images/helpicon.png">{:L('帮助中心')}</h3>
+                <ul class="nwmenu">
+                  <volist name="ArticleTypeList" id="vo">
+                <if condition="($vo['childnum'] eq '0')">
+                    <li class="topmenu semenu" id="article_{$vo.id}">
+                        <a href="{:U('Article/index',array('id'=>$vo['id']))}">
+                            <img src="__PUBLIC__/Home/news/images/{$vo.img1}" class="img1">
+                            <img src="__PUBLIC__/Home/news/images/{$vo.img11}" class="img2">
+                            {$vo.title}
+                        </a>
+                    </li>
+                    <div class="botmenu" style="display: none;">
+                        <ul>
+                        <volist name="vo['child']" id="f">
+                            <li><a href="#">{$f.title}</a></li>
+                        </volist>
+                        </ul>
+                    </div>
+                <else/>
+                    <li class="topmenu semenu semenu1" id="article_{$vo.id}">
+                            <img src="__PUBLIC__/Home/news/images/closemenu.png" class="img1">
+                            <img src="__PUBLIC__/Home/news/images/openmenu.png" class="img2">
+                            <img src="__PUBLIC__/Home/news/images/closemenu2.png" class="img3">
+                            {$vo.title}
+                    </li>
+                    <div class="botmenu" style="display: none;">
+                        <ul>
+                        <volist name="vo['child']" id="f">
+                            <li id="article_{$f.id}"><a href="{:U('Article/index',array('id'=>$f['id']))}">{$f.title}</a></li>
+                        </volist>
+                        </ul>
+                    </div>
+                </if>
+                </volist>
+                </ul>
+                <script>
+                       $(".semenu").click(function() {
+                            if($(this).next(".botmenu").css("display")=="none"){
+                                 $(this).siblings('.botmenu').slideUp();
+                                 $(this).next(".botmenu").slideDown();
+                                 $(this).siblings('.topmenu').removeClass("on");
+                                 $(this).addClass('on');
+                            }else{
+                                $(this).next(".botmenu").slideUp();
+                                $(this).removeClass('on');
+                            }
+                        });
+                </script>
+            </div>
+        </div>
+        </div>
+        </div>
+        <script>
+          var idss = {$idss};
+          //菜单高亮
+          $('#article_'+idss).addClass('on');
+          $('#article_box').addClass('on');
+        </script>
+<include file="Public:footer"/>

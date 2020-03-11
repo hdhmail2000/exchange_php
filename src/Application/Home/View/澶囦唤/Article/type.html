@@ -1,0 +1,38 @@
+<include file="Public:header_new"/>
+
+        <div class="newmain">
+            <div class="nwmleft">
+                <h2 class="textcenter">{$data.title}</h2>
+                <p class="pubdate textcenter">
+                    {:L('发布时间：')}{$data.addtime|date="Y-m-d H:i:s",###}   {:L('发布人：')}{:C('web_title')}
+                </p>
+                <div class="nwdtsbox">
+                    {$data['content']}
+                </div>
+            </div>
+            <div class="nwmright">
+                <h3><img src="__PUBLIC__/Home/news/images/helpicon.png">{$shang.title}</h3>
+                <ul class="nwmenu">
+                  <volist name="ArticleTypeList" id="vo">
+                    <!-- <li class="on"> -->
+                    <li id="article_{$vo.id}" class="">
+                        <a href="{:U('Article/type',array('id'=>$vo['id']))}">
+                            <img src="__PUBLIC__/Home/news/images/helpicon2.png" class="img1">
+                            <img src="__PUBLIC__/Home/news/images/helpicon22.png" class="img2">
+                            {$vo.title}
+                        </a>
+                    </li>
+                  </volist>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+          var a_id = {$a_id};
+          //菜单高亮
+          $('#article_'+a_id).addClass('on');
+          $('#article_box').addClass('on');
+        </script>
+
+
+<include file="Public:footer"/>

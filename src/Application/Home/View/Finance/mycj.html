@@ -1,0 +1,100 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('成交查询')}</h3>
+			
+			<div class="select fr">
+				<img src="__UPLOAD__/coin/{$coin_list[$market_list[$market]['xnb']]['img']}">
+				<select name="market-selectTest" id="market-selectTest" class="selul">
+					<volist name="market_list" id="vo">
+						<eq name="market" value="$key">
+							<option value="{$vo['name']}" selected="selected">{$vo.xnb|strtoupper} ({$vo.rmb|strtoupper})</option>
+							<else />
+							<option value="{$vo['name']}">{$vo.xnb|strtoupper} ({$vo.rmb|strtoupper})</option>
+						</eq>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="150px">{:L('币种')}</th>
+					<th width="160px">{:L('成交时间')}</th>
+					<th width="100px" class="last">
+<!--						<select name="type-selectTest" id="type-selectTest" class="wd70">
+							<option value="0"<eq name="type" value="0">selected</eq>>类型</option>
+							<option value="1"<eq name="type" value="1">selected</eq>>买入</option>
+							<option value="2"<eq name="type" value="2">selected</eq>>卖出</option>
+						</select> -->
+						{:L('类型')}
+					</th>
+					<th width="140px">{:L('成交价格')}</th>
+					<th width="140px">{:L('成交数量')}</th>
+					<th>{:L('总金额')}</th>
+					<th width="110px" class="last">{:L('手续费')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$coin_list[$market_list[$vo['market']]['xnb']]['title']} ({$market_list[$vo['market']]['rmb']|strtoupper})</td>
+						<td>{$vo.addtime|date='m-d H:i:s',###}</td>
+						<td>
+							<eq name="vo['userid']" value="$vo['peerid']">
+								<font class="buy">{:L('自买')}</font>
+								<font class="sell">{:L('自卖')}</font>
+							<else />
+								<if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 1)">
+									<font class="buy">{:L('买入')}</font>
+								</if>
+								<if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 2)">
+									<font class="buy">{:L('买入')}</font>
+								</if>
+								<if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 1)">
+									<font class="sell">{:L('卖出')}</font>
+								</if>
+								<if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 2)">
+									<font class="sell">{:L('卖出')}</font>
+								</if>
+							</eq>
+						</td>
+						<td style="text-transform:uppercase;">{$vo['price']|NumToStr} {:Anchor_CNY}</td>
+						<td>{$vo['num']|NumToStr}</td>
+						<td>{$vo['mum']|NumToStr}</td>
+						<td>
+							<eq name="vo['userid']" value="$vo['peerid']">
+								{:L('卖出')}{$vo['fee_sell']}<br/>{:L('买入')}{$vo['fee_buy']}
+							<else />
+								<if condition="($vo['userid'] eq $userid)"> {$vo['fee_buy']}
+								<else /> {$vo['fee_sell']} </if>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$("#type-selectTest,#market-selectTest").change(function() {
+    var type = $("#type-selectTest option:selected").val();
+    var market = $("#market-selectTest option:selected").val();
+    window.location = '/Finance/mycj/type/' + type + '/market/' + market + '.html';
+});
+</script>
+<script>
+$("title").html("{:L('成交查询')} - {:C('web_title')}");
+$('#menu_4').addClass('on');
+</script>
+<include file="Public:footer" />

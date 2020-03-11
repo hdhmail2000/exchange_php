@@ -1,0 +1,81 @@
+<include file="Public:header" />
+
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">行情配置<span style="font-size:14px;color:red;">（非改变最新成交价，配合机器人使用自动抓取）</span></span>
+		</div>
+
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Config/qitaEdit')}" method="post" class="form-horizontal" >
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">USDT价格 :</td>
+									<td><input type="text" class="form-control input-10x" name="usdt" value="{$C['usdt']}"></td>
+									<td class="item-note">上次获取时间:{$C['usdtlast']|addtime}</td>
+								</tr>
+<!--								<tr class="controls">
+									<td class="item-label">BTC价格 :</td>
+									<td><input type="text" class="form-control input-10x" name="btc" value="{$C['btc']}"></td>
+									<td class="item-note">上次获取时间:{$C['btclast']|addtime}</td>
+
+								</tr>
+								<tr class="controls">
+									<td class="item-label">ETH价格 :</td>
+									<td><input type="text" class="form-control input-10x" name="eth" value="{$C['eth']}"></td>
+									<td class="item-note">上次获取时间:{$C['ethlast']|addtime}</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">平台币价格 :</td>
+									<td><input type="text" class="form-control input-10x" name="mycoin" value="{$C['mycoin']}"></td>
+									<td class="item-note">设置交易的平台币价格</td>
+								</tr>-->
+								
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class= "btn submit-btn ajax-post"  target-form="form-horizontal" id="submit" type="submit">提交</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+					//提交表单
+					$('#submit').click(function(){
+						$('#form').submit();
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript">
+	var editor;
+	KindEditor.ready(function(K){
+		editor=K.create('textarea',{width:'500px',height:'200px',items:['source','fontname','fontsize','|','forecolor','hilitecolor','bold','italic','underline','removeformat','|','justifyleft','justifycenter','justifyright','insertorderedlist','insertunorderedlist','|','emoticons','link','fullscreen'],afterBlur: function () { this.sync(); }});
+	});
+</script>
+<script type="text/javascript">
+	$(function(){
+		//主导航高亮
+		$('.config-box').addClass('current');
+		//边导航高亮
+		$('.config-contact').addClass('current');
+	});
+</script>
+<include file="Public:footer" />

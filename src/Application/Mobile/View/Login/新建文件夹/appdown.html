@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<style type="text/css">
+    .iphoneicon { display: inline-block; width: 30px; height: 30px; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAB7FBMVEX////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////zN5IfAAAAo3RSTlMAAf3+kAf2CfxsFtosBaEDGvJp+fgQ9wQKZxgGEjTug8CXzghE9RECJqrvogv6QautrEgXwxtM+4LJs0tcftTlSvHV0lVk02pJkw16QMgOUNxCdeO20aa4rkMMmXljhvDzKbdP0KVFh8IdvZ+JVFIhlOocfzayRzclsZ0zd2E85igPFZGWlRTKeN4y1yNyb9aIOD/ovrkq7LSMz79fhah8Rn17R7G5RgAAAhxJREFUeF7t1tVuI1EMBmBPmKFJ2kCThnfLzO2WcctdZmZmZmZm/l90ldEqVzkzzkTaq36XR7Il+9iSqQgrJIlKUZc2zJB2zgs9u1BGmrVO7QRKSLD6vB4Axkgj2zrkmA5ord+gR87CYdKmIQbZUTdpsmorZDWbSZszdshcRtJm0oSc7kukUQg5ySgVp8IcNJKsDEB9026SUu2tZjevbbaW/k3xQ3u6Fs1yAt2+F1sir6uO2IfjtaOVpKp92/pyyLxNi0bq2DgRnuvdEIPM1zYfIUWp6+MW5MUarXtPbN/RbUKe9+A0Kag0mCDLM2Ugy+tMBEjI02yBKp1BOBKB/WDQXakTxEeOWaDObxD+xOAQGFxBEpjuAcPILRI57oc6Xx+JuF1gGA6TyMkFMJySSKTFD4YQCY2BwTdIQlYwnHaQ0Fkw1JwjobVg0PWVWAKsJBQCh6uCRHp9YFgWd/HiEDiqSMQ2Ao6BNAk4L4NlzVUSuAae2RuCfZjxgufm0m0q5E4STJZ+KuguuO5RQfPlYLpPBT14CKZHwn3i8XeI7rnHzFHwUGHSFEoc5ycDYHj6jESkLj1UWZ6TmGcWqqoDpGDUCxUvHaTE+UoHRfYGUpatVWzD+BtSE27uxD+6t8l379vsmXx4ffUHUpddWgYA/cdPE45syhj0TH7+Im9J5uu3OeKQot8b4z9+Rs35B9uv34nEn3SgmEvVTf/Nir+F1q5GiW5+dgAAAABJRU5ErkJggg=="); background-size: cover; vertical-align: middle; margin-top: -5px; margin-right: 5px; }
+.androidicon { display: inline-block; width: 25px; height: 25px;background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAACRlBMVEX////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BowfTAAAAwXRSTlMA6vlrI6YLFjbWEfrfxAa2mPL859cYAV2TAvsFThAOA/7xBHpLsMuZw/a+cS7iChcrpS8+8xpsBxL4g67BdayBnnR/qRRNRRmPH3C01H13HhMmkOyjIr3gCfV5YO2/M1Ekn3JXOBXwyuX9ZW+AklwcDUyktzuG67iqvNIh2whe74nFSozASLlEoeOODKIybpfJuzc1aSAbltwwe61+PKiFVU94aptBdl85LN7k2m2VKFrCKZxmOtgPW0kdr2RC9zQx6bXI2QAAArJJREFUeF7t1NVTG10cx+FfQgkt227LEhaSNC4EKG7BXYoXdXeXAnV3d3d3d33f8581m0NnlpSePZkOvejwucn35jxzMju7sCCpTlf8CrDdPdQAv7NUBe7lp5wD6q7VxrgDuoONPD3AFu7RuIZeW4EHtJ1aCx50JrSb106VBeXs33TlROk+H/2H9ATwJFXyxqzQZjVyxRltwxnW8x4BuYWMAYkz1K4D+vjWFDlyi+vLS6S+/80SNE/+txWUgCUczVtcFt0dHm5GCL3POTTnbLGdQUi2XUUBbHmFEJJNaAZDREC1rsbuHHUHpAF+mBP+bz4ENoiAzG3xLcKwOiSBGCUSOjmiRKKaO6yuCxm7pADTtAGR2uAL5Mq3ImLGCSC3248MGJKB3FUOkbNGEAE2ekBOjLP99p1QqQCgvu2ZF7GEpgIA4PXgXuTx6EmvXOdv+xJi7eUs6AI7rpvdPi9j6QxCcu8CCN4hI1a167WisgEhbm+UGOA7GeQs6Sx4I4mUUbfwgzrMioAjKfjA0URp4FgyHjaHCNDaMbBSIQksW7oKj8c+IsB3BQbW0wDBeCx3B+hv8M8Ci8Ai8OcvkzYVA8U0wAU8LoqBiEkMBGskAeWly3ikakHUgzgB6O2i+aTF9guDadSLAe2NKrValj1OAazR3wlnuN678TCniHv302LrgQYATeuQ2aKD+aIDiFVLASWPyMC0QQJIDSADsU/IgNrMkwHT4NMQhmEQboBxxv08yzBJM897QCLTi5dFYdl+GLCnhYUNReOd9Kao8+07BVAV4I+BERYARvH2ywOcJ0CQAATOAqv/LrAIRPZjoFIAPs4CFqDP0YeBNEH7ZHTtmRigz5ShFoDwKQH4HOoCvoyDB41lGtXyuq8aEPpm+86FtPwHHqWzlCX8bwJcTZN5NB4WqB9l29RAUdqaCQAAAABJRU5ErkJggg=="); background-size: cover; vertical-align: middle; margin-top: -5px; margin-right: 5px; }
+
+</style>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('APP下载')}
+        </div>
+        <div class="logbot">
+              <div class="ifor_flow">
+           <p>{:L('说明')}:<br>{:L('IOS9用户安装指南')}:<br>
+1.{:L('由于IOS9的安全机制，首次安装BWBCoin APP的用户需要进入系统“设置”')}.<br>
+2.{:L('选择“通用”——“描述文件”/“设备管理”')}.<br>
+3.{:L('选择“一个英文的公司名称.”，设置为信任')}.<br>
+4.{:L('点击“信任”完成验证')}.
+</p>
+        </div>
+
+ <div style="margin: 0 auto;text-align:center;">
+                     <h3> BWBCoin{:L('钱包')}:</h3>
+                   <span style="margin: 10px auto 20px; display: block">
+                    <img src="__PUBLIC__/app/Windows.png" style="width: 40px;height: 40px;margin-bottom :-13px;"/>
+                    <a href="http://www.bwbcoin.com/win.zip" style="background: #73bee4;color:#fff; border-radius: 4px; padding: 10px 30px;  font-size: 18px; line-height: 1.3333333; display: inline-block; cursor:pointer">{:L('点击下载')}</a>
+                    <br><br>
+
+                    <img src="__PUBLIC__/app/mac.png" style="width: 40px;height: 40px;margin-bottom :-13px;"/>
+                    <a href="http://www.bwbcoin.com/mac.zip" style="background: #73bee4;color:#fff; border-radius: 4px; padding: 10px 30px;  font-size: 18px; line-height: 1.3333333; display: inline-block; cursor:pointer">{:L('点击下载')}</a>
+                    <br><br>
+                       <img src="__PUBLIC__/app/lin.png" style="width: 40px;height: 40px;margin-bottom :-13px;"/>
+                    <a href="http://www.bwbcoin.com/linux.zip" style="background: #73bee4;color:#fff; border-radius: 4px; padding: 10px 30px;  font-size: 18px; line-height: 1.3333333; display: inline-block; cursor:pointer">{:L('点击下载')}</a>
+                </span>
+            </div>
+
+<div style="margin: 0 auto;text-align:center;">
+                          <h3>{:L('交易所')}APP:</h3>
+                     <a href="http://www.bwbcoin.com/bwb.apk" style="background: #73bee4;color:#fff; border-radius: 4px; padding: 10px 30px;  font-size: 18px; line-height: 1.3333333; display: inline-block; cursor:pointer;"><i class="androidicon"></i>{:L('点击下载')}</a><br><br>
+                  <a href="https://www.pgyer.com/bwbcoin" style="background: #73bee4;color:#fff; border-radius: 4px; padding: 10px 30px;  font-size: 18px; line-height: 1.3333333; display: inline-block; cursor:pointer"><i class="iphoneicon"></i>{:L('点击下载')}</a><br><br>
+              </div>
+        </div>
+    </div>
+</body>
+
+ <include file="Public:footer" />
+</html>

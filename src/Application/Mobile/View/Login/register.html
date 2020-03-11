@@ -1,0 +1,356 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>{:L('注册')}</title>
+	<include file="Public:head" />
+	<link rel="stylesheet" href="__PUBLIC__/intel/css/intlTelInput.css">
+	<script src="__PUBLIC__/intel/js/intlTelInput.js"></script>
+</head>
+<body style="background-color:#313e51;">
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:U('Login/index')}"></a>
+	<h1 class="mui-title color_white"></h1>
+</header>
+
+<select id="area" name="area_id" class="iptbox" placeholder="{:L('select_area')}" style="display: none">
+	<option value="">{:L('select_area')}</option>
+	<volist name="areas" id="vo">
+		<option value="{$vo['id']}">
+			<eq name="LANG_SET" value="zh-cn">{$vo['name_zh']}<else/>{$vo['name_en']}</eq>
+		</option>
+	</volist>
+</select>
+
+
+<div class="mui-content cur-padding-bottom" style="background:inherit;">
+	<div class="mylogin">
+		<p class="title"><b>{:L('注册')}</b>
+			<span class="text-s fr" style="margin-top:5px;">已有帐号？<a href="{:U('Login/index')}" style="margin-left:10px;">立即登录</a></span>
+		</p>
+		<div class="login-input-group">
+			<div class="mui-input-row tel-tel">
+				<input type="tel" id="mobile" class="mui-input-clear" autocomplete="off" onblur="regmobile()" placeholder="{:L('手机号')}">
+			</div>
+			<div class="mui-input-row">
+				<div class="btn-right">
+					<img height="37" src="{:U('Verify/code')}" onclick="this.src=this.src+'?t='+Math.random()" title="{:L('换一张')}" id="verifycode">
+				</div>
+				<input type="text" name="code" id="verify" class="mui-input-clear" autocomplete="off"  onblur="regverify()">
+				<label class="input--label--akira">{:L('图形验证码')}</label>
+			</div>
+			<div class="mui-input-row">
+				<div class="btn-right">
+					<a class="mui-btn mui-btn-outlined mui-btn-positive" id="regBtn" onclick="SendCode()">{:L('获取验证码')}</a>
+				</div>
+				<input type="text" id="mobilecode" class="mui-input-clear" autocomplete="off">
+				<label class="input--label--akira">{:L('动态验证码')}</label>
+			</div>
+			<div class="mui-input-row">
+				<input type="password" id="password" class="mui-input-clear mui-input-password" autocomplete="off" onblur="regpassword()">
+				<label class="input--label--akira">{:L('设置密码')}</label>
+			</div>
+			<div class="mui-input-row">
+				<input type="password" id="repassword" class="mui-input-clear mui-input-password" autocomplete="off" onblur="regrepassword()">
+				<label class="input--label--akira">{:L('确认密码')}</label>
+			</div>
+			<div class="mui-input-row">
+				<input type="text" name="invite" id="invit" class="mui-input-clear" autocomplete="off" value="{$Think.session.invit}" <notempty name="Think.session.invit">readonly</notempty>>
+				<label class="input--label--akira">{:L('邀请码（选填）')}</label>
+			</div>
+			
+			<div class="mui-button-row" style="margin-top:20px;">
+				<button type="button" class="mui-btn mui-btn-primary" onclick="Update();">{:L('注册')}</button>
+              <br></br>
+              <button type="button" class="mui-btn mui-btn-primary" onclick="window.location.href=''">下载APP</button>
+              
+				<p class="protocol">点击注册按钮，即表示同意 <a href="{$registerAgreement}" target="_blank">用户服务协议</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<script src="__PUBLIC__/Mobile/ecshe_js/mui.min.js"></script>
+<script type="text/javascript">
+	mui.init();
+</script>
+<script src="__PUBLIC__/Mobile/ecshe_js/classie.js"></script>
+<script type="text/javascript">
+	(function() {
+		if (!String.prototype.trim) {
+			(function() {
+				// Make sure we trim BOM and NBSP
+				var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+				String.prototype.trim = function() {
+					return this.replace(rtrim, '');
+				};
+			})();
+		}
+
+		[].slice.call( document.querySelectorAll( 'input.mui-input-clear' ) ).forEach( function( inputEl ) {
+			// in case the input is already filled..
+			if( inputEl.value.trim() !== '' ) {
+				classie.add( inputEl.parentNode, 'input--filled' );
+			}
+			// events:
+			inputEl.addEventListener( 'focus', onInputFocus );
+			inputEl.addEventListener( 'blur', onInputBlur );
+		} );
+
+		function onInputFocus( ev ) {
+			classie.add( ev.target.parentNode, 'input--filled' );
+		}
+
+		function onInputBlur( ev ) {
+			if( ev.target.value.trim() === '' ) {
+				classie.remove( ev.target.parentNode, 'input--filled' );
+			}
+		}
+	})();
+</script>
+
+<script type="text/javascript">
+   $("#mobile").intlTelInput({
+      allowDropdown: true,
+      // autoHideDialCode: true,
+      // autoPlaceholder: "off",
+      dropdownContainer: "body",
+      // excludeCountries: ["us"],
+      // formatOnDisplay: true,
+      // geoIpLookup: function(callback) {
+      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+      //     var countryCode = (resp && resp.country) ? resp.country : "";
+      //     callback(countryCode);
+      //   });
+      // },
+      initialCountry: "cn",
+      nationalMode: true,
+      // onlyCountries: ['us', 'fr', 'ca', 'jp','kr','de','cn','ru'],
+      // placeholderNumberType: "MOBILE",
+      // preferredCountries: ['cn', 'jp'],
+      separateDialCode: true,
+      utilsScript: "/Public/intel/js/utils.js"
+    });
+</script>
+<script>
+function registerAgreement() {
+    layer.open({
+        type: 2,
+        skin: 'layui-layer-rim',
+        area: ['800px', '600px'],
+        title: '{$Think.lang.user_registration_agreement}',
+        content: "{:U('Login/webreg')}"
+    });
+}
+
+$('.reg_input_box input').each(function(i, d) {
+    $(d).focus(function() {
+        var oRegMsg = $('#' + $(this).attr('id') + '-msg');
+        oRegMsg.attr('class') == 'form_explain_error' ? oRegMsg.attr('class', 'form_explain').html(oRegMsg.attr('data-explain')).show() : oRegMsg.show();
+    })
+    $(d).blur(function() {
+        var oRegMsg = $('#' + $(this).attr('id') + '-msg');
+        $(this).parent().find('.form_explain').hide();
+    })
+})
+
+// Input box message
+function formMsg(o, status, msg) {
+    $('#' + o + '-msg').attr('class', 'form_explain_' + (status ? 'pass' : 'error')).html((typeof msg == 'undefined' ? '' : msg) + '<em></em>').show();
+    return true;
+}
+</script>
+<script>
+var mbTest_username = /^(?![^a-zA-Z]+$)(?!\D+$).{5,15}$/;
+function regmobile() {
+    var mobile = $('#mobile').val();
+    var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+    var isValid = $("#mobile").intlTelInput("isValidNumber");//验证手机号码是否正确
+
+   // console.log(isValid)
+   // console.log(intlNumber['dialCode'])
+
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+     if (isValid!=true) {
+        layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+        return false;
+    }
+   //if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(mobile))){
+     //   layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+      //  return false;
+   // }
+}
+
+function regverify() {
+    var verify = $('#verify').val();
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请输入图形验证码 }', '#verify', { tips: 3 });
+        return false;
+    }
+}
+	
+var mbTest_password = /^[a-zA-Z0-9_]{5,15}$/;
+function regpassword() {
+    var password = $('#password').val();
+    if (password == "" || password == null) {
+        layer.tips('{$Think.lang.请输入登录密码 }', '#password', { tips: 3 });
+        return false;
+    } else {
+        if (!mbTest_password.test(password)) {
+            layer.tips('{$Think.lang.密码格式为6~16 位， 不含特殊符号！ }', '#password', { tips: 3 });
+            return false;
+        }
+    }
+}
+function regrepassword() {
+    var password = $('#password').val();
+    var repassword = $('#repassword').val();
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认密码 }', '#repassword', { tips: 3 });
+        return false;
+    } else {
+        if (!mbTest_password.test(repassword)) {
+            layer.tips('{$Think.lang.密码格式为6~16 位， 不含特殊符号！ }', '#repassword', { tips: 3 });
+            return false;
+        } else {
+            if (password != repassword) {
+                layer.tips('{$Think.lang.两次输入的密码不一致 }', '#repassword', { tips: 3 });
+                return false;
+            }
+        }
+    }
+}
+	
+function SendCode() {
+    var mobile = $("#mobile").val();
+	var verify = $('#verify').val();
+    var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+    var intnum =  intlNumber['dialCode'];//获取国家代码
+    var isValid = $("#mobile").intlTelInput("isValidNumber");//验证手机号码是否正确
+	
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (isValid!=true) {
+        layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+        return false;
+   }
+     // if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(mobile))){
+     //   layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+      //  return false;
+   // }
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请先输入图形验证码}', '#verify', { tips: 3 });
+        return false;
+    }
+	
+    $.post("{:U('Verify/regss')}", {
+        mobile: mobile,
+        intnum:intnum,
+        verify: verify
+    }, function(data) {
+        layer.closeAll();
+        // console.log(data.info);
+        if (data.status == 1) {
+            //刷新验证码
+            //$('#regBtn').attr("disabled", "disabled");
+            layer.msg(data.info, { icon: 1 });
+            var obj = $('#regBtn');
+            var wait = 60;
+            var interval = setInterval(function() {
+                obj.css('color', '#a7a7a7');
+				obj.css('border-color', '#a7a7a7');
+				obj.css('cursor', 'default');
+				obj.removeAttr('onclick');
+                obj.text(wait + '{$Think.lang.秒再次发送 }');
+
+                wait--;
+                if (wait < 1) {
+                    //obj.removeAttr("disabled");
+					obj.css('color', '#4cd964');
+					obj.css('border-color', '#4cd964');
+					obj.css('cursor', 'pointer');
+					obj.attr("onclick","SendCode();");
+                    clearInterval(interval);
+                    obj.text('{$Think.lang.获取验证码 }');
+                };
+            }, 1000);
+        } else {
+            obj = $('#regBtn');
+            //刷新验证码
+            layer.msg(data.info, { icon: 2 });
+            $("#verifycode").click();
+            //$('#regBtn').removeAttr("disabled");
+			obj.attr("onclick","SendCode()");
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+
+function Update() {
+    var area_id = $("#area").val();
+    /*var enname = $("#enname").val();*/
+    var mobile = $("#mobile").val();
+    var password = $("#password").val();
+    var repassword = $("#repassword").val();
+    var invit = $("#invit").val();
+    var verify = $("#verify").val();
+    var mobilecode = $("#mobilecode").val();
+    var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+    var qz = intlNumber['dialCode'];//获取国家代码前缀
+	var tokens = "{:session('__token__')}"; //令牌
+
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请输入图形验证码}', '#verify', { tips: 3 });
+        return false;
+    }
+	if(mobilecode=="" || mobilecode == null) {
+		layer.tips('{$Think.lang.请输入手机验证码}','#mobilecode',{tips:3});
+		return false;
+	}
+    if (password == "" || password == null) {
+        layer.tips('{$Think.lang.请输入登录密码}', '#password', { tips: 3 });
+        return false;
+    }
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认密码}', '#repassword', { tips: 3 });
+        return false;
+    }
+    if (password != repassword) {
+        layer.tips('{$Think.lang.两次输入的密码不一致}', '#repassword', { tips: 3 });
+        return false;
+    }
+/*	if (!$("#regweb").is(':checked')) {
+		layer.tips("{$Think.lang.请勾选用户服务协议}", '#regweb', {tips: 3});
+		return false;
+	}*/
+	
+    $.post("{:U('Login/upregister')}", { area_id:area_id,mobile: mobile, password: password, repassword: repassword, verify: verify, invit: invit, mobilecode: mobilecode, qz: qz, token: tokens }, function(data) {
+         if (data.status == 1) {
+            layer.msg(data.info, { icon: 3,time: 2000,end:function(){
+                window.location.href ="/Login/complete.html";
+            }});
+        } else {
+			$("#verify").val('');
+            layer.msg(data.info, { icon: 2 });
+            $("#verifycode").click();
+            if (data.url) {
+                window.location.href = data.url;
+            }
+        }
+    }, "json");
+}
+</script>
+</body>
+</html>

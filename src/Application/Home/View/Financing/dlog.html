@@ -1,0 +1,75 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+<style>
+.crumbs{
+	margin: 0 auto;
+	margin-top: 35px;
+	padding: 0 30px;
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+.crumbs li{
+	float: left;
+	font-size: 16px;
+	color: #575757;
+}
+.crumbs li.on,.crumbs li.on a{
+	color: #018bc0;
+}
+.crumbs li span{
+	margin: 0 10px;
+}
+</style>
+
+<div class="crumbs">
+	<ul>
+		<li><a href="{:U('Financing/index')}">{:L('币生币')}</a><span>&gt;</span></li>
+		<li class="on">{:L('理财详情')}</li>
+	</ul>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="SettingRight" style="width: 100%;">
+		<div class="titles">
+			<h3 class="fl">{:L('理财详情')}</h3>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="">{:L('项目标题')}</th>
+					<th width="">{:L('本金币种')}</th>
+					<th width="">{:L('利息币种')}</th>
+					<th width="">{:L('费用类型')}</th>
+					<th width="">{:L('费用数量')}</th>
+					<th width="">{:L('详情')}</th>
+					<th width="">{:L('日期')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$vo['money']['name']}</td>
+						<td>{$vo['money']['coinname']}</td>
+						<td>{$vo['money']['feecoin']}</td>
+						<td>
+							<eq name="vo.type" value="1">
+								<font color="green">收入</font>
+							<else />
+								<font color="red">支出</font>
+							</eq>
+						</td>
+						<td>{$vo['num']|NumToStr}</td>
+						<td>{$vo['content']}</td>
+						<td>{$vo.addtime|addtime}</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+<script>
+$("title").html("{:L('理财记录')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

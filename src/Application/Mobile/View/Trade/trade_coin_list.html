@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{:L(C('web_name'))}-{:L('交易大厅')}</title>
+    <meta charset="utf-8">
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <!--百度禁止转码-->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <!-- 搜索引擎抓取 -->
+    <meta name="robots" content="index,follow" />
+    <meta name="baidu-site-verification" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!-- 为移动设备添加 viewport -->
+    <!-- <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no"> -->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <!--禁止数字识自动别为电话号码-->
+    <meta content="telephone=no" name="format-detection">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+        <include file="Public:header2" />
+</head>
+<body class="darkbg">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    body {
+        position: relative;
+        font-family: pinfang, "Helvetica Neue", Helvetica, sans-serif;
+        background: #12161C;
+        color: #f3f3f3;
+        font-size: .85rem;
+        line-height: 1.5;
+    }
+
+    .box {
+        margin-top: 0.73rem;
+    }
+
+    #title {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        font-size: .30rem;
+        overflow: hidden;
+        background: #1F2833;
+    }
+
+    #title span {
+        float: left;
+        width: 20%;
+        text-align: center;
+    }
+
+    #content {}
+
+    #content li {
+        width: 100%;
+        overflow: hidden;
+        display: none;
+        border-bottom: 1px solid #20272C;
+    }
+
+
+    #title .select {
+        color: #f0b90b;
+        border-bottom: 2px solid #F0B90B;
+        /*background: #12161C;*/
+    }
+
+    #content .show {
+
+        display: block;
+    }
+
+    i {
+        display: inline-block;
+        font-style: normal;
+    }
+
+    #title i {
+
+        line-height: .72rem;
+        padding: 0 .1rem;
+    }
+
+    .box-des {
+        width: 95%;
+        margin: 0 auto;
+        height: .64rem;
+        line-height: .64rem;
+    }
+
+    .box-des span {
+        color: #d8dee8;
+    }
+
+    .box-des .list-up {
+        color: #F0B90B;
+        font-size: .28rem;
+    }
+
+    .des-list {
+        float: left;
+        width: 33.3%;
+        display: inline-block;
+    }
+
+    .box-list {
+        background: #42464c;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .clear:after {
+        content: '';
+        display: block;
+        clear: both;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+    }
+
+    .clear {
+        zoom: 1;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    .show-list {
+        display: inline-block;
+        width: 33.3%;
+        float: left;
+        padding: .18rem 0;
+        font-size: .28rem;
+        color: #828A98;
+    }
+
+    .content-list {
+        width: 95%;
+        padding: 0 .2rem;
+        margin: 0 auto;
+    }
+
+    .list-tr {
+        font-size: .32rem;
+        color: white;
+    }
+
+    .show-btn {
+        vertical-align: middle;
+        text-align: right;
+    }
+
+    .show-btn i {
+        display: inline-block;
+        text-align: center;
+        background: #74A700;
+        font-size: .32rem;
+        color: #fff;
+        margin-top: .1rem;
+        padding: .1rem .2rem;
+        border-radius: .05rem;
+    }
+
+    .show-box {
+        border-bottom: 1px solid #20272C;
+    }
+
+    .red2 {
+       background: #E50370!important;
+    }
+    </style>
+    <script type="text/javascript">
+    (function(win, lib) {
+        var doc = win.document;
+        var docEl = doc.documentElement;
+        var metaEl = doc.querySelector('meta[name="viewport"]');
+        var flexibleEl = doc.querySelector('meta[name="flexible"]');
+        var dpr = 0;
+        var scale = 0;
+        var tid;
+        var flexible = lib.flexible || (lib.flexible = {});
+
+        if (metaEl) {
+            var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+            if (match) {
+                scale = parseFloat(match[1]);
+                dpr = parseInt(1 / scale);
+            }
+        } else if (flexibleEl) {
+            var content = flexibleEl.getAttribute('content');
+            if (content) {
+                var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+                var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+                if (initialDpr) {
+                    dpr = parseFloat(initialDpr[1]);
+                    scale = parseFloat((1 / dpr).toFixed(2));
+                }
+                if (maximumDpr) {
+                    dpr = parseFloat(maximumDpr[1]);
+                    scale = parseFloat((1 / dpr).toFixed(2));
+                }
+            }
+        }
+
+        if (!dpr && !scale) {
+            var isAndroid = win.navigator.appVersion.match(/android/gi);
+            var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+            var devicePixelRatio = win.devicePixelRatio;
+            if (isIPhone) {
+                // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+                if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+                    dpr = 3;
+                } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+                    dpr = 2;
+                } else {
+                    dpr = 1;
+                }
+            } else {
+                // 其他设备下，仍旧使用1倍的方案
+                dpr = 1;
+            }
+            scale = 1 / dpr;
+        }
+
+        docEl.setAttribute('data-dpr', dpr);
+        if (!metaEl) {
+            metaEl = doc.createElement('meta');
+            metaEl.setAttribute('name', 'viewport');
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+            if (docEl.firstElementChild) {
+                docEl.firstElementChild.appendChild(metaEl);
+            } else {
+                var wrap = doc.createElement('div');
+                wrap.appendChild(metaEl);
+                doc.write(wrap.innerHTML);
+            }
+        }
+
+        function refreshRem() {
+            var width = docEl.getBoundingClientRect().width
+            // 适配平板
+            if (width / dpr > 750) {
+                width = 750 * dpr
+            }
+            var rem = 100 * (width / 750)
+            docEl.style.fontSize = rem + 'px'
+            flexible.rem = win.rem = rem;
+        }
+
+        win.addEventListener('resize', function() {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+        }, false);
+        win.addEventListener('pageshow', function(e) {
+            if (e.persisted) {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }
+        }, false);
+
+        if (doc.readyState === 'complete') {
+            doc.body.style.fontSize = 12 * dpr + 'px';
+        } else {
+            doc.addEventListener('DOMContentLoaded', function(e) {
+                doc.body.style.fontSize = 12 * dpr + 'px';
+            }, false);
+        }
+
+        refreshRem();
+
+        flexible.dpr = win.dpr = dpr;
+        flexible.refreshRem = refreshRem;
+        flexible.rem2px = function(d) {
+            var val = parseFloat(d) * this.rem;
+            if (typeof d === 'string' && d.match(/rem$/)) {
+                val += 'px';
+            }
+            return val;
+        }
+        flexible.px2rem = function(d) {
+            var val = parseFloat(d) / this.rem;
+            if (typeof d === 'string' && d.match(/px$/)) {
+                val += 'rem';
+            }
+            return val;
+        }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+    //以下为copy index.html中的函数
+     $('.price_today_ull > .click-sort').each(function () {
+    $(this).click(function () {
+      click_sortList(this);
+    })
+  })
+  function allcoin_callback(priceTmp) {
+    for (var i in priceTmp) {
+      var c = priceTmp[i][8];
+      console.log(c)
+      if (typeof (trends[c]['data']) && typeof (trends[c]['data']) != 'null') {
+        // if (typeof (trends[c]) != 'undefined' && typeof (trends[c]['data']) != 'undefined') {
+        //   $.plot($("#" + c + "_plot"), [{shadowSize: 0, data: trends[c]['data']}], {
+        //     grid: {borderWidth: 0},
+        //     xaxis: {mode: "time", ticks: false},
+        //     yaxis: {tickDecimals: 0, ticks: false},
+        //     colors: ['#f99f83']
+        //   });
+        // }
+      }
+    }
+  }
+  function click_sortList(sortdata) {
+    var a = $(sortdata).attr('data-toggle');
+    var b = $(sortdata).attr('data-sort');
+    $(".price_today_ull > li").find('.cagret-up').css('border-bottom-color', '#848484');
+    $(".price_today_ull > li").find('.cagret-down').css('border-top-color', '#848484');
+    $(".price_today_ull > li").attr('data-flaglist', 0).attr('data-toggle', 0);
+    $(".price_today_ull > li").css('color', '');
+    $(sortdata).css('color', '#1a81d6');
+    if (a == 0) {
+      priceTmp = priceTmp.sort(sortcoinList('dec', b));
+      $(sortdata).find('.cagret-down').css('border-top-color', '#1a81d6');
+      $(sortdata).find('.cagret-up').css('border-bottom-color', '#848484');
+      $(sortdata).attr('data-flaglist', 1).attr('data-toggle', 1)
+    }
+    else if (a == 1) {
+      $(sortdata).attr('data-toggle', 0).attr('data-flaglist', 2);
+      ;
+      $(sortdata).find('.cagret-up').css('border-bottom-color', '#1a81d6');
+      $(sortdata).find('.cagret-down').css('border-top-color', '#848484');
+      priceTmp = priceTmp.sort(sortcoinList('asc', b));
+    }
+    renderPage(priceTmp);
+    change_line_bg('content', 'li');
+    // allcoin_callback(priceTmp);
+  }
+  function trends() {
+    $.getJSON('/ajax/index_b_trends?t=' + rd(), function (d) {
+      trends = d;
+      allcoin();
+    });
+  }
+  function allcoin(cb) {
+    var trade_qu_id = $('.trade_qu_list .select').attr('data');
+    // console.log(trade_qu_id)
+    $.get('/ajax/allcoin_a/id/' + trade_qu_id + '?t=' + rd(), cb ? cb : function (data) {
+      var d;
+      if (data.status == 1) {
+        d = data.url;
+
+      }
+       // console.log(data)
+      ALLCOIN  = d;
+      var t    = 0;
+      var img  = '';
+      priceTmp = [];
+      for (var x in d) {
+        if (typeof(trends[x]) != 'undefined' && parseFloat(trends[x]['yprice']) > 0) {
+          rise1 = (((parseFloat(d[x][4]) + parseFloat(d[x][5])) / 2 - parseFloat(trends[x]['yprice'])) * 100) / parseFloat(trends[x]['yprice']);
+          rise1 = rise1.toFixed(2);
+        } else {
+          rise1 = 0;
+        }
+        img = d[x].pop();
+        d[x].push(rise1);
+        d[x].push(x);
+        d[x].push(img);
+        priceTmp.push(d[x]);
+      }
+      $('.price_today_ull > .click-sort').each(function () {
+        var listId = $(this).attr('data-sort');
+        if ($(this).attr('data-flaglist') == 1 && $(this).attr('data-sort') !== 0) {
+          priceTmp = priceTmp.sort(sortcoinList('dec', listId))
+        } else if ($(this).attr('data-flaglist') == 2 && $(this).attr('data-sort') !== 0) {
+          priceTmp = priceTmp.sort(sortcoinList('asc', listId))
+        }
+      });
+      // console.log(priceTmp);
+      renderPage(priceTmp);
+      // allcoin_callback(priceTmp);
+      change_line_bg('content', 'li');
+      t = setTimeout('allcoin()', 2000);
+    }, 'json');
+  }
+  function rd() {
+    return Math.random()
+  }
+  function renderPage(ary) {
+    var html = '';
+    var window_width =$(window).width();
+
+    for (var i in ary) {
+      var coinfinance = 0;
+      if (typeof FINANCE == 'object') coinfinance = parseFloat(FINANCE.data[ary[i][8] + '_balance']);
+      console.log(ary);
+        html+='<li><a  href="/Trade/market_condition/market/' + ary[i][8] + '/"><div class="show-box"><div class="content-list clear"><div class="show-list"><div><span class="list-tr">' + ary[i][10] + '</span></div><div><span>{:L('成交量')}:'  + formatCount(ary[i][6]) +  '</span></div></div><div class="show-list"><div class="list-tr"><span>' + ary[i][1] + '</span></div><div><span>￥ '+ary[i][13]+'</span></div></div><div class="show-list show-btn"><i '+ (parseFloat(ary[i][7]) < 0 ? 'class="red2"' : '')+'>' + (parseFloat(ary[i][7]) < 0 ? '' : '+') + ((parseFloat(ary[i][7]) < 0.01 && parseFloat(ary[i][7]) > -0.01) ? "0.00" : (parseFloat(ary[i][7])).toFixed(2)) + '%</i></div></div></div></li>'
+    }
+
+    $('#contentnew').html(html);
+    // console.log(html);
+  }
+  function formatCount(count) {
+    var countokuu = (count / 100000000).toFixed(3)
+    var countwan  = (count / 10000).toFixed(3)
+      return count
+  }
+  function change_line_bg(id, tag, nobg) {
+    var oCoin_list = $('#' + id);
+    var oC_li      = oCoin_list.find(tag);
+    var oInp       = oCoin_list.find('input');
+    var oldCol     = null;
+    var newCol     = null;
+    if (!nobg) {
+      for (var i = 0; i < oC_li.length; i++) {
+        oC_li.eq(i).css('background-color', i % 2 ? '#f8f8f8' : '#fff');
+      }
+    }
+    oCoin_list.find(tag).hover(function () {
+      oldCol = $(this).css('backgroundColor');
+      $(this).css('background-color', '#eaedf4');
+    }, function () {
+      $(this).css('background-color', oldCol);
+    })
+  }
+  function sortcoinList(order, sortBy) {
+    var ordAlpah = (order == 'asc') ? '>' : '<';
+    var sortFun  = new Function('a', 'b', 'return parseFloat(a[' + sortBy + '])' + ordAlpah + 'parseFloat(b[' + sortBy + '])? 1:-1');
+    return sortFun;
+  }
+  function trade_qu(o){
+    $('.trade_qu_pai').removeClass('select');
+    $(o).addClass('select');
+    allcoin();
+  }
+  trends();
+
+    </script>
+</head>
+
+<body>
+    <nav id="title" class="trade_qu_list">
+        <!-- <div><span>{:L(C('web_name'))}</span></div><br> -->
+      <volist name="jiaoyiqu" id="vo" >
+        <span style="width: <?php echo 100/($total);?>%"><i class="trade_qu_pai <eq name="key" value="0"> select</eq>" data="{$key}" onclick="trade_qu(this)">{$vo}</i></span>
+    </volist>
+    </nav>
+    <div class="box">
+        <div class="box-list">
+            <div class="box-des clear">
+                <div class="des-list">
+                    <span class="list-up">{:L('资产')}/</span>
+                    <span class="list-up">{:L('成交量')}</span>
+                </div>
+                <div class="des-list center">
+                    <span class="list-up">{:L('最新成交价')} </span>
+                </div>
+                <div class="des-list right">
+                    <span class="list-up">{:L('日涨跌')}</span>
+                </div>
+            </div>
+        </div>
+        <ul id="contentnew" ></ul>
+    </div>
+    <!-- <script>
+    var title = document.getElementById('title');
+    var content = document.getElementById('content');
+    var spans = title.getElementsByTagName('i');
+    var lis = content.getElementsByTagName('li');
+    for (var i = 0; i < spans.length; i++) {
+        spans[i].index = i;
+        spans[i].onclick = function() {
+            for (var j = 0; j < spans.length; j++) {
+                spans[j].className = '';
+                lis[j].className = '';
+            }
+            this.className = 'select';
+            lis[this.index].className = 'show';
+        }
+    }
+    </script> -->
+
+
+
+ <include file="Public:footer" />
+</body>
+</html>

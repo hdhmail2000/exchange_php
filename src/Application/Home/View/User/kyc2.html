@@ -1,0 +1,270 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="User:left" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles"><h3>{:L('账户信息')} &gt; {:L('实名认证')} &gt; {:L('高级认证')}</h3></div>
+		<div class="Column_identity">
+			<eq name="user.idstate" value="8">
+				<p style="margin:20px 20px;line-height:25px;padding:20px;background-color:#fff1e0;font-size:1rem;color:#d89c2a;">{:L('认证驳回原因')} : {$user.idcardinfo}</p>
+			</eq>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<th>{:L('国籍')}</th>
+						<td>
+							<input type="text" id="regidnationality" class="select-1" value="{$user['idnationality']}" readonly>
+						</td>
+						<th>{:L('姓名')}</th>
+						<td><input type="text" id="regtruename" class="select-1" value="{$user['truename']}" readonly></td>
+					</tr>
+					<tr>
+						<th>{:L('证件类型')}</th>
+						<td>
+							<select name="type" id="regidtype" class="select-1" disabled="disabled">
+								<option value="1" <eq name="user['idtype']" value="1">selected="selected"</eq>>{:L('身份证')}</option>
+								<option value="2" <eq name="user['idtype']" value="2">selected="selected"</eq>>{:L('护照')}</option>
+								<option value="3" <eq name="user['idtype']" value="3">selected="selected"</eq>>{:L('驾驶证')}</option>
+							</select>
+						</td>
+						<th>{:L('证件ID')}</th>
+						<td><input type="text" id="regidcard" class="select-1" value="{$user['idcard']}" readonly></td>
+					</tr>
+					<tr>
+						<th>{:L('证件照片')}</th>
+						<td colspan="3" style="padding:20px 0;">
+							<style>
+								.imgs img{width:200px!important;height:100px!important;}
+							</style>				
+							<div class="upload-img">
+								<div class="upload-box">
+									<div class="imgs">
+										<notempty name="user.idimg1">
+											<img id="up_img_idimg1" onclick="getElementById('idimg1').click()" title="{:L('点击添加图片')}" alt="{:L('点击添加图片')}" src="/Upload/idcard/{$user['idimg1']}">
+										<else/>
+											<img id="up_img_idimg1" onclick="getElementById('idimg1').click()" title="{:L('点击添加图片')}" alt="{:L('点击添加图片')}" src="__PUBLIC__/Home/ecshe_img/user_icon/idcard1.jpg">
+										</notempty>
+									</div>
+									<input type="hidden" id="idimg1" name="idimg1" value="{$user.idimg1}">
+									<input type="file" id="file_idimg1"accept="image/gif, image/jpeg, image/jpg, image/png" value=""/>
+								</div>
+								<p class="title">{:L('证件正面')}</p>
+							</div>
+							<div class="upload-img">
+								<div class="upload-box">	
+									<div class="imgs">
+										<notempty name="user.idimg2">
+											<img id="up_img_idimg2" onclick="getElementById('idimg2').click()" title="{:L('点击添加图片')}" alt="{:L('点击添加图片')}" src="/Upload/idcard/{$user['idimg2']}">
+										<else/>
+											<img id="up_img_idimg2" onclick="getElementById('idimg2').click()" title="{:L('点击添加图片')}" alt="{:L('点击添加图片')}" src="__PUBLIC__/Home/ecshe_img/user_icon/idcard2.jpg">
+										</notempty>
+									</div>
+									<input type="hidden" id="idimg2" name="idimg2" value="{$user.idimg2}">
+									<input type="file" id="file_idimg2"accept="image/gif, image/jpeg, image/jpg, image/png" value=""/>
+								</div>
+								<p class="title">{:L('证件反面')}</p>
+							</div>
+							<div class="upload-img">
+								<div class="upload-box">
+									<div class="imgs">
+										<notempty name="user.idimg3">
+											<img id="up_img_idimg3" onclick="getElementById('idimg3').click()" title="{:L('点击添加图片')}" alt="{:L('点击添加图片')}" src="/Upload/idcard/{$user['idimg3']}">
+										<else/>
+											<img id="up_img_idimg3" onclick="getElementById('idimg3').click()" title="{:L('点击添加图片')}" alt="{:L('点击添加图片')}" src="__PUBLIC__/Home/ecshe_img/user_icon/idcard3.jpg">
+										</notempty>
+									</div>
+									<input type="hidden" id="idimg3" name="idimg3" value="{$user.idimg3}">
+									<input type="file" id="file_idimg3"accept="image/gif, image/jpeg, image/jpg, image/png" value=""/>
+								</div>
+								<p class="title">{:L('手持证件照片+个人签名')}</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td colspan="3" style="padding-top:20px;">
+							<div class="Tips">
+								<div class="icons">
+									<h3>{:L('重要提示：')}</h3>
+								</div>
+								<div class="TextContent">
+									<p>1. {:L('请上传清晰的证件照片')}</p>
+									<p>2. {:L('图片支持JPG/PNG/JPEG格式，大小不超过1M')}</p>
+									<p>3. {:L('手持证件照通过标准，护照信息清晰，需包括“1993.MOBI”字样和当天日期')}</p>
+									<p>4. {:L('遇到问题联系客服')} <b style="color: #4f64dc;">admin@1993.MOBI</b></p>
+								</div>
+							</div>
+							<p><a class="btns" href="javascript:void(0)" onclick="Update()">{:L('提交')}</a></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script charset="utf-8" src="__PUBLIC__/kindeditorv4/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditorv4/lang/zh-CN.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	//响应文件添加成功事件
+	$("#file_idimg1").change(function () {
+		
+		if ({:APP_DEMO}) {
+			return alert('测试站暂时不能修改！');
+		}
+		
+		//创建FormData对象
+		var data = new FormData();
+		//为FormData对象添加数据
+		$.each($('#file_idimg1')[0].files, function (i, file) {
+			data.append('upload_file' + i, file);
+		});
+
+		//发送数据
+		$.ajax({
+			url: '/Ajax/imgUser',
+			type: 'POST',
+			data: data,
+			cache: false,
+			contentType: false, //不可缺参数
+			processData: false, //不可缺参数
+			success: function (data) {
+				if (data) {
+					$('#up_img_idimg1').attr("src", '/Upload/idcard/' + $.trim(data));
+					$('#idimg1').val($.trim(data));
+					$('#up_img_idimg1').show();
+				}
+			},
+			error: function () {
+				alert('上传出错');
+				$(".loading").hide(); //加载失败移除加载图片
+			}
+		});
+
+	});
+});
+	
+$(document).ready(function () {
+	//响应文件添加成功事件
+	$("#file_idimg2").change(function () {
+		
+		if ({:APP_DEMO}) {
+			return alert('测试站暂时不能修改！');
+		}
+		
+		//创建FormData对象
+		var data = new FormData();
+		//为FormData对象添加数据
+		$.each($('#file_idimg2')[0].files, function (i, file) {
+			data.append('upload_file' + i, file);
+		});
+
+		//发送数据
+		$.ajax({
+			url: '/Ajax/imgUser',
+			type: 'POST',
+			data: data,
+			cache: false,
+			contentType: false, //不可缺参数
+			processData: false, //不可缺参数
+			success: function (data) {
+				if (data) {
+					$('#up_img_idimg2').attr("src", '/Upload/idcard/' + $.trim(data));
+					$('#idimg2').val($.trim(data));
+					$('#up_img_idimg2').show();
+				}
+			},
+			error: function () {
+				alert('上传出错');
+				$(".loading").hide(); //加载失败移除加载图片
+			}
+		});
+
+	});
+});
+	
+$(document).ready(function () {
+	//响应文件添加成功事件
+	$("#file_idimg3").change(function () {
+		
+		if ({:APP_DEMO}) {
+			return alert('测试站暂时不能修改！');
+		}
+		
+		//创建FormData对象
+		var data = new FormData();
+		//为FormData对象添加数据
+		$.each($('#file_idimg3')[0].files, function (i, file) {
+			data.append('upload_file' + i, file);
+		});
+
+		//发送数据
+		$.ajax({
+			url: '/Ajax/imgUser',
+			type: 'POST',
+			data: data,
+			cache: false,
+			contentType: false, //不可缺参数
+			processData: false, //不可缺参数
+			success: function (data) {
+				if (data) {
+					$('#up_img_idimg3').attr("src", '/Upload/idcard/' + $.trim(data));
+					$('#idimg3').val($.trim(data));
+					$('#up_img_idimg3').show();
+				}
+			},
+			error: function () {
+				alert('上传出错');
+				$(".loading").hide(); //加载失败移除加载图片
+			}
+		});
+
+	});
+});
+</script>
+
+<script type="text/javascript">
+function Update(){
+	var idimg1 = $("#idimg1").val();
+	var idimg2 = $("#idimg2").val();
+	var idimg3 = $("#idimg3").val();
+	
+	if(idimg1 == "" || idimg1 == null) {
+		layer.tips('{:L(' 请上传证件正面照片 ')}', '#file_idimg1', { tips: 3 });
+		return false;
+	}
+	if(idimg2 == "" || idimg2 == null) {
+		layer.tips('{:L(' 请上传证件反面照片 ')}', '#file_idimg2', { tips: 3 });
+		return false;
+	}
+	if(idimg3 == "" || idimg3 == null) {
+		layer.tips('{:L(' 请上传手持证件照片 ')}', '#file_idimg3', { tips: 3 });
+		return false;
+	}
+
+	$.post("{:U('User/kyc2_Handle')}",{ idimg1: idimg1, idimg2: idimg2, idimg3: idimg3 },function(data){
+		if(data.status == 1){
+			layer.msg(data.info, { icon: 1 });
+			window.setTimeout('window.location="{:U('User/index')}"',1000);
+		}else{
+			layer.msg(data.info, { icon: 2 });
+			if (data.url) {
+				window.location = data.url;
+			}
+		}
+	},"json");
+}
+</script>
+
+<script>
+$("title").html("{:L('实名认证')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

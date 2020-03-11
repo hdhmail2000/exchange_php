@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>汇款单</title>
+	<include file="Public:head" />
+</head>
+<body>
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:U('Exchange/index')}"></a>
+	<h1 class="mui-title color_white">汇款单</h1>
+</header>
+
+<div class="mui-content" style="margin-top:20px;">
+	<div class="payinfo-head">
+		<i class="iconfont icon-qiandai"></i>
+		<p class="money">￥{$data['order']['num']}</p>
+		<p><b class="red">待支付</b></p>
+	</div>
+	<div class="mui-control-content form-payinfo mui-active">
+		<div class="mui-input-row mui-input-row-h">
+			<label>流水号</label>
+			<div class="fl inputs">2018111025218</div>
+		</div>
+		<div class="mui-input-row mui-input-row-h" style="margin-bottom:10px;">
+			<label>申请时间</label>
+			<div class="fl inputs">2018-11-10 17:37:15</div>
+		</div>
+		
+		<div class="mui-input-row mui-input-row-g">
+			<label>收款方户名</label>
+			<div class="fl inputs">{$data['agent']['name']}</div>
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>银行名称</label>
+			<div class="fl inputs">{$data['agent']['bank']}</div>
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>收款方开户行</label>
+			<div class="fl inputs">{$data['agent']['bankprov']} {$data['agent']['bankcity']} {$data['agent']['bankaddr']}</div>
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>收款方账号</label>
+			<div class="fl inputs"><span id="invite-copy1">{$data['agent']['bankcard']}</span><input type="button" value="复制" class="btn btn-copy" data-clipboard-text="{$data['agent']['bankcard']}"></div>
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>转账备注</label>
+			<div class="fl inputs"><span class="red" id="invite-copy2">{$data['order']['remarks']}</span>(请务必填写)<input type="button" value="复制" class="btn btn-copy" id="copy_button2" data-clipboard-text="{$data['order']['remarks']}"></div>
+		</div>
+		<!--<button type="button" class="mui-btn mui-btn-default">通知已汇款</button>-->
+	</div>
+	<div class="payinfo_record">
+		<div class="titlehead">温馨提示</div>
+		<div class="content">
+			<p>1. 买卖商户均为实名认证商户，并提供保证金，可放心交易；</p><br>
+			<p>2. 商家处理时间 9:00 - 21:00 非处理时间的订单会在第二天 9:00 开始处理，一般接单后2小时内完成交易，最长处理时间不超过24小时。请在下单后30分钟内完成付款，否则会延迟到账；</p><br>
+			<p>3. 单天最多只能发起<span class="red">10笔</span>卖出订单。</p><br>
+			<p>4. <span class="red">禁止使用微信、支付宝、他人代付、ATM及柜台转账等第三方转账。</span>请务必使用本人绑定的银行卡通过手机银行或网银进行汇款，其它任何方式汇款都会造成延迟处理；</p><br>
+			<p>5. 如果您的交易24小时内未处理，请及时联系在线客服登记。我们会有专人与您联系，请保持手机畅通。另24小时内无处理的交易订单由于有时咨询量过大，在线客服无法及时提供帮助，敬请谅解；</p>
+		</div>
+	</div>
+</div>
+
+<script src="__PUBLIC__/Home/js/clipboard.min.js"></script>
+<script>
+var clipboard = new Clipboard('.btn-copy');
+clipboard.on('success', function(e) {
+	layer.msg("{:L('复制成功！')}");
+	console.log(e);
+});
+clipboard.on('error', function(e) {
+	layer.msg("{:L('复制失败！')}");
+	console.log(e);
+});
+</script>
+</body>
+</html>

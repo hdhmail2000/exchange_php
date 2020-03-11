@@ -1,0 +1,105 @@
+<include file="Public:header" />
+
+<div id="main-content">
+
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">接口配置</span>
+		</div>
+
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Config/joggleEdit')}" method="post" class="form-horizontal" >
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">谷歌验证器前缀 :</td>
+									<td><input type="text" class="form-control input-10x" name="google_prefix" value="{$C['google_prefix']}"></td>
+									<td class="item-note">*效果：前缀-用户账号</td>
+								</tr>
+                               
+                                <tr class="controls" style="border-top:1px solid #d0d0d0;">
+                                    <td class="item-label">注册短信开启 :</td>
+                                    <td>
+										<select name="register_verify" class="form-control input-10x">
+											<option value="1"<eq name="C['register_verify']" value="1">selected</eq>>开启</option>
+											<option value="0"<eq name="C['register_verify']" value="0">selected</eq>>不开启</option>
+										</select>
+                                    </td>
+                                    <td class="item-note"></td>
+                                </tr>
+								<tr class="controls">
+									<td class="item-label">短信签名 :</td>
+									<td><input type="text" class="form-control input-10x" name="smsqm" value="{$C['smsqm']}"></td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">短信接口账号 :</td>
+									<td><input type="text" class="form-control input-10x" name="smsname" value="{$C['smsname']}"></td>
+									<td class="item-note">短信接口申请地址：<a target="_blank" href="http://www.crpaas.com">接口官网</a> / <a target="_blank" href="http://021.1cloudsp.com/static/index.html">立即登录</a>
+									</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">短信接口密码 :</td>
+									<td><input type="password" class="form-control input-10x" name="smspass" value="{$C['smspass']}"></td>
+									<td class="item-note"></td>
+								</tr>
+
+                                <tr class="controls" style="border-top:1px solid #d0d0d0;">
+                                    <td class="item-label">实名接口开启 :</td>
+                                    <td>
+										<select name="real_switch" class="form-control input-10x">
+											<option value="1"<eq name="C['real_switch']" value="1">selected</eq>>开启</option>
+											<option value="0"<eq name="C['real_switch']" value="0">selected</eq>>不开启</option>
+										</select>
+                                    </td>
+                                    <td class="item-note"></td>
+                                </tr>
+								<tr class="controls">
+									<td class="item-label">实名接口AppCode :</td>
+									<td><input type="password" class="form-control input-10x" name="realpass" value="{$C['realpass']}"></td>
+									<td class="item-note">实名接口申请地址：<a target="_blank" href="https://market.aliyun.com/products/56928004/cmapi014760.html?spm=5176.730006-56956004-57000002-cmapi014429/A.recommend.6.398875c49WKgad#sku=yuncode876000009">立即申请</a>
+									</td>
+								</tr>
+                                
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class= "btn submit-btn ajax-post"  target-form="form-horizontal" id="submit" type="submit">提交</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+
+				<script type="text/javascript">
+					//提交表单
+					$('#submit').click(function(){
+						$('#form').submit();
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		//主导航高亮
+		$('.config-box').addClass('current');
+		//边导航高亮
+		$('.config-contact').addClass('current');
+	});
+</script>
+
+<include file="Public:footer" />

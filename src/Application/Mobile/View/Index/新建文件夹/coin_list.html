@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('虚拟币操作')}
+        </div>
+        <!-- <span class="layout">
+            <a href="{:U('Finance/myzr_coin_list')}">品种充值</a>
+        </span>
+        <span class="layout">
+            <a href="{:U('Finance/myzc_coin_list')}">品种提现</a>
+        </span> -->
+        <div class="helpmain">
+            <div class="helplist"><a href="{:U('Finance/myzr_coin_list')}"><img src="__PUBLIC__/Mobile/images/rechargeicon1.png" style="margin-top: -3px;">{:L('虚拟币转入')}</a></div>
+            <!--<div class="helplist"> <a href="{:U('Finance/myzc_coin_list')}"><img src="__PUBLIC__/Mobile/images/rechargeicon2.png"-->
+            <!--style="margin-top: -3px;">{:L('虚拟币转出')}</a></div>-->
+        </div>
+    </div>
+<include file="Public:footer" />
+</body>
+</html>

@@ -1,0 +1,74 @@
+<include file="Public:header_new"/>
+
+<div class="newmain">
+	<div class="nwmleft">
+		<h2 class="textcenter">{$data.title}</h2>
+		<p class="pubdate textcenter">
+			{:L('发布时间：')}{$data.addtime|date="Y-m-d H:i:s",###}   {:L('发布人：')}{:L(C('web_title'))}
+		</p>
+		<div class="nwdtsbox">
+			{$data['content']}
+		</div>
+	</div>
+	<div class="nwmright">
+		<h3><img src="__PUBLIC__/Home/news/images/helpicon.png">{:L('帮助中心')}</h3>
+		<ul class="nwmenu">
+		<volist name="ArticleTypeList" id="vo">
+		<if condition="($vo['childnum'] eq '0')">
+			<li class="topmenu semenu" id="article_{$vo.id}">
+				<a href="{:U('Article/index',array('id'=>$vo['id']))}">
+					<img src="__PUBLIC__/Home/news/images/{$vo.img1}" class="img1">
+					<img src="__PUBLIC__/Home/news/images/{$vo.img11}" class="img2">
+					{$vo.title}
+				</a>
+			</li>
+			<div class="botmenu" style="display: none;">
+				<ul>
+				<volist name="vo['child']" id="f">
+					<li><a href="#">{$f.title}</a></li>
+				</volist>
+				</ul>
+			</div>
+		<else/>
+			<li class="topmenu semenu semenu1" id="article_{$vo.id}">
+				<img src="__PUBLIC__/Home/news/images/closemenu.png" class="img1">
+				<img src="__PUBLIC__/Home/news/images/openmenu.png" class="img2">
+				<img src="__PUBLIC__/Home/news/images/closemenu2.png" class="img3">
+				{$vo.title}
+			</li>
+			<div class="botmenu" style="display: none;">
+				<ul>
+				<volist name="vo['child']" id="f">
+					<li id="article_{$f.id}"><a href="{:U('Article/index',array('id'=>$f['id']))}">{$f.title}</a></li>
+				</volist>
+				</ul>
+			</div>
+		</if>
+		</volist>
+		</ul>
+		<script>
+		   $(".semenu").click(function() {
+				if($(this).next(".botmenu").css("display")=="none"){
+					 $(this).siblings('.botmenu').slideUp();
+					 $(this).next(".botmenu").slideDown();
+					 $(this).siblings('.topmenu').removeClass("on");
+					 $(this).addClass('on');
+				}else{
+					$(this).next(".botmenu").slideUp();
+					$(this).removeClass('on');
+				}
+			});
+		</script>
+	</div>
+</div>
+</div>
+</div>
+
+<script>
+  var a_id = {$a_id};
+  //菜单高亮
+  $('#article_'+a_id).addClass('on');
+  $('#article_box').addClass('on');
+</script>
+
+<include file="Public:footer"/>

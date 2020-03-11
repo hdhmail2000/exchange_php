@@ -1,0 +1,77 @@
+<include file="Public:header_new" />
+<link href="__PUBLIC__/layui/css/layui.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/layui/layui.js"></script>
+<style>
+    .layui-form-label{width: 150px;}
+    .botinfo{padding: 20px 0px;}
+</style>
+	<ul class="main-advert m-top100">
+		<volist name="news_list1" id="vo">
+			<li><a href="{:U('Article/detail','id='.$vo['id'])}">{$vo['title']|msubstr=0,17,'utf-8'}</a></li>
+			<span>/</span>
+		</volist>
+		<li><a href="#">{:L("更多公告")}</a></li>
+	</ul>
+<div class="usernewout">
+    
+    <div class="usncont">
+        <!-- 左侧导航 -->
+        <include file="Ptpbc:left" />
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>{:L('购买')}</h1>
+            <div class="botinfo">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:L('购买'.$data['title'].'数量')}</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux"> ~ 6.66本位币</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:L('支付方式')}</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="payment" value="alipay" checked title="{:L('支付宝')}">
+                            <input type="radio" name="payment" value="weixin" title="{:L('微信')}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">{:L('立即提交')}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            layui.use('form',function () {
+                var form=layui.form;
+            })
+            window.onload = function(){
+                var Lheight = $(".usnc_left").outerHeight();
+                var Rheight = $(".usnc_right").outerHeight();
+                var Tall = Lheight > Rheight ? Lheight:Rheight
+                $(".usnc_left").outerHeight(Tall);
+                $(".usnc_right").outerHeight(Tall);
+            }
+            $('#finance_box').addClass('on');
+            $('#finance_index').addClass('on');
+
+            $(function($) {
+                $(".ptpbc_list_contact_merchant").hover(function () {
+                    // console.info($(this).attr('mid'));
+                    layer.tips(' <img src="__PUBLIC__/Home/images/3c459279-6da6-46df-94c0-0c6dade905b9.png" width="120">',this,{
+                        tips: [2, '#3595CC']
+                    });
+                });
+            });
+            
+        </script>
+    </div>
+</div>
+
+</div>
+
+<include file="Public:footer" />

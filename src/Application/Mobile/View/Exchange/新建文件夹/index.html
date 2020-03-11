@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <style>
+		.back2{
+			position: absolute;
+			margin-right: 20px;
+			width: 70px!important;
+			font-size: 0.7rem!important;
+			color: #fff!important;
+			background: inherit!important;
+			text-align: right!important;
+		}
+		.back2 a{
+			color: #fff!important;
+		}
+	</style>
+</head>
+<body class="blackbg">
+<div id="container" class="logbg">
+	<div class="log_title"><span class="back"><a href="javascript:history.go(-1)"></a></span>C2C {:L('交易')} - CNC</div>
+
+	<span style="display:none" id="hidden_buy"></span>
+	<span style="display:none" id="hidden_sell"></span>
+
+	<input type="hidden" id="zuo_price">
+	<input type="hidden" id="zhang_bili">
+	<input type="hidden" id="die_bili">
+	<input type="hidden" id="hidden_sell">
+	<input type="hidden" id="hidden_buy">
+
+	<div class="salebox">
+		<div class="salehd">
+			<ul>
+				<li style="width: 50%;">{:L('买入')}</li>
+				<li style="width: 50%;">{:L('卖出')}</li>
+			</ul>
+		</div>
+
+		<div class="salebd">
+			<ul>
+				<li>
+					<div class="iptbox">
+						<label>{:L('买入价格：')}</label>
+						<input type="text" name="price" id="buy_price" autocomplete="off" class="priceipt" value="1.00" readonly />
+					</div>
+					<div class="iptbox">
+						<label>{:L('买入数量：')}</label>
+						<input type="text" name="num" id="buy_num" autocomplete="off" maxlength="11" placeholder="0.00" class="priceipt numss">
+						<span class="delete"></span>
+					</div>
+					<div class="iptbox">
+						<label>{:L('交易额：')}</label>
+						<span style="font-size:14px;color:#f1280f;"><b id="buy_mum">0.00</b> CNY</span>
+					</div>
+					<input type="button" value="{:L('立即买入')}" class="buyin" onclick="tradeadd_buy();">
+				</li>
+				
+				<li>
+					<div class="bdts_top">
+						{:L('可用')}{$xnbxs}：<span class="green" id="my_xnbs">{$userc[$xnb]|NumToStr}</span>
+						<span class="recharge"><a href="{:U('Finance/index')}">{:L('财务中心')}</a></span>
+					</div>
+					
+					<div class="iptbox">
+						<label>{:L('卖出价格：')}</label>
+						<input type="text" name="price" id="sell_price" autocomplete="off" class="priceipt" value="0.99" readonly />
+					</div>
+					<div class="iptbox">
+						<label>{:L('卖出数量：')}</label>
+						<input type="text" name="num" id="sell_num" autocomplete="off" maxlength="11" placeholder="0.00" class="priceipt numss">
+						<span class="delete"></span>
+					</div>
+					<div class="iptbox">
+						<label>{:L('交易额：')}</label>
+						<span style="font-size:14px;color:#3dc18e;"><b id="sell_mum">0.00</b> CNY</span>
+					</div>
+					<input type="button" value="{:L('立即卖出')}" class="buyin" style="background-color:#3dc18e;" onclick="tradeadd_sell();">
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(".delete").click(function() {
+			$('.numss').val("");
+			$("#buy_mum").html('0.00');
+			$("#sell_mum").html('0.00');
+		});
+		jQuery(".salebox").slide({mainCell:".salebd ul",titCell:".salehd ul li"});
+	</script>
+	<div class="saletable">
+		<div class="saletable_top">
+			<table>
+				<tr>
+					<th width="26.6%">{:L('买/卖')}</th>
+					<th width="26.6%">{:L('数量')}</th>
+	  				<th width="26.6%">{:L('总价')}</th>
+		  			<th width="20%">{:L('状态')}</th>
+				</tr>
+			</table>
+		</div>
+		<div class="saletable_bot">
+			<table>
+				<volist name="list" id="vo">
+					<tr>
+						<td width="26.6%">
+							<eq name="vo.otype" value="1">{:L('买入')}CNC</eq>
+							<eq name="vo.otype" value="2">{:L('卖出')}CNC</eq>
+						</td>
+						<td width="26.6%">{$vo.num}</td>
+						<td width="26.6%">{$vo.mum}</td>
+						<td width="20%">
+							<eq name="vo.otype" value="1">
+								<eq name="vo.status" value="1">
+									<eq name="vo.status" value="1">
+										<a class="red" href="{:U('Exchange/info',array('id'=>$vo['id'],'aid'=>$vo['aid']))}"><b>{:L('付款信息')}</b></a>
+									</eq>
+								</eq>
+								<eq name="vo.status" value="2">
+									<span class="green icon_time">{:L('处理中')}</span>
+								</eq>
+								<eq name="vo.status" value="3">
+									<span class="green icon_yhk">{:L('支付成功')}</span>
+								</eq>
+								<eq name="vo.status" value="8">
+									<span class="red icon_yhkqx">{:L('已取消')}</span>
+								</eq>
+							</eq>
+							<eq name="vo.otype" value="2">
+								<eq name="vo.status" value="1">
+									<span class="green icon_time">{:L('待处理')}</span>
+								</eq>
+								<eq name="vo.status" value="2">
+									<span class="green icon_time">{:L('处理中')}</span>
+								</eq>
+								<eq name="vo.status" value="3">
+									<span class="green icon_yhk">{:L('打款成功')}</span>
+								</eq>
+								<eq name="vo.status" value="8">
+									<span class="red icon_yhkqx">{:L('已取消')}</span>
+								</eq>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+var trans_lock = 0;
+	
+$('#buy_num').bind('input propertychange', function () {
+    $("#buy_mum").html((($('#buy_num').val() * $('#buy_price').val()).toFixed(8) * 1).toFixed(2));
+});
+$('#sell_num').bind('input propertychange', function () {
+    $("#sell_mum").html((($('#sell_num').val() * $('#sell_price').val()).toFixed(8) * 1).toFixed(2));
+});
+	
+function tradeadd_buy(){
+	if(trans_lock){
+		layer.msg("{:L('不要重复提交')}",{icon : 2 });
+		return;
+	}
+	trans_lock = 1;
+	
+	var idcard = "{$idcard}";
+	var banks = "{$banks}";	
+	var logins = "{$logins}";
+	if(logins == 0){
+		layer.msg("{:L('请先登录！')}");
+		trans_lock = 0;
+		return false;
+	}
+	if(idcard == 0){
+		layer.msg("{:L('请先实名认证！')}");
+		trans_lock = 0;
+		return false;
+	}
+	if(banks == 0){
+		layer.msg("{:L('请先绑定银行卡！')}");
+		trans_lock = 0;
+		return false;
+	}
+
+	var price = parseFloat($('#buy_price').val());
+	var num = parseFloat($('#buy_num').val());
+	//var paypassword=$('#buy_paypassword').val();
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	
+	if(price==""||price==null||!reg.test(price)){
+		layer.tips("{:L('交易价格必须大于')}0",'#buy_price',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	if(num==""||num==null||!reg.test(num)){
+		layer.tips("{:L('交易数量必须大于')}0",'#buy_num',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+
+	layer.load(2);
+
+	$.post("{:U('Exchange/upTrade')}",{price : $('#buy_price').val(),num : $('#buy_num').val(),otype : 1 },function(data){
+		layer.closeAll('loading');
+		trans_lock = 0;	
+		if (data.status==1) {
+			$("#buy_num").val('');
+			$("#sell_num").val('');
+			$("#buy_mum").val('0.00');
+			$("#sell_mum").val('0.00');
+			//$('#buy_paypassword').val('');
+						
+			layer.msg(data.info,{icon : 1 });
+			//setTimeout('addPayment('+data.url.id+','+data.url.aid+')', 2000); //延迟
+            if (data.url) {
+                window.location.href = data.url;
+            }
+			return false;
+		} else {
+			layer.msg(data.info,{icon : 2 });
+			return false;
+		}
+	},'json');
+}
+
+function tradeadd_sell(){
+	if(trans_lock){
+		layer.msg("{:L('不要重复提交')}",{icon : 2 });
+		return;
+	}
+	trans_lock = 1;
+
+	var idcard = "{$idcard}";
+	var banks = "{$banks}";	
+	var logins = "{$logins}";
+	if(logins == 0){
+		layer.msg("{:L('请先登录！')}");
+		trans_lock = 0;
+		return false;
+	}
+	if(idcard == 0){
+		addidcard();
+		trans_lock = 0;
+		return false;
+	}
+	if(banks == 0){
+		addBank();
+		trans_lock = 0;
+		return false;
+	}
+	
+	var price=parseFloat($('#sell_price').val());
+	var num=parseFloat($('#sell_num').val());
+	//var paypassword=$('#sell_paypassword').val();
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	
+	if(price==""||price==null||!reg.test(price)){
+		layer.tips("{:L('交易价格必须大于')}0",'#sell_price',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	if(num==""||num==null||!reg.test(num)){
+		layer.tips("{:L('交易数量必须大于')}0",'#sell_num',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+
+	layer.load(2);
+
+	$.post("{:U('Exchange/upMytx')}",{price : $('#sell_price').val(),num : $('#sell_num').val(),otype : 2 },function(data){
+		layer.closeAll('loading');
+		trans_lock = 0;
+		if (data.status==1) {
+			$("#buy_num").val('');
+			$("#sell_num").val('');
+			$("#buy_mum").html('0.00');
+			$("#sell_mum").html('0.00');
+			//$('#buy_paypassword').val('');
+			
+			layer.msg(data.info,{icon : 1 });
+			//setTimeout('window.location.reload()', 3000); //延迟
+            if (data.url) {
+                window.location.href = data.url;
+            }
+			return false;
+		} else {
+			layer.msg(data.info,{icon : 2 });
+			return false;
+		}
+	},'json');
+}
+
+function addPayment(id,aid) {
+	if (id||aid) {
+		var ids = id;
+		var aids = aid;
+	} else {
+		var ids = 0;
+		var aids = 0;		
+	}
+	
+	$.post("/Ajax/c2cPayment?id="+ids+"&aid="+aids+"&ajax=json",function(data){
+		var data = JSON.parse(data);
+		if(data){
+			content = '<tr><th>{:L('收款人')}</th><td>'+data['agent']['name']+'</td></tr><tr><th>{:L('银行名称')}</th><td>'+data['agent']['bank']+'</td></tr><tr><th>{:L('收款方开户行')}</th><td>'+data['agent']['bankprov']+data['agent']['bankcity']+' '+data['agent']['bankaddr']+'</td></tr><tr><th>{:L('收款方账号')}</th><td><span id="invite-copy1">'+data['agent']['bankcard']+'</span><input type="button" value="{:L('复制')}" data-clipboard-action="copy" data-clipboard-target="#invite-copy1" class="copy_button" id="copy_button1"></td></tr><tr><th>{:L('转账金额')}</th><td><b class="red">'+data['order']['num']+'</b></td></tr><tr><th>{:L('转账备注')}</th><td><b class="red" id="invite-copy2">'+data['order']['remarks']+'</b> (请务必填写)<input type="button" value="{:L('复制')}" data-clipboard-action="copy" data-clipboard-target="#invite-copy2" class="copy_button" id="copy_button2"></td></tr><tr><th>{:L('状态')}</th><td>'+data['order']['status']+'</td></tr>';
+			
+			$("#payment").html(content);
+		}
+	});
+	
+    parent.layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addPayment')
+    });
+}
+function addidcard() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addidcard')
+    });
+}
+function addBank() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addBank')
+    });
+}
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+</script>
+<script src="__PUBLIC__/Home/js/clipboard.min.js"></script>
+<script>
+var clipboard = new Clipboard('#copy_button1');
+clipboard.on('success', function(e) {
+	layer.msg('{:L('复制成功！')}');
+	// console.log(e);
+});
+clipboard.on('error', function(e) {
+	layer.msg('{:L('复制失败！')}');
+	console.log(e);
+});
+	
+var clipboard2 = new Clipboard('#copy_button2');
+clipboard2.on('success', function(e) {
+	layer.msg('{:L('复制成功！')}');
+	// console.log(e);
+});
+clipboard2.on('error', function(e) {
+	layer.msg('{:L('复制失败！')}');
+	console.log(e);
+});
+</script>
+</body>
+</html>

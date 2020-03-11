@@ -1,0 +1,524 @@
+<include file="Public:header_new" />
+<script src="__PUBLIC__/Home/js/datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/ico.css" />
+<div class="usernewout">
+    <div class="usncont">
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>ICO{:L('项目明细')}</h1>
+            <div class="cont1_main">
+                <div class="title">
+                    <p class="tit_p2" style="font-size: 28px;"><span></span>{$issue.name}</p>
+                </div>
+                <!-- --------------------------项目主页----------------- -->
+                <style type="text/css">
+                .crowd_center {
+                    font-family: tahoma, Microsoft YaHei, Arial, Helvetica, sans-serif;
+                    font-size: 14px;
+                    color: #333;
+                }
+
+                .crowd_con {
+                    background: #FFF;
+                    padding: 25px 30px;
+                    border-radius: 8px;
+                    height: 400px;
+                }
+
+                .crowd_con_l {
+                    width: 67%;
+                    border-right: 1px solid #EEE;
+                    float: left;
+                    height: 320px;
+                }
+
+                .crowd_con_r {
+                    width: 30%;
+                    height: 320px;
+                    float: left;
+                }
+
+                .crowd_bi {
+                    margin-bottom: 10px;
+                }
+
+                .crowd_bi span {
+                    display: inline-block;
+                    width: 50px;
+                    height: 50px;
+                    background-size: 50px;
+                    margin-right: 10px;
+                    float: left;
+                }
+
+                .crowd_bi span.crowd_bi_ytc {
+                    background-position: 0 -50px;
+                }
+
+                .crowd_bi h2 {
+                    font-size: 20px;
+                    font-weight: 400;
+                    line-height: 50px;
+                    display: inline-block;
+                }
+
+                .crowd_con_lp {
+                    font-size: 14px;
+                    height: 30px;
+                    line-height: 30px;
+                    color: #333;
+                }
+
+                .crowd_con_lp2 {
+                    line-height: 46px;
+                    height: 46px;
+                }
+
+                .crowd_con_lp3 {
+                    font-size: 12px;
+                    color: #999;
+                    margin-top: 12px;
+                }
+
+                .crowd_time {
+                    width: 457px;
+                    height: 50px;
+                    background: #F9F3DD;
+                    border-radius: 3px;
+                    margin-top: 120px;
+                    padding: 5px 15px;
+                    border-radius: 6px;
+                }
+
+                .crowd_time span {
+                    display: inline-block;
+                    width: 24px;
+                    height: 35px;
+                    line-height: 35px;
+                    margin-right: 10px;
+                    background: #FFF;
+                    border-radius: 3px;
+                    font-size: 24px;
+                    color: #e75600;
+                    text-align: center;
+                }
+
+                .crowd_time em {
+                    font-style: normal;
+                    font-size: 14px;
+                    line-height: 35px;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+
+                .crowd_pro {
+                    width: 490px;
+                    margin: 15px 0;
+                }
+
+                .crowd_pro progress {
+                    width: 530px;
+                    height: 8px;
+                    margin-top: 5px;
+                    -webkit-appearance: none;
+                }
+
+                .crowd_pro ::-webkit-progress-bar {
+                    border: none;
+                    background: #EDEDED;
+                    border-radius: 30px;
+                }
+
+                .crowd_pro ::-webkit-progress-value {
+                    background: #e75600;
+                    border-radius: 30px;
+                }
+
+                .crowd_rule_t {
+                    font-size: 24px;
+                    font-weight: 400;
+                    border-left: 3px solid #e75600;
+                    height: 20px;
+                    margin-bottom: 20px;
+                    line-height: 20px;
+                    padding-left: 10px;
+                }
+
+                .crowd_subscribe {
+                    margin: 25px 0 20px;
+                }
+
+                .crowd_subscribe li {
+                    float: left;
+                    padding-right: 100px;
+                }
+
+                .crowd_subscribe li:last-child {
+                    padding-right: 0;
+                }
+
+                .crowd_subscribe li span {
+                    font-size: 16px;
+                    margin-top: 10px;
+                    display: inline-block;
+                }
+
+                .red {
+                    color: red;
+                }
+
+                .blue {
+                    color: #000;
+                }
+                </style>
+                <div class="crowd_con clear">
+                    <div class="crowd_con_l ">
+                        <div class="crowd_bi clear">
+                            <img src="__UPLOAD__/coin/{$issue['img']}" style="width: 30px;margin-top: 10px;" class="left">
+                            <h2><a href="#" style="" class="left">{$issue['name']}</a></h2>
+                        </div>
+                        <ul class="crowd_subscribe clear">
+                            <li style="width:180px">
+                                <span class="blue"> {:L('认购总量')}:</span>
+                                <span class="red">{$issue['num']*1}
+                                 </span>
+                            </li>
+                            <li style="width:180px">
+                                <span class="blue"> {:L('认购单价')}:</span>
+                                <span class="red">
+                                {$issue['price']*1}                     </span>{$issue['buycoin']|strtoupper}
+                            </li>
+                            <li style="width:180px">
+                                <span class="blue"> {:L('认购限量')}:</span>
+                                <span class="red">
+                                {$issue['limit']*1}                     </span>
+                            </li style="width:180px">
+                            <li>
+                                <span class="blue"> {:L('累计已认购')}:</span>
+                                <span class="green">
+                                {$issue['deal']*1}                  </span>
+                            </li>
+                        </ul>
+                        <div class="crowd_time">
+                            <eq name="issue['status']" value="0">
+                                <div class="dowebok_move">
+                                    <p class="crowd_con_lp " style="color:blue;text-align: center;font-size: 22px;letter-spacing: 1px;line-height: 55px;">{:L('当前认购已经结束')}</p>
+                                </div>
+                            </eq>
+                            <eq name="issue['status']" value="1">
+                                <div class="dowebok_move">
+                                    <p class="crowd_con_lp " style="color:red;text-align: center;font-size: 22px;letter-spacing: 1px;line-height: 55px;">{:L('正在认购中')}</p>
+                                </div>
+                            </eq>
+                            <eq name="issue['status']" value="2">
+                                <div class="dowebok_move">
+                                    <p class="crowd_con_lp " style="text-align: center;font-size: 22px;letter-spacing: 1px;line-height: 55px;">{:L('没有开始当前认购')}</p>
+                                </div>
+                            </eq>
+                        </div>
+                        <div class="crowd_pro">
+                            <!-- <progress value="{$issue['bili']}" max="100"></progress> -->
+                            {:L('众筹进度')}:<span class="txt-percent fmoney">{$issue['bili']}%</span>
+                            <div class="pb2m-info-bar radius10px">
+                                <div class="pb2m-info-percent" title="{$issue['bili']}" id="deal_info_800" style="width: {$issue['bili']}%;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="crowd_xq">
+                            <span class=" mr10">{:L('开始时间：')}<b class="red">{$issue['time']}</b></span> <span class=" mr10">{:L('结束时间：')}<b class="red">{$issue['endtime']}</b></span> <span class=" mr10">{:L('付款币种：')}<b class="green">{$issue['buycoin']|strtoupper}</b>  </span>
+                        </div>
+                    </div>
+                    <div class="crowd_con_r">
+                        <div class="crowd_my" style="margin-left: 25%">
+                            <h2>{:L('我要认购')}</h2>
+                            <div class="login_button mt10">
+                                <p class="crowd_con_lp crowd_con_lp2">{:L('您目前可用')}{$issue['buycoin']|strtoupper}：<span id="finance_span" class="green">{$user_coin[$issue['buycoin']]*1}</span>
+                                </p>
+                            </div>
+                            <div class="login_text zin90 clear mt10">
+                                <span>{:L('认购数量')}:</span>
+                                <input type="text" id="num" class="texts" style="width:180px;height:20px;border:1px solid #d6dbdd;font-size:14px;color:#666;text-indent:10px;padding-right:10px;outline:none;">
+                            </div>
+                            <div class="login_text zin80 clear mt10">
+                                <span>{:L('交易密码')}:</span>
+                                <input type="password" id="paypassword" class="texts" style="width:180px;height:20px;border:1px solid #d6dbdd;font-size:14px;color:#666;text-indent:10px;padding-right:10px;outline:none;>
+                        </div>
+                        <div class=" login_button ">
+                            <eq name="issue[ 'status'] " value='1'>
+                                <input type="button " value="{:L( '立即认购')} " class="btns2 " onclick="trandata_buy_up_tishi() " style="width:180px;height:40px;background:#e75600;border:none;font-size:16px;color:#fff;cursor:pointer;outline:none;margin-top:10px;border-radius: 5px;margin-left: 5% ">
+                            <else/>
+                                <input type="button " value="{:L( '当前不可认购')} " class="btns2 " disabled='disabled' style="margin-left: 55px; ">
+                            </eq>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<style>
+
+
+.modal-open {
+    overflow: hidden;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+.modal.fade .modal-dialog {
+    -webkit-transition: -webkit-transform .3s ease-out;
+    -o-transition:      -o-transform .3s ease-out;
+    transition:         transform .3s ease-out;
+    -webkit-transform: translate(0, -25%);
+    -ms-transform: translate(0, -25%);
+    -o-transform: translate(0, -25%);
+    transform: translate(0, -25%);
+}
+.modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 10%);
+    /*transform: translate(0, 0);*/
+}
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+.modal-backdrop.fade {
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+.modal-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+.modal-header {
+    min-height: 16.42857143px;
+    padding: 15px;
+}
+.modal-header .close {
+    margin-top: -2px;
+}
+.modal-title {
+    margin: 0;
+    line-height: 1.42857143;
+}
+.modal-body {
+    position: relative;
+    padding: 15px;
+}
+.modal-footer {
+    padding: 5px 0 20px 0;
+    text-align: center;
+}
+.modal-footer .btn + .btn {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+.modal-footer .btn-group .btn + .btn {
+    margin-left: -1px;
+}
+.modal-footer .btn-block + .btn-block {
+    margin-left: 0;
+}
+.modal-scrollbar-measure {
+    position: absolute;
+    top: -9999px;
+    width: 50px;
+    height: 50px;
+    overflow: scroll;
+}
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 600px;
+        margin: 0px auto;
+    }
+    .modal-content {
+        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    }
+    .modal-sm {
+        width: 300px;
+    }
+}
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 900px;
+    }
+}
+
+.modal-footer:before,
+.modal-footer:after {
+    display: table;
+    content: " ";
+}
+.modal-footer:after {
+    clear: both;
+}
+
+
+
+</style>
+
+
+
+<div class="modal " id="myModal " tabindex="-1 " role="dialog " aria-labelledby="myModalLabel " aria-hidden="true " style="text-align: center;display: none;padding-right: 16px; ">
+    <div class="modal-dialog " style="width:640px;text-align:center; ">
+        <div id="autoCenter " class="modal-content " style="padding: 10px 30px 10px; height: auto; margin-top: 164px; ">
+
+
+            <div class="modal-header " style="border:none;text-align:left;margin-left:20px; ">
+
+                <h3 class="modal-title " id="myModalLabel " style="font-size:18px; ">
+                    {$C['web_name']}{:L('提醒您')}:
+                </h3>
+            </div>
+            <div class="modal-body " style="font-size:18px;width: 550px;margin-top:-30px; ">
+                <div class="paragraph paragraph_news " style="font-size:14px;text-indent:2em;line-height: 30px;text-align:left; ">
+                      {$C['issue_waring']}
+                </div>
+
+            </div>
+            <div class="modal-footer " style="border:none; ">
+                <button type="button " style="cursor:pointer;font-family:Microsoft YaHei !important;font-size:14px;background: #009200;width:200px;height:40px;border:0px;color:white;border-radius: 4px; " class="btn btn-warning " data-dismiss="modal " id="yes_sure ">
+                {:L('我已了解以上风险,确认认购')}
+                </button>
+                        &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;
+                <button type="button " style="cursor:pointer;font-family:Microsoft YaHei !important;font-size:14px;background: #f60;width:200px;height:40px;border:0px;color:white;border-radius: 4px; " class="btn btn-warning " data-dismiss="modal " id="no_sure ">
+                {:L('取消认购')}
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop fade in " style="display:none; "></div>
+
+<script>
+
+    $("#yes_sure ").click(function(){
+        $('#myModal').css('display','none');
+        $('.modal-backdrop').css('display','none');
+        buy_up();
+    });
+
+
+    $("#no_sure ").click(function(){
+        $('#myModal').css('display','none');
+        $('.modal-backdrop').css('display','none');
+    });
+
+    function trandata_buy_up_tishi(){
+
+        $('#myModal').css('display','block');
+        $('.modal-backdrop').css('display','block');
+
+    }
+
+
+</script>
+
+<script>
+    function buy_up() {
+        var id          = "{$issue[ 'id']} ";
+        var num         = $('#num').val();
+        var paypassword = $('#paypassword').val();
+        if (num == " " || num == null) {
+            layer.tips('{:L('请输入认购数量')}', '#num', {tips: 3});
+            return false;
+        }
+        if (paypassword == " " || paypassword == null) {
+            layer.tips('{:L('请输入交易密码')}', '#paypassword', {tips: 3});
+            return false;
+        }
+        $.post("{:U( 'Issue/upbuy')} ", {
+            id: id,
+            num: num,
+            paypassword: paypassword,
+            token:" "
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location = "/issue/log ";
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json ");
+    }
+</script>
+
+<script>
+    var hints = "0 ";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#Issue_box').addClass('active');
+
+    function goumai(_this) {
+        window.location = "/issue/buy/id/ " + $(_this).attr('data');
+    }
+</script>
+<span class="crowd_rule_t fz_20 ">{:L('认购介绍')}</span>
+                <div class="main1_fl show hb_item_content_main " style="font-family: '微软雅黑' ">
+
+                    <div class="l_main ">
+                        {$issue.content}
+
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+
+    </div>
+    <br>
+    <br>
+    <script>
+        window.onload = function () {
+            var Lheight = $(".usnc_left ").outerHeight();
+            var Rheight = $(".usnc_right ").outerHeight();
+            var Tall = Lheight > Rheight ? Lheight : Rheight
+            $(".usnc_left ").outerHeight(Tall);
+            $(".usnc_right ").outerHeight(Tall);
+        }
+        $('#Issue_box').addClass('on');
+        $('#Issue_index').addClass('on');
+    </script>
+    <include file="Public:footer "/>

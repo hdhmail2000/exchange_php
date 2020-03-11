@@ -1,0 +1,176 @@
+<include file="Public:header"/>
+<style>
+	.tc {text-align:center;}
+	
+	.themebox {
+		padding: 10px 0 10px 0;
+		overflow: hidden;
+	}
+	.themebox li {
+		float: left;
+		width: 25%;
+		margin-bottom: 20px;
+	}
+	
+	.themebox li .xbox {
+		margin:0 3%;
+		
+	}
+	.themebox li .xbox:hover {
+		-webkit-box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+		box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+		-webkit-transform: translate3d(0, -2px, 0);
+		transform: translate3d(0, -2px, 0);
+	}
+	
+	.themebox li .xbox .title {
+		padding: 10px 15px;
+		font-size: 16px;
+		color: #646464;
+	}
+	.themebox li .xbox .title .glyphicon {
+		margin-right: 6px;
+		font-size: 14px;
+	}
+	
+	.themebox li .xbox .block-content {
+		position: relative;
+		margin: 0 auto;
+		padding: 20px 20px 1px;
+		width: 100%;
+		min-height: 160px;
+		background-color: #70b9eb;
+		border-top-right-radius: 8px;
+		border-top-left-radius: 8px;
+	}
+	.themebox li .xbox .block-content .DPicture {
+		margin: 0 auto;
+		margin-top: 5px;
+		color: #fff;
+		text-align: center;
+	}
+	.themebox li .xbox .block-content .DPicture .icons {
+		margin: 0 auto;
+		width: 70px;
+		height: 70px;
+		line-height: 70px;
+		background-color: rgba(255, 255, 255, 0.15);
+		border-radius: 50%;
+	}
+	.themebox li .xbox .block-content .DPicture .icons i {
+		margin-top: 22px;
+		display: inline-block;
+		font-size: 25px;
+	}
+	.themebox li .xbox .block-content .DPicture h3 {
+		margin-top: 15px;
+		font-size: 22px;
+		font-weight: 300;
+	}
+
+	.themebox li .xbox .bottombg {
+		padding-bottom: 10px;
+		background-color: #f9f9f9;
+		border-bttom-right-radius: 8px;
+		border-bttom-left-radius: 8px;
+	}
+	.themebox li .xbox .bottombg .btn {
+		width: 100px;
+	}
+	.themebox li .xbox .bottombg .on {
+		background-color: #B1B1B1;
+		cursor: default;
+	}
+	.themebox li .xbox .bottombg .green {
+		color: #46c37b;
+	}
+	.imgbg {
+		background: no-repeat center;
+		background-size: 100% 100%;
+	}
+</style>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">主题模板</span>
+		</div>
+		
+		<ul class="themebox">
+			<li>
+				<div class="xbox">
+					<div class="block-content">
+						<div class="DPicture">
+							<div class="icons">
+								<i class="glyphicon glyphicon-cloud"></i>
+							</div>
+							<h3>默认风格</h3>
+						</div>
+					</div>
+
+					<div class="bottombg">
+						<p class="title">
+							默认风格
+							<eq name="C['index_html']" value="admin">
+								<b class="fr green"><i class="glyphicon glyphicon-ok"></i>已启用</b>
+							<else/>
+								<span class="fr"><i class="glyphicon glyphicon-th-large"></i>未开启</span>
+							</eq>
+						</p>
+						<p class="tc">
+							<eq name="C['index_html']" value="admin">
+								<a class="btn on" href="javascript:;">使用中</a>
+							<else/>
+								<a class="btn" href="{:U('Cloud/themeUp',array('theme'=>admin))}">启用</a>
+							</eq>
+						</p>
+					</div>
+				</div>
+			</li>
+			<volist name="fileArr" id="vo">
+				<li>
+					<div class="xbox">
+						<eq name="conf['imgswitch'][$key]" value="0">
+							<div class="block-content">
+								<div class="DPicture">
+									<div class="icons">
+										<i class="glyphicon glyphicon-cloud"></i>
+									</div>
+									<h3><empty name="conf['imttitle'][$key]">标题未命名<else />{$conf['imttitle'][$key]}</empty></h3>
+								</div>
+							</div>
+						<else />
+							<div class="block-content imgbg" style="background-image: url('/Application/Home/Theme/{$key}/imgs.png');"></div>
+						</eq>
+							
+						<div class="bottombg">
+							<p class="title">
+								<empty name="conf['title'][$key]">标题未命名<else />{$conf['title'][$key]}</empty>
+								<eq name="C['index_html']" value="$key">
+									<b class="fr green"><i class="glyphicon glyphicon-ok"></i>已启用</b>
+								<else/>
+									<span class="fr"><i class="glyphicon glyphicon-gift"></i>未开启</span>
+								</eq>
+							</p>
+							<p class="tc">
+								<eq name="conf['preview'][$key]" value="0">
+									<a class="btn on" href="javascript:;" style="background-color:#FF9C5A;">敬请期待</a>
+								<else/>
+									<eq name="C['index_html']" value="$key">
+										<a class="btn on" href="javascript:;">使用中</a>
+									<else/>
+										<a class="btn" href="{:U('Cloud/themeUp',array('theme'=>$key))}">启用</a>
+									</eq>
+								</eq>
+							</p>
+						</div>
+					</div>
+				</li>
+			</volist>
+		</ul>
+	</div>
+</div>
+<include file="Public:footer"/>

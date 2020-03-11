@@ -1,0 +1,104 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('我的推荐')}</h3>
+			<span class="fr TotalAssets">{:L('一级人数')} : <b>{$tongji['invit_1']*1}</b> , {:L('二级人数')} : <b>{$tongji['invit_2']*1}</b> , {:L('三级人数')} : <b>{$tongji['invit_3']*1}</b></span>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="150px">{:L('类型')}</th>
+					<th width="160px">{:L('用户名')}</th>
+					<th width="100px" class="last">{:L('注册时间')}</th>
+				</tr>
+                <volist name="list" id="v">
+					<tr>
+						<td>
+							<a href="javascript:void(0)" onclick="Address({$v['id']})">
+								<img class="invit_img_{$v['id']}" src="__PUBLIC__/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('一代会员')}({$v.invitss})
+							</a>
+						</td>
+						<td>{$v.username|substr_replace='****',3,6}</td>
+						<td>{$v.addtime|addtime}</td>
+					</tr>
+					<notempty name="v['invits']">
+						<volist name="v['invits']" id="vv">
+							<tr class="invit_{$v['id']}" style="display: none;">
+								<td>
+									<a href="javascript:void(0)" onclick="Address({$vv['id']})">
+									<img class="invita_img_{$v['id']} invit_img_{$vv['id']}" src="__PUBLIC__/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('二代会员')}({$vv.invitss})
+									</a>
+								</td>
+								<td>{$vv.username|substr_replace='****',3,6}</td>
+								<td>{$vv.addtime|addtime}</td>
+							</tr>
+							<notempty name="vv['invits']">
+								<volist name="vv['invits']" id="vvv">
+									<tr class="invita_{$v['id']} invit_{$vv['id']} " style="display: none;">
+										<td>
+											<a href="javascript:void(0)" onclick="Address({$vvv['id']})">
+											<img class="invita_img_{$v['id']} invit_img_{$vvv['id']}" src="__PUBLIC__/Home/images/jian.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('三代会员')}
+											</a>
+										</td>
+										<td>{$vvv.username|substr_replace='****',3,6}</td>
+										<td>{$vvv.addtime|addtime}</td>
+									</tr>
+								</volist>
+							</notempty>
+						</volist>
+					</notempty>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+<script>
+function Address(id) {
+	var img1 = "__PUBLIC__/Home/images/jia.png";
+	var img2 = "__PUBLIC__/Home/images/jian.png";
+	var img = $(".invit_img_" + id).attr("src");
+	//alert(img)
+	
+	if (img == img1) {
+		$(".invit_img_" + id).attr("src", img2);
+		$(".invit_" + id).show();
+	} else {
+		$(".invit_img_" + id).attr("src", img1);
+		$(".invita_img_" + id).attr("src", img1);
+		$(".invit_" + id).hide();
+		$(".invita_" + id).hide();
+	}
+}
+
+function Addressb(id) {
+	var img1 = "__PUBLIC__/Home/images/jia.png";
+	var img2 = "__PUBLIC__/Home/images/jian.png";
+	var img = $(".invit_img_" + id).attr("src");
+	//alert(img)
+	
+	if (img == img1) {
+		$(".invit_img_" + id).attr("src", img2);
+		$(".invit_" + id).show();
+	} else {
+		$(".invit_img_" + id).attr("src", img1);
+		$(".invit_" + id).hide();
+		$(".invita_" + id).hide();
+	}
+}
+</script>
+<script>
+$("title").html("{:L('我的推荐')} - {:C('web_title')}");
+//$('#menu_5').addClass('on');
+</script>
+<include file="Public:footer" />

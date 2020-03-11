@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            {:L('me')}
+        </div>
+        <div class="useifor">
+            <!-- ID：{$user.id}<br/> -->
+
+            {:L('account')}:{$user.username}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {:L('name')}:{$user.truename}
+        </div>
+        <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('Finance/index')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon1.png"></span>
+                         {:L('总资产')}
+                         <span class="price">{$cny['zj']}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('User/safety')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon2.png"></span>
+                         {:L('安全设置')}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+           <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('Finance/mytj')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon9.png"></span>
+                         {:L('我的推广链接')}
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Finance/mywd')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon11.png"></span>
+                         {:L('我的推荐')}
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Finance/myjp')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon2.png"></span>
+                         {:L('推荐奖励')}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('Finance/myzr_coin_list')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon7.png"></span>
+                         {:L('币种转入')}
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Finance/myzc_coin_list')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon8.png"></span>
+                         {:L('币种转出')}
+                    </a>
+                </li>
+
+               <!--  <li>
+                    <a href="{:U('Finance/myuser_coin_list')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/home2.png"></span>
+                        {:L(' 会员互转')}
+                    </a>
+                </li> -->
+
+                <li>
+                    <a href="{:U('User/qianbao_coin_list')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon13.png"></span>
+                         {:L('钱包地址管理')}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('Finance/mywt_coin_list')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon9.png"></span>
+                         {:L('委托管理')}
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Finance/mycj_coin_list')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon10.png"></span>
+                         {:L('成交记录')}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('Article/about')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon11.png"></span>
+                         关于平台
+                    </a>
+                </li>
+            </ul>
+        </div> -->
+
+        <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('Login/loginout')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon12.png"></span>
+                        {:L('安全退出')}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <include file="Public:footer" />
+    </div>
+
+
+</body>
+</html>

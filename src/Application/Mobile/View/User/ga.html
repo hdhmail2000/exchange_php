@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('谷歌验证')}
+        </div>
+    <eq name="is_ga" value="0">
+        <div class="ifor_flow">
+            <!-- <h2>更改实名认证信息流程：</h2> -->
+            <p>Google Authenticator{:L('双重验证可以更安全的保护您的账户，未开户双重验证不影响正常的交易')}
+            </p>
+            <p>{:L('开户双重验证功能后，在您每次进行登陆操作时，系统都会提示您输入手机应用程序上显示的一次性密码，来确保您的资金安全。您可以依照下面的步骤来设置并启用这一功能。')}</p>
+        </div>
+        <div class="ifor_flow">
+            <!-- <h2>更改实名认证信息流程：</h2> -->
+            <p>1、{:L('在您的手机上安装双重验证程序：')}Google Authenticator
+            </p>
+            <p>{:L('iPhone手机：在App Store中搜索')}Google Authenticator</p><a target="_blank"
+                                           href="http://itunes.apple.com/cn/app/google-authenticator/id388497605?mt=8">{:L('点此查看')}</a>
+            <p>{:L('Android手机：在应用市场中搜索“谷歌身份验证器”，或搜索Google Authenticator')}</p>
+            <a target="_blank" href="http://apk.hiapk.com/html/2013/07/1643619.html">{:L('点此下载')}</a>
+            <p>2、{:L('安装完成后，您需要对该应用程序进行如下配置')}</p>
+            <p>{:L('在“Google Authenticator (身份验证器)”应用程序中，点击“添加新账户 (iOS 下是 +号)，然后选择手动添加账户，并输入如下密匙：')}<font color="#ff8800">{$Asecret}</font></p>
+            <p>{:L('添加账户时请注意下图中的账户项目请严格按照图中格式输入以下信息：')}<font color="#ff8800">{$zhanghu}</font></p>
+            <p><img src="__PUBLIC__/Mobile/images/gugeyanzheng.png" width="100%"></p>
+            <p>3、{:L('配置完成')}</p>
+            <p>{:L('配置完成后，手机上会显示一个6位数字，每隔30秒变化一次。这个数字即为您的双重验证密码。')}</p>
+            <p>{:L('请勿删除此双重验证密码账户，否则会导致您无法进行账户操作')}</p>
+            <p>{:L('您可将密钥记录下来')} : <font color="#ff8800">{$Asecret}</font> {:L('如果误删，可通过手动输入密钥来恢复。')}</p>
+            <p>{:L('输入双重验证密码，以开启或关闭双重验证功能')}</p>
+        </div>
+        <div class="logbot">
+            <form>
+                <input type="text" placeholder="{:L('双重验证密码')}" class="logipt"  id="ga">
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('请输入手机应用程序上显示的双重验证密码。')}<em></em>
+                </p>
+                <li><label for="only" style="font-size:16px;line-height:24px;color:#ff8800;padding-left:10px;"><input type="checkbox" id="ga-login" name="login" checked="1"> {:L('登录')} </label></li>
+                <input type="button" class="logbut" onclick="goole_verify()" value="{:L('验证并启用')}">
+            </form>
+        </div>
+        <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qrcode.min.js"></script>
+                <script>
+                    $('#qrcode').qrcode({
+                        render: "table", //table方式
+                        size: 200,
+                        text: "{$qrCodeUrl}" //任意内容
+                    }); //任意字符串
+
+                    function goole_verify() {
+                        var ga = $('#ga').val();
+                        var ga_login = $('#ga-login').is(':checked') ? 1 : 0;
+                        var ga_transfer = $('#ga-transfer').is(':checked') ? 1 : 0;
+                        var ga = $('#ga').val();
+                        if (!ga) {
+                            layer.tips('{:L('请输入验证码')}', '#ga', {
+                                tips: [
+                                    1,
+                                    '#0FA6D8'
+                                ]
+                            });
+                            return;
+                        }
+                        $.post("{:U('user/ga')}", {
+                            ga: ga,
+                            ga_login: ga_login,
+                            ga_transfer: ga_transfer,
+                            type: 'add'
+                        }, function (ret) {
+                            if (ret.status) {
+                                layer.msg('{:L('操作成功跳转中')}...', {icon: 16});
+                                setTimeout('flash()', 3000);
+                            } else {
+                                layer.msg(ret.info);
+                            }
+                        }, 'json');
+                    }
+                </script>
+    <else/>
+        <div class="logbot">
+            <form>
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('配置验证的模块')}:<em></em>
+                </p>
+                <input type="text" placeholder="{:L('双重验证密码')}" class="logipt"  id="ga">
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('请输入手机应用程序上显示的双重验证密码。')}<em></em>
+                </p>
+                <li><label for="only" style="font-size:16px;line-height:24px;color:#ff8800;padding-left:10px;"><input type="checkbox" id="ga-login" name="login" <eq name="ga_login" value="1">checked="1"</eq>> {:L('登录')} </label></li>
+                <input type="button" class="logbut" value="{:L('保存')}" onclick="google_set()">
+            </form>
+        </div>
+        <div class="logbot">
+            <form>
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('开启或关闭双重验证功能：')}<em></em>
+                </p>
+                <input type="text" class="logipt" id="ga_delete" name="ga_delete" placeholder="{:L('请输入双重验证密码')}">
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('请输入手机应用程序上显示的双重验证密码。')}<em></em>
+                </p>
+                <input type="button" class="logbut" value="{:L('取消双重验证')}" onclick="ga_cancel()">
+            </form>
+        </div>
+        <script>
+            function google_set() {
+                var ga = $('#ga').val();
+                var ga_login = $('#ga-login').is(':checked') ? 1 : 0;
+                var ga_transfer = $('#ga-transfer').is(':checked') ? 1 : 0;
+                var ga = $('#ga').val();
+                if (!ga) {
+                    layer.tips('{:L('请输入验证码')}', '#ga', {
+                        tips: [
+                            1,
+                            '#0FA6D8'
+                        ]
+                    });
+                    return;
+                }
+                $.post("{:U('user/ga')}", {
+                    ga: ga,
+                    ga_login: ga_login,
+                    ga_transfer: ga_transfer,
+                    type: 'update'
+                }, function (ret) {
+                    if (ret.status) {
+                        layer.msg('{:L('操作成功跳转中')}...', {icon: 16});
+                        setTimeout('flash()', 3000);
+                    } else {
+                        layer.msg(ret.info);
+                    }
+                }, 'json');
+            }
+
+            function ga_cancel() {
+                var ga = $('#ga_delete').val();
+                var ga = $('#ga_delete').val();
+                if (!ga) {
+                    layer.tips('{:L('请输入验证码')}', '#ga_delete', {
+                        tips: [
+                            1,
+                            '#0FA6D8'
+                        ]
+                    });
+                    return;
+                }
+                $.post("{:U('user/ga')}", {
+                    ga: ga,
+                    type: 'delete'
+                }, function (ret) {
+                    if (ret.status) {
+                        layer.msg('{:L('操作成功跳转中')}...', {icon: 16});
+                        setTimeout('flash()', 3000);
+                    } else {
+                        layer.msg(ret.info);
+                    }
+                }, 'json');
+            }
+        </script>
+    </eq>
+        <script>
+
+            $('#user_box').addClass('active');
+            $('#user_ga').addClass('active');
+            $('#user_ga i').attr('class', 'coin_menu_op_11');
+
+            function flash() {
+
+                window.location = "{:U('user/ga')}"
+            }
+        </script>
+    </div>
+</body>
+</html>

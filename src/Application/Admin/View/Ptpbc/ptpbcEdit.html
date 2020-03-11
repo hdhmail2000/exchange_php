@@ -1,0 +1,132 @@
+<include file="Public:header"/>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+            <span class="h1-title"><empty name="data">添加市场
+	            <else/>编辑市场
+            </empty></span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Ptpbc/save_action')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<input type="hidden" name="id" value="{$data.id}">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">交易市场 :</td>
+									<td>
+										<select name="market" class="form-control">
+												<volist name="C['PTP_MARKET']" id="vo">
+												<option value="{$vo}"
+												<eq name="vo" value="$data.market">selected</eq>
+												>{:L($vo)}</option>
+											</volist>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">语言 :</td>
+									<td>
+										<select name="lang" class="form-control input-10x">
+											<volist name="__LANG__" id="v">
+												<option value="{$key}"
+												<eq name="data['lang']" value="$key">selected</eq>
+												>{$v}</option>
+											</volist>
+										</select></td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">交易国籍 :</td>
+									<td>
+										<select name="nation" class="form-control">
+											<volist name="C['NATION']" id="vo">
+												<option value="{$key}"
+												<eq name="key" value="$data.nation">selected</eq>
+												>{:L($vo)}</option>
+											</volist>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">商家名称 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="merchant" value="{$data.merchant}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">单价 :</td>
+									<td>
+										<input type="number" class="form-control input-10x" name="price" value="{$data.price}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">价格单位 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="unit" value="{$data.unit}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">交易限额 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="quota" value="{$data.quota}">
+									</td>
+									<td class="item-note">最低和最高之间用逗号分隔，例：1,1000</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">收款方式 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="payments" value="{$data.payments}">
+									</td>
+									<td class="item-note">多个请用逗号分隔，例：支付宝,银联</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">收款账号 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="receives" value="{$data.receives}">
+									</td>
+									<td class="item-note">多个请用逗号分隔，与收款账号对应</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">提交
+											</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/>
+											</notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+					//提交表单
+					$('#submit').click(function () {
+						$('#form').submit();
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:U('Ptpbc/market')}");
+	</script>
+</block>

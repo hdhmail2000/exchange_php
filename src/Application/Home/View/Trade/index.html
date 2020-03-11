@@ -1,0 +1,817 @@
+<include file="Public:header_new"/>
+<style>
+	body {background: #171a25;}
+</style>
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/fb.css">
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/exchange.css">
+	
+<ul class="main-advert">
+	<volist name="notice_list" id="vov">
+		<li><a href="{:U('Support/index/articles/cid/'.$vov['pid'].'/id/'.$vov['id'])}">{$vov['title']|msubstr=0,25,'utf-8'}</a></li>
+		<span>/</span>
+	</volist>
+	<li><a href="{:U('Support/index')}">{:L("更多公告")}</a></li>
+</ul>
+<div class="banner2">
+	<div class="coin-btc-details">
+		<div class="main-title">
+			<img class="icon_coin-btc" src="__UPLOAD__/coin/{$C['market'][$market]['xnbimg']}" />
+			<span class="coin-name">{$coin_name} / {$coin_type}</span>
+			<a href="#" class="coin-brief">{:L("简介")}</a>
+		</div>
+		<ul class="total-box">
+			<li class="total-price">
+				<h3 class="prices" id="market_new_price">--</h3>
+				<p>≈ {$rmbprice} {$market_coin}</p>
+			</li>
+			<li class="total-increase">
+				<h3 id="market_change">--</h3>
+				<p>24h {:L("涨跌幅")}</p>
+			</li>
+			<li>
+				<h3 class="prices" id="market_max_price">--</h3>
+				<p>24h {:L("最高价")} ({$coin_type})</p>
+			</li>
+			<li>
+				<h3 class="prices" id="market_min_price">--</h3>
+				<p>24h {:L("最低价")} ({$coin_type})</p>
+			</li>
+			<li class="total-amount">
+				<h3 id="market_volume">--</h3>
+				<p>24h {:L("成交量")} ({$coin_name})</p>
+			</li>												
+		</ul>
+	</div>
+	<!--Candlestick chart-->
+	<div id="kline">
+		<div id="paint_chart" style="width: 1200px;overflow: hidden;margin: 0 auto;">
+			<iframe style="border-style: none;" border="0" width="100%" height="360" id="market_chart" src="/Trade/ordinary?market={$market}"></iframe>
+		</div>
+	</div>
+	<!--Candlestick chart end-->
+</div>
+<div class="tables-content clear">
+	<div class="main-table-box1">
+		<ul class="table-section-title">
+			<volist name="jiaoyiqu" id="v">
+				<li class="trade_qu_pai <eq name='key' value='$coinnav'>active</eq>" data="{$key}" onclick="trade_qu(this)" title="对{$v}交易">{$v}</li>
+			</volist>
+		</ul>
+
+		<div class="table_coin_box">
+			<ul class="table-head">
+				<li style="width: 33%"><i></i>{:L("市场")}</li>
+				<li style="width: 42%"><i></i>{:L("价格")}</li>
+				<li class="tl" style="width: 25%">{:L("涨跌幅")}</li>
+			</ul>
+			<ul class="table-list" id="all_coin"></ul>
+		</div>
+
+	</div>
+	<div class="trade-box">
+		<div class="clear">
+			<div class="form-box">
+				<p class="form-title">{:L("可用")} {$coin_type}<span id="buy_usable">--</span></p>
+				<div class="form-text">
+					<input type="text" name="price" id="buy_price" placeholder="{:L('请输入买入价')}" autocomplete="off" value="{$sell}" />
+					<span class="chain-name">{$coin_type}</span>
+				</div>
+				<div class="form-text">
+					<input type="text" name="num" id="buy_num" placeholder="{:L('请输入买入数量')}" autocomplete="off" />
+					<span class="chain-name">{$coin_name}</span>
+				</div>
+
+				<div class="form-text">
+					<input type="password" name="pwtrade" id="buy_paypassword" placeholder="{:L('请输入交易密码')}" />
+					<span class="chain-name3" onclick="layertpwd()"></span>
+				</div>
+
+				<p class="form-count clear">
+					<label>{:L("交易额")} <span id="buy_mum">0.00</span><span>{$coin_type}</span></label>
+					<label>{:L("手续费")} {:C('market')[$market]['fee_buy']}%</label>
+				</p>
+
+				<if condition="$Think.session.userId eq '0'">
+					<button type="button" class="btn-buy" onclick="tologin();">{:L("请先登录")}</button>
+				<else/>
+					<button type="button" id="buybutton" onclick="tradeadd_buy();" class="btn-buy">{:L("买入")} {$coin_name}</button>
+				</if>
+			</div>
+			
+			
+			
+			
+
+			<div class="form-box sell-box">
+				<p class="form-title">{:L("可用")} {$coin_name}<span id="sell_usable">--</span></p>
+				<div class="form-text">
+					<input type="text" name="price" id="sell_price" placeholder="{:L('请输入卖出价')}" autocomplete="off" value="{$buy}" />
+					<span class="chain-name">{$coin_type}</span>
+				</div>
+				<div class="form-text">
+					<input type="text" name="num" id="sell_num" placeholder="{:L('请输入卖出数量')}" autocomplete="off" />
+					<span class="chain-name">{$coin_name}</span>
+				</div>
+
+				<div class="form-text">
+					<input type="password" name="pwtrade" id="sell_paypassword" placeholder="{:L('请输入交易密码')}" />
+					<span class="chain-name3" onclick="layertpwd()"></span>
+				</div>
+
+				<p class="form-count clear">
+					<label>{:L("交易额")} <span id="sell_mum">0.00</span><span>{$coin_type}</span></label>
+					<label>{:L("手续费")} {:C('market')[$market]['fee_sell']}%</label>
+				</p>
+
+				<if condition="$Think.session.userId eq '0'">
+					<button type="button" class="btn-buy" onclick="tologin();">{:L("请先登录")}</button>
+				<else/>
+					<button type="button" id="sellerbutton" onclick="tradeadd_sell();" class="btn-buy">{:L("卖出")} {$coin_name}</button>
+				</if>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		<div class="authorize-box">
+			<div class="table-section-title2">
+				<span class="active">{:L("当前委托")}</span>
+				<span><a href="/Finance/mycj/type/undefined/market/{$market}">{:L("历史委托")}</a></span>
+				<p class="r-btns">
+					<a href="/Finance/mywt/type/undefined/status/undefined/market/{$market}">[{:L("更多记录")}]</a>
+				</p>
+			</div>
+
+			<div class="entrust-box">
+				<ul class="table-head">
+					<li style="width: 20%"><i></i>{:L("委托时间")}</li>
+					<li style="width: 25%"><i></i>{:L("委托价")}({$coin_type})</li>
+					<li style="width: 35%"><i></i>{:L("委托量")} / {:L("已成交")}({$coin_name})</li>
+					<li style="width: 10%" class="tc">{:L("状态")}</li>
+					<li style="width: 10%" class="tc">{:L("操作")}</li>
+				</ul>
+				<ul class="table-list" id="entrustlist"></ul>
+			</div>
+
+		</div>
+	</div>
+	<div class="records-box">
+		<div class="main-table-box2">
+			<ul class="table-head">
+				<li style="width: 20%"><i></i>{:L("档位")}</li>
+				<li style="width: 40%"><i></i>{:L("价格")}</li>
+				<li class="tr" style="width: 40%">{:L("数量")}<i></i></li>
+			</ul>
+			<ul class="table-list green" id="selllist"></ul>
+			<ul class="table-list red" id="buylist"></ul>
+		</div>
+
+		<div class="table-count-list">
+			<ul class="table-head">
+				<li style="width: 25%"><i></i>{:L("时间")}</li>
+				<li style="width: 35%"><i></i>{:L("成交价")}</li>
+				<li class="tr" style="width: 40%">{:L("成交量")}<i></i></li>
+			</ul>
+			<ul class="table-list" id="orderlist">
+				{$orderlist}
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<div class="float_win_pay" id="layertpwd" style="display: none;">
+    <div class="tan_title">
+        <h4>{:L('交易密码输入设置')}</h4>
+        <span class="closebut" onclick="closeCharge();"><img src="__PUBLIC__/Home/news/images/closebut.png"></span>
+    </div>
+    <div class="payment_content">
+		<form id="tpwdsetting" class="set_verify" style="padding-left:0px!important;">
+			<ul class="tpwd">
+				<li><label for="only"><input type="radio" id="only" value="1" name="aaatpwdsetting"> {:L('每次登录只输入一次交易密码')} </label></li>
+				<li><label for="every"><input type="radio" checked id="every" value="2" name="aaatpwdsetting"> {:L('每笔交易都输入交易密码')}</label></li>
+				<li><label for="none"><input type="radio" id="none" name="aaatpwdsetting" value="3"> {:L('每次交易都不需要输入交易密码')}</label></li>
+				<li><input type="password" id="aaapaypassword" name="paypassword" placeholder="{:L('请输入交易密码')}" class="text"/></li>
+			</ul>
+			<div class="save_verify"><input type="button" value="{:L('保存')}" onclick="tpwdsettingaa()" /></div>
+		</form>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.4; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+<script>
+$("title").html("{:C('web_title')}");
+
+$(function() {
+	getJsonTop();
+	allcoin();
+});
+	
+function getJsonTop(){
+	$.getJSON("/Ajax/getJsonTop?market={$market}&t=" + Math.random(),function(data){
+		if(data){
+			if(data['info']['new_price']){
+				$('#market_new_price').removeClass('buy');
+				$('#market_new_price').removeClass('sell');
+
+				if(data['info']['change'] == 0 || data['info']['change'] > 0){
+					$('#market_new_price').addClass('buy');
+				}else{
+					$('#market_new_price').addClass('sell');
+				}
+
+				$("#market_new_price").html(data['info']['new_price']);
+				
+				$("title").html(data['info']['new_price'] + " | {$coin_name}-{$coin_type} | {:C('web_title')}");
+			}
+			if(data['info']['buy_price']){
+				$('#market_buy_price').removeClass('buy');
+				$('#market_buy_price').removeClass('sell');
+				
+				if($("#market_buy_price").html()>data['info']['buy_price']){
+					$('#market_buy_price').addClass('sell');
+				}
+				if($("#market_buy_price").html()<data['info']['buy_price']){
+					$('#market_buy_price').addClass('buy');
+				}
+				
+				$("#market_buy_price").html(data['info']['buy_price']);
+				$("#sell_best_price").html('￥'+data['info']['buy_price']);
+			}
+			if(data['info']['sell_price']){
+				$('#market_sell_price').removeClass('buy');
+				$('#market_sell_price').removeClass('sell');
+				
+				if($("#market_sell_price").html()>data['info']['sell_price']){
+					$('#market_sell_price').addClass('sell');
+				}
+				if($("#market_sell_price").html()<data['info']['sell_price']){
+					$('#market_sell_price').addClass('buy');
+				}
+				
+				$("#market_sell_price").html(data['info']['sell_price']);
+				$("#buy_best_price").html('￥'+data['info']['sell_price']);
+			}
+			if(data['info']['max_price']){
+				$("#market_max_price").html(data['info']['max_price']);
+			}
+			if(data['info']['min_price']){
+				$("#market_min_price").html(data['info']['min_price']);
+			}
+			if(data['info']['volume']){
+				if(data['info']['volume']>10000){
+					data['info']['volume']=(data['info']['volume']/10000).toFixed(2)+"万"
+				}
+				if(data['info']['volume']>100000000){
+					data['info']['volume']=(data['info']['volume']/100000000).toFixed(2)+"亿"
+				}
+				$("#market_volume").html(data['info']['volume']);
+			}
+			if(data['info']['change'] || data['info']['change'] == 0){
+				$('#market_change').removeClass('buy');
+				$('#market_change').removeClass('sell');
+
+				if(data['info']['change'] == 0){
+					$('#market_change').addClass('buy');
+					$("#market_change").html("+0.00%");
+				}else if(data['info']['change'] > 0){
+					$('#market_change').addClass('buy');
+					$("#market_change").html('+' + data['info']['change']+"%");
+				}else{
+					$('#market_change').addClass('sell');
+					$("#market_change").html(data['info']['change']+"%");
+				}
+			}
+		}
+	});
+	setTimeout('getJsonTop()',5000);
+}
+
+function allcoin(){
+	var trade_qu_id = $('.table-section-title .active').attr('data');
+	$.getJSON("/Ajax/getJsonTop2/id/" + trade_qu_id + "?t=" + Math.random(), function (data) {
+		if(data){
+			var list='';
+			for(var i in data['list']){
+				ifcolor = (data['list'][i]['change'] >= 0 ? 'red' : 'green');
+				
+				list+='<li><dl><a href="/Trade/index/market/'+data['list'][i]['name']+'"><dt class="fl market" style="width: 33%"><i></i><img src="__UPLOAD__/coin/'+data['list'][i]['img']+'" width="20" height="20" alt="" /><span class="coin_name">'+data['list'][i]['coin_name']+'</span></dt><dd class="fl ' + ifcolor + '" style="width: 42%"><i></i>'+data['list'][i]['new_price']+'</dd><dd class="fl tl ' + ifcolor + '" style="width: 25%">' + (parseFloat(data['list'][i]['change']) < 0 ? '' : '+') + ((parseFloat(data['list'][i]['change']) < 0.01 && parseFloat(data['list'][i]['change']) > -0.01) ? "0.00" : (parseFloat(data['list'][i]['change'])).toFixed(2)) + '%<i></i></dd></a></dl></li>';
+			}
+			$("#all_coin").html(list);
+		}
+	});
+	setTimeout('allcoin()',5000);
+}
+function trade_qu(o){
+	$('.trade_qu_pai').removeClass('active');
+	$(o).addClass('active');
+	allcoin();
+}
+</script>
+   
+<script type="text/javascript">
+function tologin() { window.location.href="{:U('Login/index')}"; }
+var market = "{$market}";
+var market_round = "{$C['market'][$market]['round']}";
+var market_round_num = "{$C['market'][$market]['round']}";
+var market_round_total = parseInt(market_round)+parseInt(market_round_num);
+var heh = {$C['market'][$market]['hou_price']|NumToStr};
+var userid = "{$Think.session.userId}";
+var trade_moshi = 1;
+var getDepth_tlme = null;
+var trans_lock = 0;
+
+// Maximum buy
+$("#buy_usable").on("click",function() {
+	$("#buy_num").val('0');
+	$("#buy_mum").val('0.00');
+	if($("#buy_num").val().trim() != ''){
+		var buyusable = parseFloat( $('#buy_usable').html() ) || 0;
+		var buyprice = parseFloat( $('#buy_price').val() ) || 0;
+		if(buyusable && buyprice) {
+			$("#buy_num").val((buyusable / buyprice).toFixed(market_round_num) * 1);
+			$("#buy_mum").html(($('#buy_num').val() * $('#buy_price').val()).toFixed(8) * 1);
+		}
+	}
+})
+
+// Maximum sale
+$("#sell_usable").on("click",function() {
+	$("#sell_num").val('0');
+	$("#sell_mum").val('0.00');
+	if($("#sell_price").val().trim() != 0){
+		$("#sell_num").val($(this).html().replace(/[-\s]/g,""));
+		$("#sell_mum").html(($('#sell_num').val() * $('#sell_price').val()).toFixed(8) * 1);
+	}
+})
+
+// Transaction password setting
+function layertpwd(){
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#layertpwd')
+    });
+
+	$.get('/user/tpwdsetting', function(d){
+		if (d==1) { $('#only').prop('checked', true); }
+		if (d==2) { $('#every').prop('checked', true); }
+		if (d==3) { $('#none').prop('checked', true); }
+	})
+}
+	
+function closeCharge() {
+    layer.closeAll();
+}
+
+// Save the transaction password settings
+function tpwdsettingaa() {
+	var paypassword = $("#aaapaypassword").val();
+	var tpwdsetting = $("input[name='aaatpwdsetting']:checked").val();
+	if (paypassword == "" || paypassword == null) {
+		layer.tips('请输入交易密码', '#paypassword', {tips: 3});
+		return false;
+	}
+	if (tpwdsetting == "" || tpwdsetting == null) {
+		layer.tips('请输入选择一个', '#tpwdsetting', {tips: 3});
+		return false;
+	}
+	$.post('/user/uptpwdsetting', {paypassword: paypassword, tpwdsetting: tpwdsetting}, function (d) {
+		if (d.status) {
+			layer.msg('设置成功', {icon: 1});
+			window.location.reload();
+		} else {
+			layer.msg(d.info, {icon: 2});
+		}
+	}, 'json');
+}
+
+// Buy operation
+function tradeadd_buy(){
+	if(trans_lock){
+		layer.msg("{:L('不要重复提交')}",{icon : 2 });
+		return;
+	}
+	trans_lock = 1;
+	var price = parseFloat($('#buy_price').val());
+	var num = parseFloat($('#buy_num').val());
+	var paypassword = $('#buy_paypassword').val();
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	
+	if(price==""||price==null||!reg.test(price)){
+		layer.tips("{:L('交易价格必须大于')}0",'#buy_price',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	if(num==""||num==null||!reg.test(num)){
+		layer.tips("{:L('交易数量必须大于')}0",'#buy_num',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+
+	//加载层
+	layer.load(2);
+	//此处演示关闭
+/*	setTimeout(function(){
+		layer.closeAll('loading');
+		trans_lock = 0;
+	}, 10000);*/
+
+	$.post("{:U('Trade/upTrade')}",{price : $('#buy_price').val(),num : $('#buy_num').val(),paypassword : $('#buy_paypassword').val(),market : market,type : 1 },function(data){
+		layer.closeAll('loading');
+		trans_lock = 0;
+		if(data.status==1){
+			$("#buy_price").val('');
+			$("#buy_num").val('');
+			$("#sell_price").val('');
+			$("#sell_num").val('');
+			$('#buy_paypassword').val('');
+			layer.msg(data.info,{icon : 1 });
+		}else{
+			layer.msg(data.info,{icon : 2 });
+		}
+	},'json');
+}
+
+// Selling operation
+function tradeadd_sell(){
+	if(trans_lock){
+	  layer.msg("{:L('不要重复提交')}",{icon : 2 }); return;
+	}
+	trans_lock = 1;
+	var price=parseFloat($('#sell_price').val());
+	var num=parseFloat($('#sell_num').val());
+	var paypassword=$('#sell_paypassword').val();
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	
+	if(price==""||price==null||!reg.test(price)){
+		layer.tips("{:L('交易价格必须大于')}0",'#sell_price',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	if(num==""||num==null||!reg.test(num)){
+		layer.tips("{:L('交易数量必须大于')}0",'#sell_num',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	
+	//加载层
+	layer.load(2);
+	//此处演示关闭
+/*	setTimeout(function(){
+		layer.closeAll('loading');
+		trans_lock = 0;
+	}, 10000);*/
+
+	$.post("{:U('Trade/upTrade')}",{price : $('#sell_price').val(),num : $('#sell_num').val(),paypassword : $('#sell_paypassword').val(),market : market,type : 2 },function(data){
+		layer.closeAll('loading');
+		trans_lock = 0;
+		if(data.status==1){
+			$("#buy_price").val('');
+			$("#buy_num").val('');
+			$("#sell_price").val('');
+			$("#sell_num").val('');
+			$('#sell_paypassword').val('');
+			layer.msg(data.info,{icon : 1 });
+		}else{
+			layer.msg(data.info,{icon : 2 });
+		}
+	},'json');
+}
+
+// 我的财产 我的委托
+function getEntrustAndUsercoin(){
+	$.getJSON("/Ajax/getEntrustAndUsercoin?market="+market+"&t="+Math.random(),function(data){
+		if(data){
+			if(data['entrust']){
+				$('#entrust_over').show();
+				var list='';
+				var cont=data['entrust'].length;
+				var status_name = '--';
+
+				// 委托信息
+				for(i=0; i<data['entrust'].length; i++){
+					if(data['entrust'][i]['type']==1){
+						if(data['entrust'][i]['status'] == 0){status_name = "{:L('交易中')}";}
+						else if(data['entrust'][i]['status'] == 1){status_name = "{:L('已完成')}";}
+						else if(data['entrust'][i]['status'] == 2){status_name = "{:L('已撤销')}";}
+
+						list+='<li><dl><dd class="fl" style="width: 20%"><i></i>'+data['entrust'][i]['addtime']+'</dd><dd class="fl red" style="width: 25%"><i></i>{:L('买')} '+(data['entrust'][i]['price']).toFixed(market_round)+'</dd><dd class="fl red" style="width: 35%"><i></i>'+(data['entrust'][i]['num']).toFixed(market_round_num)+' / '+(data['entrust'][i]['deal']).toFixed(market_round_num)+'</dd><dd class="fl tc"  style="width: 10%">'+status_name+'</dd><dd class="fl tc" style="width: 10%"><a class="green" id="'+data['entrust'][i]['id']+'" onclick="cancelaa(\''+data['entrust'][i]['id']+'\')" href="javascript:void(0);">{:L('取消')}</a></dd></dl></li>';
+					}else{
+						if(data['entrust'][i]['status'] == 0){status_name = "{:L('交易中')}";}
+						else if(data['entrust'][i]['status'] == 1){status_name = "{:L('已完成')}";}
+						else if(data['entrust'][i]['status'] == 2){status_name = "{:L('已撤销')}";}
+
+						list+='<li><dl><dd class="fl" style="width: 20%"><i></i>'+data['entrust'][i]['addtime']+'</dd><dd class="fl green" style="width: 25%"><i></i>{:L('卖')} '+(data['entrust'][i]['price']).toFixed(market_round)+'</dd><dd class="fl green" style="width: 35%"><i></i>'+(data['entrust'][i]['num']).toFixed(market_round_num)+' / '+(data['entrust'][i]['deal']).toFixed(market_round_num)+'</dd><dd class="fl tc"  style="width: 10%">'+status_name+'</dd><dd class="fl tc" style="width: 10%"><a class="green" id="'+data['entrust'][i]['id']+'" onclick="cancelaa(\''+data['entrust'][i]['id']+'\')" href="javascript:void(0);">{:L('取消')}</a></dd></dl></li>';
+					}
+				}
+				$('#entrustlist').html(list);
+			}else{
+				$('#entrust_over').hide();
+			}
+
+			// 我的财产信息
+			if(data['usercoin']){
+				if(data['usercoin']['rmb']){
+					$("#buy_usable").html(data['usercoin']['rmb'].toFixed(5) * 1);
+					if($('#buy_price').val()>0){
+						$("#buy_max").html(((data['usercoin']['rmb']/$('#buy_price').val()).toFixed(market_round_num) * 1));
+					}else{
+						$("#buy_max").html(0);
+					}
+				}else{
+					$("#buy_usable").html('0.00');
+				}
+
+				if(data['usercoin']['rmbd']){
+					$("#buy_usabled").html(data['usercoin']['rmbd'].toFixed(market_round_num) * 1);
+				}else{
+					$("#buy_usabled").html('0.00');
+				}
+
+				if(data['usercoin']['xnb']){
+					$("#sell_usable").html(data['usercoin']['xnb'].toFixed(market_round_num) * 1);
+					$("#sell_max").html(data['usercoin']['xnb'].toFixed(market_round_num) * 1);
+				}else{
+					$("#sell_usable").html('0.00');
+				}
+
+				if(data['usercoin']['xnbd']){
+					$("#sell_usabled").html(data['usercoin']['xnbd'].toFixed(market_round_num) * 1);
+				}else{
+					$("#sell_usabled").html('0.00');
+				}
+
+				if(data['time_state']==0){
+					$("#buybutton").show();
+					$("#buybutton").attr("onclick","tradeadd_buy();");
+					$("#sellerbutton").show();
+					$("#sellerbutton").attr("onclick","tradeadd_sell();");
+				}else{
+					$("#buybutton").show();
+					$("#buybutton").val("{:L('闭盘期间')}");
+					$("#buybutton").css("background","#ccc");
+					$("#buybutton").attr("onclick","tradaedd_buy();");
+					$("#sellerbutton").show();
+					$("#sellerbutton").val("{:L('闭盘期间')}");
+					$("#sellerbutton").css("background","#ccc");
+					$("#sellerbutton").attr("onclick","tradadedd_sell();");
+				}
+			}
+		}
+	});
+
+	// 账户总资产
+	$.get("/Ajax/allfinance?t="+Math.random()+'&ajax=json',function(data){
+		// $('#user_finance').html(toNum(data,2));//原显示
+		var data = JSON.parse(data);
+		$('#user_finance').html(data);//千分位显示
+	});
+	setTimeout('getEntrustAndUsercoin()',1000);
+}
+
+// 最新交易记录
+function getTradelog(){
+	$.get("/Ajax/getTradelog?market="+market+"&t="+Math.random()+'&ajax=json',function(data){
+		var data = JSON.parse(data);
+		if(data){
+			if(data['tradelog']){
+				var list='';
+				var type='';
+				var typename='';
+
+				for( var i in data['tradelog']){		
+					if(data['tradelog'][i]['type']==1){
+						list+='<li class="red"><dl onclick="autotrust(this,\'buy\',1)"><dd class="fl" style="width:25%"><i></i>'+data['tradelog'][i]['addtime']+'</dd><dd class="fl" style="width:35%"><i></i>'+(data['tradelog'][i]['price']).toFixed(market_round_num)+'</dd><dd class="fl tr" style="width:40%">'+(data['tradelog'][i]['num']).toFixed(4)+'<i></i></dd></dl></li>';
+					}else{
+						list+='<li class="green"><dl onclick="autotrust(this,\'sell\',1)"><dd class="fl" style="width:25%"><i></i>'+data['tradelog'][i]['addtime']+'</dd><dd class="fl" style="width:35%"><i></i>'+(data['tradelog'][i]['price']).toFixed(market_round_num)+'</dd><dd class="fl tr" style="width:40%">'+(data['tradelog'][i]['num']).toFixed(4)+'<i></i></dd></dl></li>';
+					}
+				}
+				$("#orderlist").html(list);
+			}
+		}
+	});
+	setTimeout('getTradelog()',5000);
+}
+
+// 交易买卖委托信息
+function getDepth(){
+	$.get("/Ajax/getDepth?market="+market+"&trade_moshi="+trade_moshi+"&t="+Math.random()+'&ajax=json',function(data){
+		var data = JSON.parse(data);
+		if(data){
+			if(data['depth']){
+				var list='';
+				var sellk=data['depth']['sell'].length;
+				if(data['depth']['sell']){
+					for(i=0; i<data['depth']['sell'].length; i++){
+						list += '<li><dl onclick="autotrust(this,\'sell\',1,2)"><dd class="fl" style="width:20%"><i></i>{:L('卖')}'+(sellk-i)+'</dd><dd class="fl" style="width:40%"><i></i>'+(data['depth']['sell'][i][0]).toFixed(market_round_num)+'</dd><dd class="fl tr" style="width:40%">'+(data['depth']['sell'][i][1]).toFixed(4)+'<i></i><i class="turntable_bg_green" style="width: '+(data['depth']['sellpbar'][i])+'%"></i></dd></dl></li>';
+					}
+				}
+				$("#selllist").html(list);
+				list='';
+				if(data['depth']['buy']){
+					for(i=0; i<data['depth']['buy'].length; i++){
+						list += '<li><dl onclick="autotrust(this,\'buy\',1,2)"><dd class="fl" style="width:20%"><i></i>{:L('买')}'+(i+1)+'</dd><dd class="fl" style="width:40%"><i></i>'+(data['depth']['buy'][i][0]).toFixed(market_round_num)+'</dd><dd class="fl tr" style="width:40%">'+(data['depth']['buy'][i][1]).toFixed(4)+'<i></i><i class="turntable_bg_red" style="width: '+(data['depth']['buypbar'][i])+'%"></i></dd></dl></li>';
+					}
+				}
+			$("#buylist").html(list);
+			}
+		}
+	});
+	clearInterval(getDepth_tlme);
+
+	var wait=second=1;
+	getDepth_tlme=setInterval(function(){
+		wait--;
+		if(wait<0){
+			clearInterval(getDepth_tlme);
+			getDepth();
+			wait=second;
+		}
+	},1000);
+}
+
+function closetanchu(){
+	layer.closeAll('loading');
+}
+
+//撤销
+function cancelaa(id){
+	layer.load(0, {shade: [0.5,'#8F8F8F']});
+	$.post("{:U('Trade/chexiao')}",{id : id },function(data){
+		setTimeout("closetanchu()",4000);
+		if(data.status==1){
+			getEntrustAndUsercoin();
+			layer.msg(data.info,{icon : 1 });
+		}else{
+			layer.msg(data.info,{icon : 2 });
+		}
+	});
+}
+
+// 执行函数
+$(function(){
+	getJsonTop();
+	getTradelog();
+	getDepth();
+	if(userid>0){ getEntrustAndUsercoin(); }else{ $('#entrust_over').hide(); }
+	xianshi();
+});
+	
+function xianshi(){
+	$('#market_change1').html(heh.toFixed(market_round_num))
+}
+	
+function toNum(num,round){
+	var mum=Math.round(num*Math.pow(10,round))/Math.pow(10,round);
+	if(mum<0){var mum=0;}
+	return mum;
+}
+
+// Price check
+function autotrust(_this, type, cq, nums) {
+	$('#buy_price,#sell_price').val( parseFloat(removeHTMLTag($(_this).children().eq(cq).html())) );
+
+	if(nums > 0){
+		var bs_num = parseFloat(removeHTMLTag($(_this).children().eq(nums).html()));
+	}
+
+	if(type == 'sell'){
+/*		if ($("#buy_usable").html() > 0 && nums > 0) {
+			//$('#buy_num').val(bs_num);
+			if (bs_num >= $("#buy_usable").html()) {
+				$("#buy_num").val(toNum(($("#buy_usable").html() / $('#buy_price').val()), market_round_num));
+			} else {
+				$('#buy_num').val(bs_num);
+			}
+		}*/
+		
+		if ($('#buy_num').val()) {
+			$('#buy_num').val();
+			$("#buy_mum").html(($('#buy_num').val() * $('#buy_price').val()).toFixed(8) * 1);
+		} else {
+			$('#buy_num').val('');
+			$('#buy_mum').html('0.00');
+		}
+		
+		if ($('#sell_num').val()) {
+			$('#sell_num').val()
+			$("#sell_mum").html(($('#sell_num').val() * $('#sell_price').val()).toFixed(8) * 1);
+		} else {
+			$('#sell_num').val('');
+			$('#sell_mum').html('0.00');
+		}
+	}
+
+	if(type == 'buy'){
+/*		if ($("#sell_usable").html() > 0 && nums > 0) {
+			if (bs_num >= $("#sell_usable").html()) {
+				$("#sell_num").val($("#sell_usable").html());
+			} else {
+				$('#sell_num').val(bs_num);
+			}
+		}*/
+		
+		if ($('#buy_num').val()) {
+			$('#buy_num').val();
+			$("#buy_mum").html(($('#buy_num').val() * $('#buy_price').val()).toFixed(8) * 1);
+		} else {
+			$('#buy_num').val('');
+			$('#buy_mum').html('0.00');
+		}
+		
+		if ($('#sell_num').val()) {
+			$('#sell_num').val()
+			$("#sell_mum").html(($('#sell_num').val() * $('#sell_price').val()).toFixed(8) * 1);
+		} else {
+			$('#sell_num').val('');
+			$('#sell_mum').html('0.00');
+		}
+	}
+}
+
+//过滤HTML标签
+function removeHTMLTag(str) {
+	str = str.replace(/<\/?[^>]*>/g, ''); //去除HTML tag
+	str = str.replace(/[ | ]*\n/g, '\n'); //去除行尾空白
+	//str = str.replace(/\n[\s| | ]*\r/g,'\n'); //去除多余空行
+	str = str.replace(/ /ig, ''); //去掉 
+	return str;
+}
+
+// 买卖价格与数量 绑定键盘与选择事件
+$('#buy_price,#buy_num,#sell_price,#sell_num').css("ime-mode","disabled").bind('keyup change',function(){
+	var buyprice=parseFloat($('#buy_price').val());
+	var buynum=parseFloat($('#buy_num').val());
+	var sellprice=parseFloat($('#sell_price').val());
+	var sellnum=parseFloat($('#sell_num').val());
+	var buymum=buyprice*buynum;
+	var sellmum=sellprice*sellnum;
+	var myrmb=$("#buy_usable").html();
+	var myxnb=$("#sell_usable").html();
+	var buykenum=0;
+	var sellkenum=0;
+	if(myrmb>0){
+		buykenum=myrmb/buyprice;
+	}
+	if(myxnb>0){
+		sellkenum=myxnb;
+	}
+	if(buyprice!=null&&buyprice.toString().split(".")!=null&&buyprice.toString().split(".")[1]!=null){
+		if(buyprice.toString().split('.')[1].length>market_round){
+			$('#buy_price').val(toNum(buyprice,market_round));
+		}
+	}
+	if(buynum!=null&&buynum.toString().split(".")!=null&&buynum.toString().split(".")[1]!=null){
+		if(buynum.toString().split('.')[1].length>market_round_num){
+			$('#buy_num').val(toNum(buynum,market_round_num));
+		}
+	}
+	if(sellprice!=null&&sellprice.toString().split(".")!=null&&sellprice.toString().split(".")[1]!=null){
+		if(sellprice.toString().split('.')[1].length>market_round){
+			$('#sell_price').val(toNum(sellprice,market_round));
+		}
+	}
+	if(sellnum!=null&&sellnum.toString().split(".")!=null&&sellnum.toString().split(".")[1]!=null){
+		if(sellnum.toString().split('.')[1].length>market_round_num){
+			$('#sell_num').val(toNum(sellnum,market_round_num));
+		}
+	}
+	if(buymum!=null&&buymum>0){
+		$('#buy_mum').html(toNum(buymum,market_round_num)*1);
+	}
+	if(sellmum!=null&&sellmum>0){
+		$('#sell_mum').html(toNum(sellmum,market_round_num)*1);
+	}
+	if(buykenum!=null&&buykenum>0&&buykenum!='Infinity'){
+		$('#buy_max').html(toNum(buykenum,market_round_num));
+		//$('#buy_max').html(toNum(buykenum,market_round_num));
+	}
+	if(sellkenum!=null&&sellkenum>0&&sellkenum!='Infinity'){
+		$('#sell_max').html(toNum(sellkenum,market_round_num));
+	}
+}).bind("paste",function(){
+	return false;
+}).bind("blur",function(){
+	if(this.value.slice(-1)=="."){
+		this.value=this.value.slice(0,this.value.length-1);
+	}
+}).bind("keypress",function(e){
+	var code=(e.keyCode ? e.keyCode : e.which); //compatible:Firefox,IE
+	if(this.value.indexOf(".")==-1){
+		return (code>=48&&code<=57)||(code==46);
+	}else{
+		return code>=48&&code<=57
+	}
+});
+</script>
+<script>
+$('#trade_box').addClass('on');
+</script>
+<include file="Public:footer"/>

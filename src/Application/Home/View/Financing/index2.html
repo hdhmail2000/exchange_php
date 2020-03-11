@@ -1,0 +1,195 @@
+<include file="Public:header_new"/>
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/financing.css">
+
+
+
+<div id="wrap" class="w1200 cl mc">
+	<div class="page_title mt20 mb20 cl">
+		<p class="f18 af60 fl">{:L('币生币')}<span class="f14 a999 ml10">投资简单，收益稳定</span></p>
+		<a id="my_licai" href="{:U('Financing/log')}" class="f16 af60 fr">
+			<span>理财记录</span>
+		</a>
+	</div>
+
+	<div class="invest_wrap mt20">
+		<volist name="list" id="vo">
+			<div class="item cl car pt30 pb30">
+				<i class="iconfont afff f22 ml20 fl mark" style="background:none;">
+					<img src="__UPLOAD__/coin/{:C('coin')[$vo['coinname']]['img']}" style="width: 30px; vertical-align: -8px;margin-right: 5px;">{$vo['name']}</a></i>
+				<div class="item_info ml20 fl">
+					<div class="item_i_t cl"><a href="#" class="a12 ahf60 f18">
+						{$vo['name']}</a>
+					</div>
+
+					<ul class="mt25 cl" id="pro_num">
+						<li class="fl f13 a78 first">
+							<p>周期性利率</p>
+							<p class="mt10"><span class="f24 af60">{$vo['fee']}</span> % </p>
+						</li>
+						<li class="fl tc f13 a78" style="width:100px;">
+							<p>发行额度</p>
+							<p class="mt10"><span class="f24 af60">{$vo['num']}</span> </p>
+						</li>
+
+						<li class="fl tc f13 a78" style="width:100px;">
+							<p>已投额度</p>
+							<p class="mt10"><span class="f24 a12">{$vo['deal']}</span> </p>
+						</li>
+
+						<li class="fl tc f13 a78">
+							<p>锁仓期限</p>
+							<p class="mt20"><b>{$vo['tian']}</b></p>
+						</li>
+
+						<li class="fl tc f13 a78" style="width:90px;">
+							<p>投资人数</p>
+							<p class="mt10"><span class="f24 af60">{$vo['times']}</span> 人</p>
+						</li>
+					</ul>
+				</div>
+
+				<div class="pro_bar_btm fr">
+					<div class="pro-bar cl pb20">
+						<div class="process-bar fl" style=" margin-top:3px;">
+							<div class="process-bar-hover" style="width:{$vo['bili']}%"></div>
+						</div>
+						<p class="af60 fl f14 ml10">已完成：{$vo['bili']}%</p>
+					</div>
+					<div class="rest a56 f13 fl mt15">
+						<p>剩余额度</p>
+						<p class="mt10"><span class="f16 af60 ">{$vo['shengyu']}</span> 个</p>
+					</div>
+					<a class="ui-btm ui-btm-f60 ui-btm-w120 afff fr f14" href="javascript:licai_run('{$vo[\'id\']}')"> 立即投标</a>
+				</div>
+			</div>
+		</volist>
+	</div>
+	<div class="pages" style="margin: 10px 0 20px 0;">{$page}</div>
+</div>
+
+<!--<div  id="licai_mask"  class="all_mask_loginbox" style="position: fixed;border: 1px solid #FFF7F7;top: 313px; display: none;">
+	<div id="licai_title" class="login_title pl20">标题</div>
+	<form id="form-login" class="mask_wrap login-fb">
+		<div class="login_text zin90">
+			<div class="mask_wrap_title">合成币种：</div>
+			<input id="licai_coinname"  name="username" type="text" value="" readonly>
+		</div>
+
+		<div class="login_text zin90">
+			<div class="mask_wrap_title">可用余额：</div>
+			<input id="licai_yue" name="username" type="text" value="12563.222" readonly>
+		</div>
+
+		<div class="login_text zin90">
+			<div class="mask_wrap_title">投入数量：</div>
+			<input  id="licai_jine" name="licai_jine" type="text" value="">
+		</div>
+
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">交易密码：</div>
+			<input id="paypassword" name="paypassword" type="password">
+		</div>
+
+		<div class="login_button">
+			<input type="button" value="确定" onclick="licai_up();">
+		</div>
+	</form>
+	<div class="mask_wrap_close"  onclick="wrapClose()"></div>
+</div>-->
+
+<div class="float_win_pay" id="licai_mask" style="display:none;">
+    <div class="tan_title">
+        <h4 id="licai_title">{:L('标题')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content" id="dialog_content_CnyAddress">
+		<ul>
+			<li>
+				<span class="label-1">{:L('理财币种')}</span>
+				<input type="text" autocomplete="off" class="input-2" id="licai_coinname" readonly />
+			</li>
+			<li>
+				<span class="label-1">{:L('可用余额')}</span>
+				<input type="text" autocomplete="off" class="input-2" id="licai_yue" readonly />
+			</li>
+			<li>
+				<span class="label-1">{:L('投入数量')}</span>
+				<input type="text" autocomplete="off" class="input-1" id="licai_jine" />
+			</li>
+			<li>
+				<span class="label-1">{:L('交易密码')}</span>
+				<input type="password" autocomplete="off" class="input-1" id="paypassword" />
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="Update()" class="btns" id="btn">{:L('立即投标')}</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+<script>
+$('#wrap').css('min-height',$(window).height() - 260);
+//菜单高亮
+$('#money_box').addClass('active');
+
+var cur_id = '';
+function licai_run(id){
+	$.get("/Financing/info/id/" + id,function(ret){
+		cur_id = id;
+		if(ret.status == 1){
+			var money = ret.info.Money;
+			$('#licai_title').html(money.name);
+			$('#licai_coinname').val(money.coinname);
+			$('#licai_yue').val(money.yue);
+			
+			layer.open({
+				type: 1,
+				title: false,
+				closeBtn: 0,
+				area: 'autos',
+				skin: 'layui-layer-nobg',
+				shadeClose: true,
+				content: $('#licai_mask')
+			});
+		}else{
+			layer.msg(ret.info);
+            if (ret.url) {
+                window.location = ret.url;
+            }
+		}
+	},'json')
+}
+
+function Update(){
+	var licai_jine = $('#licai_jine').val();
+	var paypassword = $('#paypassword').val();
+	
+	if(!licai_jine || typeof licai_jine == "undefined" || licai_jine <0){
+		layer.tips('数量不正确', '#licai_jine', {tips: 1});
+		return false;
+	}
+	if(!paypassword || typeof paypassword == "undefined"){
+		layer.tips('交易密码必须填写', '#paypassword', {tips: 1});
+		return false;
+	}
+	
+    $.post("{:U('Financing/index')}", { id:cur_id, num:licai_jine, paypassword:paypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout("window.location.reload()",1000);
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+	
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+</script>
+<include file="Public:footer"/>

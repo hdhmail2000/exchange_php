@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="graybg">
+    <div id="container" class="hasbottom">
+        <div class="banner" id="banner">
+            <div class="bd">
+                <ul>
+                    <volist name="indexAdver" id="vo">
+                        <li><a href="{$vo.url}"><img src="/Upload/ad/{$vo.img}"></a></li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="hd">
+                <ul>
+                    <volist name="indexAdver" id="vo">
+                        <li></li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            TouchSlide({
+                slideCell:"#banner",
+                titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+                mainCell:".bd ul",
+                effect:"left",
+                autoPlay:true,//自动播放
+                autoPage:true, //自动分页
+                switchLoad:"_src", //切换加载，真实图片路径为"_src"
+                interTime:3000,
+                delayTime:600
+            });
+        </script>
+        <div class="newbox">
+            <img src="__PUBLIC__/Mobile/images/newicon.png"> <a href="{:U('Article/notice_detail',array('id'=>$indexArticle['id']))}">{$indexArticle['title']|msubstr=0,17}</a>
+        </div>
+        <div class="nmenubox">
+            <ul>
+                <li>
+                    <a href="{:U('Finance/index')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon1.png">
+                        <!--<p>{:L('充值')}</p>-->
+                        <!--<p>{:L('tranerin')}</p>-->
+                        <p>{:L('total_assets')}</p>
+                    </a>
+                </li>
+               <!-- <li>
+                    <a href="{:U('Trade/trade_coin_list')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon2.png">
+                        <p>{:L('交易')}</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Finance/mytxlog')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon3.png">
+                        <p>{:L('提现')}</p>
+                    </a>
+                </li>-->
+                <li>
+                    <a href="{:U('Index/coin_list')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon4.png">
+                        <p>{:L('虚拟币')}</p>
+                    </a>
+                </li>
+                <!--<li>
+                    <a href="{:U('Finance/myuser_coin_list')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon5.png">
+                        <p>转账</p>
+                    </a>
+                </li>-->
+                <!-- <li>
+                    <a href="{:U('Index/qq')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon6.png">
+                        <p>在线客服</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Article/help_list')}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon7.png">
+                        <p>帮助中心</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Article/notice_detail',array('id'=>32))}">
+                        <img src="__PUBLIC__/Mobile/images/menuicon8.png">
+                        <p>上品种申请</p>
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+        <div class="nhpiclist">
+            <h3>{:L('guide')}</h3>
+            <ul>
+                <volist name="helpArticle" id="vo">
+                    <volist name="vo" id="vvo">
+                    <li>
+                        <empty name="vvo.url">
+                            <a href="{:U('Article/detail',array('id'=>$vvo['id']))}">
+                            <else/>
+                            <a href="{$vvo.url}">
+                        </empty>
+                            <img src="/Upload/wenzhang/{$vvo.img}">
+                            <!--<div class="cover">-->
+                            <!--<h1>{:L('交易宝典')}</h1>-->
+                            <!--<p>{:L('新手交易指南')}</p>-->
+                            <!--</div>-->
+                        </a>
+                    </li>
+                    </volist>
+                </volist>
+            </ul>
+        </div>
+
+    <!--<div class="nhpiclist" >
+        <div style="margin-left: 30%">
+            <p class="time" style="color:#e75600;font-size:1rem;margin-left: 2%">{:L('在线客服微信')}: </p>
+            <img src="upload/public/{$C['wxcode']}" style="width: 120px;height: 120px;">
+            <p style="color:#e75600;font-size:1rem;margin-left: -10%">{:L('服务时间')} 9:30-21:30</p>
+            <span style="color:blue;font-size:1rem;margin-left: 8%">{$C['contact_qq'][0]}</span>
+        </div>
+   </div>-->
+        <include file="Public:footer" />
+    </div>
+</body>
+</html>

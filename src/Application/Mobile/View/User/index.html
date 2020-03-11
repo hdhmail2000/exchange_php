@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>{:L('我的')}</title>
+	<include file="Public:head" />
+</head>
+<body>
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<h1 class="mui-title color_white">{:L('我的')}</h1>
+</header>
+<div class="mui-content myinfo">
+	<div class="accounts">
+		<p class="name-min">UID : {$user.id}</p>
+		<p class="name-max">
+			{$user.username}
+			<a class="fr btn" href="{:u('User/nameauth')}">KYC认证</a>
+		</p>
+	</div>
+</div>
+
+
+<div class="mui-content cur-padding-bottom" style="padding-top:20px;">
+	<ul class="mui-table-view coins_list_my" style="margin-top:0px;">
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Finance/mycj_coin_list')}">{:L('订单管理')}</a>
+		</li>
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Finance/mytj')}">{:L('邀请推广')}</a>
+		</li>
+      <li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Finance/myjp')}">{:L('直推奖励')}</a>
+		</li>
+       <li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Finance/mywd')}">{:L('我的团队')}</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view coins_list_my" style="margin-top:20px;">
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('User/safety')}">{:L('安全中心')}</a>
+		</li>
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('User/qianbao_coin_list')}">{:L('提币地址管理')}</a>
+		</li>
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Exchange/bank')}">{:L('银行卡设置')}</a>
+		</li>
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Support/index/categories',array('cid'=>1))}">{:L('公告中心')}</a>
+		</li>
+		<li class="mui-table-view-cell mui-collapse-content">
+			<a class="mui-navigate-right" href="{:U('Support/index/categories',array('cid'=>2))}">{:L('帮助中心')}</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view coins_list_my" style="margin-top:20px;">
+		<li class="mui-table-view-cell mui-collapse-content tc">
+			<a class="red" href="{:U('Login/loginout')}">{:L('退出登录')}</a>
+		</li>
+	</ul>
+</div>
+<script>
+$(document).ready(function(){
+	$('#menu_5').addClass('mui-active');
+});
+</script>
+<include file="Public:footer" />
+</body>
+</html>

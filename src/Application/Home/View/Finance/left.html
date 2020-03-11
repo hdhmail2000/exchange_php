@@ -1,0 +1,40 @@
+<div class="usnc_left">
+    <div class="ulmenubox">
+        <h4><img src="__PUBLIC__/Home/news/images/uswicon1.png">{:L('财务中心')}</h4>
+        <ul>
+            <li id="finance_index" class=""><a href="/finance/index.html">{:L('资产详情')}</a></li>
+            <!--<li id="finance_mycz" class=""><a href="/finance/mycz.html">{:L('本位币充值')}</a></li>
+            <li id="finance_mytx" class=""><a href="/finance/mytx.html">{:L('本位币提现')}</a></li>-->
+            <li id="finance_myzr" class=""><a href="/finance/myzr.html">{:L('虚拟币转入')}</a></li>
+            <li id="finance_myzc" class=""><a href="/finance/myzc.html">{:L('虚拟币转出')}</a></li>
+            <!-- <li id="finance_myzc_user" class=""><a href="/finance/myzc_user.html">{:L('会员互转')}</a></li> -->
+        </ul>
+    </div>
+    <div class="ulmenubox">
+        <h4><img src="__PUBLIC__/Home/news/images/uswicon2.png">{:L('我的交易')}</h4>
+        <ul>
+            <li id="finance_mywt" class=""><a href="/finance/mywt.html">{:L('委托交易')}</a></li>
+            <li id="finance_mycj" class=""><a href="/finance/mycj.html">{:L('成交查询')}</a></li>
+        </ul>
+    </div>
+
+    <eq name="Think.session.is_generalize" value="1">
+     <div class="ulmenubox">
+        <h4><img src="__PUBLIC__/Home/news/images/safeicon3.png">{:L('推荐管理')}</h4>
+        <ul>
+            <li id="finance_mytj" class=""><a href="/finance/invite.html">{:L('推广链接')}</a></li>
+            <li id="finance_mywd" class=""><a href="/finance/mywd.html">{:L('推广记录')}</a></li>
+            <li id="finance_myyj" class=""><a href="/finance/myyj.html">{:L('佣金记录')}</a></li>
+        </ul>
+    </div>
+    </eq>
+</div>
+<script type="text/javascript">
+    window.onload = function(){
+		var Lheight = $(".usnc_left").outerHeight();
+		var Rheight = $(".usnc_right").outerHeight();
+		var Tall = Lheight > Rheight ? Lheight:Rheight
+		$(".usnc_left").outerHeight(Tall);
+		$(".usnc_right").outerHeight(Tall);
+	}
+</script>

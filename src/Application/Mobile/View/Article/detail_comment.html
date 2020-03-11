@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('评论列表')}
+        </div>
+        <div style="font-size:16px;text-align:center;color:#ff9900;margin:15px 0;">
+            {$data.title}
+        </div>
+        <div class="logbot" id="button" style="width:96%;">
+        <button type="button" class="layout" style="border:none;width: 100%;" onclick="bianhua()">{:L('发表评论')}</button>
+        </div>
+        <div class="logbot" style="display:none" id="check">
+            <form>
+            <input type="hidden" name="articleid" id="articleid" value="{$data['id']}">
+            <input type="hidden" name="userid" id="userid" value="{$username}">
+            <textarea name="comment" id="comment" style="width:96%;height:100px;background:rgba(0,0,0, .5);color:rgba(255,255,255, .5);font-size:14px;line-height:20px;padding:10px 2%;" onblur="if(this.value == '')this.value='{:L('发表你的评论')}';" onclick="if(this.value == '{:L('发表你的评论')}')this.value='';">{:L('发表你的评论')}</textarea>
+      <button type="submit" class="layout" onclick="Update1();" style="border:none;width: 100%;">{:L('发表')}</button>
+      <button type="button" class="layout" style="border:none;width: 100%;background:rgba(255,255,255, .5)" onclick="bianhua1()">{:L('收起')}</button>
+    </form>
+    </div>
+        <div class="chgbox">
+            <ul>
+            <empty name="list">
+                <li style="padding:20px 10px;font-size:18px;color:#ff9900;font-weight:900;text-align:center;">{$vo.content}
+                    <span class="list_time">{:L('暂无评论')}！</span>
+                </li>
+            <else />
+                <volist name="list" id="vo">
+                    <li>
+                        <div class="chglist_top">
+                        {:L('时间')}：{$vo.comtdate|date="Y-m-d H:i:s",###}
+                            <span class="state wait">
+                            {:L('评论人')}：{$vo.comtuser1}
+                            </span>
+                        </div>
+                        <div class="chglist_top">
+                            {$vo.content}
+                        </div>
+                    </li>
+                </volist>
+            </empty>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+    </div>
+<include file="Public:footer" />
+<!-- <script>
+    $("#type-selectTest,#market-selectTest").change(function(){
+        var type=$("#type-selectTest option:selected").val();
+        var market=$("#market-selectTest option:selected").val();
+        window.location='/Finance/mycj/type/'+type+'/market/'+market+'.html';
+    });
+</script> -->
+<script>
+    function bianhua(){
+        $("#check").show();
+        $("#button").hide();
+    }
+    function bianhua1(){
+        $("#button").show();
+        $("#check").hide();
+    }
+    function Update1(){
+        var articleid=$("#articleid").val();
+        var comment=$("#comment").val();
+        var username=$("#userid").val();
+        if(comment==""||comment==null){
+          formMsg('comment', 0, '{:L('请输入评论')}');
+          return false;
+        }
+
+        $.post("{:U('Article/upcomment')}",{comment:comment,articleid:articleid,username:username},function(data){
+          if(data.status==1){
+            layer.msg(data.info,{icon:1});
+            window.location.reload();
+          }else{
+            layer.msg(data.info,{icon:2});
+            if(data.url){
+              window.location=data.url;
+            }
+          }
+        },"json");
+      }
+</script>
+</body>
+</html>

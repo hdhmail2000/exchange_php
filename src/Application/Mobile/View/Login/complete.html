@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>{:L('注册成功')}</title>
+	<include file="Public:head" />
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background-color:#fff;border-color:#fff;box-shadow: 0 0 0 #fff;">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" style="color:#000;" href="javascript:history.go(-1)"></a>
+	<h1 class="mui-title color_white"></h1>
+</header>
+
+<div class="mui-content" style="margin-top:20px;">
+	<div class="TipsInfo">
+		<i class="iconfont icon-chenggong"></i>
+		<p class="money">{:L('恭喜您，注册成功！')}</p>
+		<p><b>{:L('用户名')} : {$user.username}</b></p>
+		<a class="mui-btn mui-btn-green" href="{:U('User/index')}">{:L('去交易')}</a>
+	</div>
+</div>
+
+</body>
+</html>

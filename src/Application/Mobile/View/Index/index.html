@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>交易所</title>
+	<include file="Public:head" />
+</head>
+<body>
+<div class="mui-content">
+	<div class="mui-slider">
+		<div class="mui-slider-group">
+			<div class="mui-slider-item"><a href="#"><img src="__PUBLIC__/Mobile/ecshe_img/banner.jpg" /></a></div>
+			<div class="mui-slider-item"><a href="#"><img src="__PUBLIC__/Mobile/ecshe_img/banner1.jpg" /></a></div>
+			<div class="mui-slider-item"><a href="#"><img src="__PUBLIC__/Mobile/ecshe_img/banner2.jpg" /></a></div>
+		</div>
+		<div class="mui-slider-indicator">
+			<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+		</div>
+	</div>
+</div>
+
+<div class="mui-content cur-padding-bottom">
+	<ul class="table-head bg-fff" style="padding:0 10px;border-bottom:1px solid #939393d9;">
+		<li style="width:43%;padding-left:5px;"><i></i>交易对 / 成交量</li>
+		<li class="tr" style="width:30%;"><i></i>最新价</li>
+		<li class="tr" style="width:26.99%;padding-right:6px;">涨跌幅</li>
+	</ul>
+	<ul class="mui-table-view coins_list" id="coins_list"></ul>
+</div>
+
+<script>
+function trends() {
+	$.getJSON('/ajax/index_b_trends?t=' + Math.random(), function (d) {
+		trends = d;
+		allcoin();
+	});
+}
+function allcoin(cb) {
+	$.get('/ajax/allcoin/?t=' + Math.random(), cb ? cb : function (data) {
+		var datas;
+		if (data.status == 1) { datas = data.url; }
+		renderPage(datas);
+		t = setTimeout('allcoin()', 5000);
+	}, 'json');
+}
+function renderPage(ary) {
+	var html = '';
+	for (var i in ary) {
+		ifcolor_1 = (ary[i][8] >= 0 ? 'btn-up' : 'btn-down');
+		ifcolor_2 = (ary[i][8] >= 0 ? 'icon-up' : 'icon-down');
+		html += '<li><dl><dt class="fl market" style="width: 15%"><i></i><a href="/Trade/index/market/' + ary[i][9] + '/"><img src="/Upload/coin/' + ary[i][10] + '" width="22" height="22" /><span class="coin_name">' + ary[i][0] + '</span><span> / ' + ary[i][1] + '</span></a></dt><dd class="fl" style="width: 16%"><i></i>' + ary[i][2] + '</dd><dd class="fl float" style="width: 10%"><span class="' + ifcolor_1 + '"><i class="' + ifcolor_2 + '"></i>' + (parseFloat(ary[i][8]) < 0 ? '' : '+') + ((parseFloat(ary[i][8]) < 0.01 && parseFloat(ary[i][8]) > -0.01) ? "0.00" : (parseFloat(ary[i][8])).toFixed(2)) + '%</span></dd><dd class="fl" style="width: 16%"><i></i>' + ary[i][11] + '</dd><dd class="fl" style="width: 16%"><i></i>' + ary[i][12] + '</dd><dt class="fl deal" style="width: 20%"><div><p>' + ary[i][7] + ' ' + ary[i][0] + '</p><p>≈ ' + ary[i][5] + ' ' + ary[i][1] + '</p></div></dt><dd class="fl tr" style="width: 7%"><a href="/trade/index/market/' + ary[i][9] + '/"><img src="__PUBLIC__/Home/ecshe_img/icon_operation.png" /></a><i></i></dd></dl></li>';
+		
+	}
+	$('#coins_list').html(html);
+}
+trends();
+</script>
+<script>
+$(document).ready(function(){
+	$('#menu_1').addClass('mui-active');
+});
+</script>
+
+<include file="Public:footer" />
+
+<script type="text/javascript" charset="utf-8">
+// 获得slider插件对象
+var gallery = mui('.mui-slider');
+gallery.slider({interval:5000}); // 自动轮播周期，若为0则不自动播放，默认为0；
+mui.init({swipeBack:true}); // 启用右滑关闭功能
+</script>
+</body>
+</html>

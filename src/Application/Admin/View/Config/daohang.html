@@ -1,0 +1,111 @@
+<include file="Public:header"/>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">前端导航管理</span>
+        </div>
+
+        <div class="cf">
+            <div class="fl">
+                <a class="btn btn-success" href="{:U('Config/daohangEdit')}">新 增</a>
+                <button class="btn ajax-post btn-info" url="{:U('Config/daohangStatus',array('type'=>'resume'))}" target-form="ids">启 用</button>
+                <button class="btn ajax-post btn-warning" url="{:U('Config/daohangStatus',array('type'=>'forbid'))}" target-form="ids">禁 用</button>
+                <button class="btn ajax-post confirm btn-danger" url="{:U('Config/daohangStatus',array('type'=>'delete'))}" target-form="ids">删 除</button>
+            </div>
+            <div class="search-form fr cf">
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1">
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+                            <option value="" <empty name="Think.get.status">selected</empty> >全部状态</option>
+                            <option value="2" <eq name="Think.get.status" value="2">selected</eq> >显示状态</option>
+                            <option value="1" <eq name="Think.get.status" value="1">selected</eq> >隐藏状态</option>  
+                        </select>
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="lang" class="form-control">
+                        	<option value="" <eq name="Think.get.lang">selected</eq> >全部语言</option>
+                            <option value="zh-cn" <eq name="Think.get.lang" value="zh-cn">selected</eq> >简体中文</option>
+                            <option value="en-us" <eq name="Think.get.lang" value="en-us">selected</eq> >English</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">语言</th>
+                    <th class="">链接标题</th>
+                    <th class="">链接地址</th>
+                    <th class="">添加时间</th>
+                    <th class="">是否登录访问</th>
+                    <th class="">是否开放访问</th>
+                    <th class="">排序</th>
+                    <th class="">状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="list">
+                    <volist name="list" id="vo">
+                        <tr>
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.lang}</td>
+                            <td>{$vo.title}</td>
+                            <td>{$vo.url}</td>                
+                            <td>{$vo.addtime|addtime}</td>
+							<td>
+								<eq name="vo.get_login" value="1"><b style="color: #10A017">需要</b><else/><b style="color: #F70408">不需要</b></eq>
+							</td>
+							<td>
+								<eq name="vo.access" value="1"><b style="color: #F70408">不开放</b><else/><b style="color: #10A017">开放</b></eq>
+							</td>
+							<td>{$vo.sort}</td>
+							<td>
+								<eq name="vo.status" value="1"><b style="color: #10A017">显示</b><else/><b style="color: #F70408">隐藏</b></eq>
+							</td>
+                            <td><a href="{:U('Config/daohangEdit?id='.$vo['id'])}" class="btn btn-primary btn-xs">编辑</a></td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <td colspan="12" class="text-center empty-info"><i class="glyphicon glyphicon-exclamation-sign"></i>暂无数据</td>
+                </notempty>
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:U('Config/daohang')}");
+		$('title').html('前端导航管理-'+'__WEBTITLE__');
+    </script>
+</block>

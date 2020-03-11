@@ -1,0 +1,606 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="User:left" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles"><h3>{:L('安全设置')}</h3></div>
+		<div class="Column_Security">
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon0.png" width="45" height="45">
+				<h3>{:L('实名认证')}</h3>
+				
+				<if condition="$user.kyc_lv eq 1" >
+					<if condition="$user.idstate eq 8" >
+						<p style="color:#FF0004;"><b>{:L('初级认证-未通过')}</b></p>
+						<p><a class="btnson" href="{:U('User/kyc')}">{:L('重新认证')}</a></p>
+					<elseif condition="$user.idstate eq 1"/>
+						<p><b>{:L('审核中')}</b></p>
+						<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+					<elseif condition="$user.idstate eq 2"/>
+						<p><b style="color:#24D328;">{:L('初级认证-通过')}</b></p>
+						<p><a class="btnson" href="{:U('User/kyc')}">{:L('升级认证')}</a></p>
+					<else />
+						<p>{:L('未认证')}</p>
+						<p><a class="btnson" href="{:U('User/kyc')}">{:L('立即认证')}</a></p>
+					</if>
+					
+				<elseif condition="$user.kyc_lv eq 2" />
+					<if condition="$user.idstate eq 8" >
+						<p style="color:#FF0004;"><b>{:L('高级认证-未通过')}</b></p>
+						<p><a class="btnson" href="{:U('User/kyc')}">{:L('重新认证')}</a></p>
+					<elseif condition="$user.idstate eq 1"/>
+						<p><b>{:L('审核中')}</b></p>
+						<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+					<elseif condition="$user.idstate eq 2"/>
+						<p><b style="color:#24D328;">{:L('高级认证-通过')}</b></p>
+						<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+					<else />
+						<p>{:L('未认证')}</p>
+						<p><a class="btnson" href="{:U('User/kyc')}">{:L('立即认证')}</a></p>
+					</if>
+				<else />
+					<p>{:L('未认证')}</p>
+					<p><a class="btnson" href="{:U('User/kyc')}">{:L('立即认证')}</a></p>
+				</if>
+			</div>
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon2.png" width="45" height="45">
+				<h3>{:L('手机认证')}</h3>
+				<p>
+					<eq name="user.mobile" value="">
+						{:L('未绑定')}
+					<else/>
+						{$mobiles}
+					</eq>
+				</p>
+				<p><a class="btnjz" href="#">{:L('禁止修改')}</a></p>
+			</div>
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon3.png" width="45" height="45">
+				<h3>{:L('谷歌验证器')}</h3>
+				<p>{:L('用于提现和安全设置验证')}</p>
+				<p>
+					<eq name="user.ga" value="">
+						<a class="btnson" onclick="addGoogleSet();">{:L('绑定')}</a>
+					<else/>
+						<a class="btns" onclick="addGoogle();">{:L('解绑')}</a>
+					</eq>
+				</p>
+			</div>
+		</div>
+
+		<div class="Column_Security">
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon4.png" width="45" height="45">
+				<h3>{:L('登录密码')}</h3>
+				<p>{:L('用于登录您的账号，请保存好登录密码')}</p>
+				<p><a class="btns" onclick="addPassword();">{:L('修改')}</a></p>
+			</div>
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon5.png" width="45" height="45">
+				<h3>{:L('交易密码')}</h3>
+				<p>{:L('账户资金变动时，需先验证交易密码')}</p>
+				<p>
+					<eq name="user.paypassword" value="">
+						<a class="btnson" onclick="addPaypasswordSet();">{:L('设置')}</a>
+					<else/>
+						<a class="btns" onclick="addPaypassword();">{:L('修改')}</a>
+					</eq>
+				</p>
+			</div>
+		</div>
+		
+		<div class="titles"><h3>{:L('登录历史')}</h3></div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="39.5%" align="center">{:L('登录时间')}</th>
+					<th width="39.5%" align="center">{:L('IP地址')}</th>
+					<th width="20%" align="center">{:L('状态')}</th>
+				</tr>
+				<volist name="userlog" id="vo">
+					<tr>
+						<td>{$vo.addtime|addtime}</td>
+						<td>{$vo.addip}</td>
+						<td>
+							<eq name="vo.status" value="0">
+								<font color="violet">{:L('出错')}</font>
+							</eq>
+							<eq name="vo.status" value="1"> {:L('正常')}</eq>
+							<eq name="vo.status" value="2">
+								<font color="red">{:L('异常')}</font>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+				<tr>
+					<td align="center" colspan="3">
+						<a class="btns" href="{:U('User/log')}">{:L('加载更多')}</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="float_win_pay" id="addGoogleSet" style="display:none;width:500px;">
+    <div class="tan_title">
+        <h4>{:L('绑定 GOOGLE验证器')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content payment_ga" style="min-width:0;">
+		<ul>
+			<li>
+				<p style="margin-bottom:10px;"><b>1. {:L('下载并安装 Google 身份验证器')}</b></p>
+				<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+					<img src="__PUBLIC__/Home/ecshe_img/user_icon/download-Google.png">
+				</a>
+				<a style="margin-left:20px;" href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">
+					<img src="__PUBLIC__/Home/ecshe_img/user_icon/download-Apple.png">
+				</a>
+			</li>
+			<li>
+				<p style="margin-bottom:10px;"><b>2. {:L('使用 Google 身份验证器 扫描二维码或输入序列号')}</b></p>
+				<div class="CodeContent">
+					<div style="width:50%;" id="qrcode"></div>
+					<div style="width:45%;">{:L('双重验证可以更安全的保护您的账户，此密钥可让您在手机丢失的情况下恢复您的 Google 身份验证。')}</div>
+				</div>
+				<p style="margin-bottom:30px;line-height:45px;background-color:#fff8ea;text-align:center;"><b>{$Asecret}</b></p>
+			</li>
+			<li>
+				<span class="label-1">{:L('谷歌验证码')}</span>
+				<input type="text" autocomplete="off" id="ga_verify" class="input-1" />
+			</li>
+			<li>
+				<div class="dv_radio" style="display:none">
+				   <!-- {:L('配置验证的模块')}：-->
+					<label for="ga-login">
+						<input type="checkbox" id="ga-login" name="login" checked="1">{:L('登录')}</label>
+					<label for="ga-transfer">
+						<input type="checkbox" id="ga-transfer" checked="1" name="transfer">{:L('资金转出')}
+					</label>
+				</div>
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="UpGoogleSet()" class="btns">{:L('确认')}</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div class="float_win_pay" id="addGoogle" style="display:none;width:500px;">
+    <div class="tan_title">
+        <h4>{:L('解绑 GOOGLE验证器')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content payment_ga" style="min-width:0;">
+		<ul>
+			<li>
+				<span class="label-1">{:L('谷歌验证码')}</span>
+				<input type="text" autocomplete="off" id="ga_delete" class="input-1" />
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="UpGoogle()" class="btns">{:L('确认')}</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div class="float_win_pay" id="addPassword" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('修改登录密码')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content">
+		<ul>
+			<li>
+				<span class="label-1">{:L('旧登录密码')}</span>
+				<input type="password" autocomplete="off" id="oldpassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('新登录密码')}</span>
+				<input type="password" autocomplete="off" id="newpassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('确认登录密码')}</span>
+				<input type="password" autocomplete="off" id="repassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('动态验证码')}</span>
+				<input type="text" autocomplete="off" id="mobile_verify_password" class="vcode-1" />
+				<input type="button" id="regBtn_pass" onclick="SendCode_pass()" value="{:L('获取验证码')}" class="code-num">
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="UpPassword()" class="btns">{:L('确认')}</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div class="float_win_pay" id="addPaypasswordSet" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('设置交易密码')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content">
+		<ul>
+			<li>
+				<span class="label-1">{:L('交易密码')}</span>
+				<input type="password" autocomplete="off" id="set_paypassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('确认交易密码')}</span>
+				<input type="password" autocomplete="off" id="set_repaypassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('动态验证码')}</span>
+				<input type="text" autocomplete="off" id="set_mobile_verify" class="vcode-1" />
+				<input type="button" id="setBtn_paypass" onclick="SendCode_setpaypass()" value="{:L('获取验证码')}" class="code-num">
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="UpPaypasswordSet()" class="btns">{:L('确认')}</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div class="float_win_pay" id="addPaypassword" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('修改交易密码')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content">
+		<ul>
+			<li>
+				<span class="label-1">{:L('旧交易密码')}</span>
+				<input type="password" autocomplete="off" id="oldpaypassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('新交易密码')}</span>
+				<input type="password" autocomplete="off" id="newpaypassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('确认交易密码')}</span>
+				<input type="password" autocomplete="off" id="repaypassword" class="input-1" />
+			</li>
+			<li>
+				<span class="label-1">{:L('动态验证码')}</span>
+				<input type="text" autocomplete="off" id="mobile_verify_paypassword" class="vcode-1" />
+				<input type="button" id="regBtn_paypass" onclick="SendCode_paypass()" value="{:L('获取验证码')}" class="code-num">
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="UpPaypassword()" class="btns">{:L('确认')}</a>
+			</li>
+			<li><p class="forget tc"><a href="{:U('Login/findpaypwd')}">{:L('忘记交易密码？')}</a></p></li>
+		</ul>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qrcode.min.js"></script>
+<script>
+$('#qrcode').qrcode({
+	render: "table",
+	size: 200,
+	text: "{$qrCodeUrl}"
+});
+</script>
+<script>
+function UpGoogleSet() {
+    var ga_verify = $("#ga_verify").val();
+	var ga_login = $('#ga-login').is(':checked') ? 1 : 0;
+	var ga_transfer = $('#ga-transfer').is(':checked') ? 1 : 0;
+
+    if (ga_verify == "" || ga_verify == null) {
+        layer.tips('{$Think.lang.请输入谷歌验证码}', '#ga_verify', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/gaGoogle')}", { ga_verify: ga_verify, ga_login: ga_login, ga_transfer: ga_transfer, type: 'add' }, function(data) {
+		if (data.status) {
+			layer.closeAll();
+			layer.msg("{:L('操作成功跳转中...')}", { icon: 16 });
+			window.setTimeout('window.location="{:U('User/index')}"',1000);
+		} else {
+			layer.msg(data.info, { icon: 2 });
+		}
+    }, "json");
+}
+function UpGoogle() {
+    var ga_verify = $("#ga_delete").val();
+
+    if (ga_verify == "" || ga_verify == null) {
+        layer.tips('{$Think.lang.请输入谷歌验证码}', '#ga_delete', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/gaGoogle')}", { ga_verify: ga_verify, type: 'delet' }, function(data) {
+		if (data.status) {
+			layer.closeAll();
+			layer.msg("{:L('操作成功跳转中...')}", { icon: 16 });
+			window.setTimeout('window.location="{:U('User/index')}"',1000);
+		} else {
+			layer.msg(data.info, { icon: 2 });
+		}
+    }, "json");
+}
+function UpPassword() {
+    var oldpassword = $("#oldpassword").val();
+    var newpassword = $("#newpassword").val();
+    var repassword = $("#repassword").val();
+    var mobile_verify = $("#mobile_verify_password").val();
+
+    if (oldpassword == "" || oldpassword == null) {
+        layer.tips('{$Think.lang.请输入旧登录密码}', '#oldpassword', { tips: 3 });
+        return false;
+    }
+    if (newpassword == "" || newpassword == null) {
+        layer.tips('{$Think.lang.请输入新登录密码}', '#newpassword', { tips: 3 });
+        return false;
+    }
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认新登录密码}', '#repassword', { tips: 3 });
+        return false;
+    }
+    if (mobile_verify == "" || mobile_verify == null) {
+        layer.tips('{$Think.lang.请输入短信验证码}', '#mobile_verify_password', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/uppassword')}", { mobile_verify: mobile_verify, oldpassword: oldpassword, newpassword: newpassword, repassword: repassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout('window.location="{:U('User/index')}"',1000);
+            // window.location = "{:U('User/paypassword')}";
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+function UpPaypasswordSet() {
+    var paypassword = $("#set_paypassword").val();
+    var repaypassword = $("#set_repaypassword").val();
+    var mobile_verify = $("#set_mobile_verify").val();
+
+    if (paypassword == "" || paypassword == null) {
+        layer.tips('{$Think.lang.请输入交易密码}', '#set_paypassword', { tips: 3 });
+        return false;
+    }
+    if (repaypassword == "" || repaypassword == null) {
+        layer.tips('{$Think.lang.请输入确认密码}', '#set_repaypassword', { tips: 3 });
+        return false;
+    }
+    if (mobile_verify == "" || mobile_verify == null) {
+        layer.tips('{$Think.lang.请输入短信验证码}', '#set_mobile_verify', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/uppaypasswordset')}", { mobile_verify: mobile_verify, paypassword: paypassword, repaypassword: repaypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout('window.location="{:U('User/index')}"',1000);
+            // window.location = "{:U('User/paypassword')}";
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+function UpPaypassword() {
+    var oldpaypassword = $("#oldpaypassword").val();
+    var newpaypassword = $("#newpaypassword").val();
+    var repaypassword = $("#repaypassword").val();
+    var mobile_verify = $("#mobile_verify_paypassword").val();
+
+    if (oldpaypassword == "" || oldpaypassword == null) {
+        layer.tips('{$Think.lang.请输入旧交易密码}', '#oldpaypassword', { tips: 3 });
+        return false;
+    }
+    if (newpaypassword == "" || newpaypassword == null) {
+        layer.tips('{$Think.lang.请输入新交易密码}', '#newpaypassword', { tips: 3 });
+        return false;
+    }
+    if (repaypassword == "" || repaypassword == null) {
+        layer.tips('{$Think.lang.请输入确认新密码}', '#repaypassword', { tips: 3 });
+        return false;
+    }
+    if (mobile_verify == "" || mobile_verify == null) {
+        layer.tips('{$Think.lang.请输入短信验证码}', '#mobile_verify_paypassword', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/uppaypassword')}", { mobile_verify: mobile_verify, oldpaypassword: oldpaypassword, newpaypassword: newpaypassword, repaypassword: repaypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout('window.location="{:U('User/index')}"',1000);
+            // window.location = "{:U('User/paypassword')}";
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+</script>
+
+<script>
+function SendCode_pass() {
+    //layer.load(0, { shade: [0.5, '#6b6b6b'] });
+    $('#regBtn_pass').attr("disabled", "disabled");
+    $.post("{:U('Verify/pass')}", {}, function(data) {
+        //layer.closeAll();
+        if (data.status == 1) {
+            layer.msg(data.info, {
+                icon: 1
+            });
+			//parent.layer.msg(data.info, {shade: 0.3})
+            var obj = $('#regBtn_pass');
+            var wait = 120;
+            var interval = setInterval(function() {
+                obj.css('backgroundColor', '#8d9eff');
+				obj.css('cursor', 'auto');
+                obj.val(wait + '{$Think.lang.秒}');
+                wait--;
+                if (wait < 0) {
+                    $('#regBtn_pass').removeAttr("disabled");
+                    clearInterval(interval);
+                    obj.val('{$Think.lang.获取验证码}');
+                    obj.css('backgroundColor', '#4f64dc');
+					obj.css('cursor', 'pointer');
+                };
+            }, 1000);
+        } else {
+            $('#regBtn_pass').removeAttr("disabled");
+            /*layer.msg(data.info, {
+                icon: 2
+            });*/
+			parent.layer.msg(data.info, {shade: 0.3})
+        }
+    }, "json");
+}
+function SendCode_setpaypass() {
+    //layer.load(0, { shade: [0.5, '#6b6b6b'] });
+    $('#setBtn_paypass').attr("disabled", "disabled");
+    $.post("{:U('Verify/paypass')}", {}, function(data) {
+        //layer.closeAll();
+        if (data.status == 1) {
+            layer.msg(data.info, {
+                icon: 1
+            });
+			//parent.layer.msg(data.info, {shade: 0.3})
+            var obj = $('#setBtn_paypass');
+            var wait = 120;
+            var interval = setInterval(function() {
+                obj.css('backgroundColor', '#8d9eff');
+				obj.css('cursor', 'auto');
+                obj.val(wait + '{$Think.lang.秒}');
+                wait--;
+                if (wait < 0) {
+                    $('#setBtn_paypass').removeAttr("disabled");
+                    clearInterval(interval);
+                    obj.val('{$Think.lang.获取验证码}');
+                    obj.css('backgroundColor', '#4f64dc');
+					obj.css('cursor', 'pointer');
+                };
+            }, 1000);
+        } else {
+            $('#setBtn_paypass').removeAttr("disabled");
+            /*layer.msg(data.info, {
+                icon: 2
+            });*/
+			parent.layer.msg(data.info, {shade: 0.3})
+        }
+    }, "json");
+}
+function SendCode_paypass() {
+    //layer.load(0, { shade: [0.5, '#6b6b6b'] });
+    $('#regBtn_paypass').attr("disabled", "disabled");
+    $.post("{:U('Verify/paypass')}", {}, function(data) {
+        //layer.closeAll();
+        if (data.status == 1) {
+            layer.msg(data.info, {
+                icon: 1
+            });
+			//parent.layer.msg(data.info, {shade: 0.3})
+            var obj = $('#regBtn_paypass');
+            var wait = 120;
+            var interval = setInterval(function() {
+                obj.css('backgroundColor', '#8d9eff');
+				obj.css('cursor', 'auto');
+                obj.val(wait + '{$Think.lang.秒}');
+                wait--;
+                if (wait < 0) {
+                    $('#regBtn_paypass').removeAttr("disabled");
+                    clearInterval(interval);
+                    obj.val('{$Think.lang.获取验证码}');
+                    obj.css('backgroundColor', '#4f64dc');
+					obj.css('cursor', 'pointer');
+                };
+            }, 1000);
+        } else {
+            $('#regBtn_paypass').removeAttr("disabled");
+            /*layer.msg(data.info, {
+                icon: 2
+            });*/
+			parent.layer.msg(data.info, {shade: 0.3})
+        }
+    }, "json");
+}
+
+function addGoogleSet() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addGoogleSet')
+    });
+}
+function addGoogle() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addGoogle')
+    });
+}
+function addPassword() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addPassword')
+    });
+}
+function addPaypasswordSet() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addPaypasswordSet')
+    });
+}
+function addPaypassword() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addPaypassword')
+    });
+}
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+</script>
+<script>
+$("title").html("{:L('账户信息')} - {:C('web_title')}");
+$('#menu_1').addClass('on');
+</script>
+<include file="Public:footer" />

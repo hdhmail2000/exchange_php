@@ -1,0 +1,75 @@
+<include file="Public:header"/>
+
+<div class="main">
+	<div class="container-divider"></div>
+</div>
+
+<div class="container">
+	<nav class="sub-nav">
+		<ol>
+			{:GetPosStr()}
+			<li><span>&gt;</span>{:L('费率标准')}</li>
+		</ol>
+		
+		<form role="search" class="search" method="get" action="{:U('Support/Pages/fee/')}">
+			<img class="icon" src="__PUBLIC__/Home/ecshe_img/soso.png" />
+			<input type="search" name="so" placeholder="{:L('搜索')}" autocomplete="off" value="{$keyword}">
+		</form>
+	</nav>
+
+	<div class="table-container">
+		<eq name="keyword" value="">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fee-table" style="margin-bottom:35px;">
+				<tbody>
+					<tr class="tc">
+						<td colspan="3" style="height:35px;font-size:20px;">{:L('交易费率')}</td>
+					</tr>
+					<tr>
+						<th>{:L('交易区')}</th>
+						<th>{:L('买入手续费')}</th>
+						<th>{:L('卖出手续费')}</th>
+					</tr>
+					<tr class="tc">
+						<td style="text-transform:uppercase;">{:Anchor_CNY}</td>
+						<td>0.1%</td>
+						<td>0.1%</td>
+					</tr>
+				</tbody>
+			</table>
+		</eq>
+		
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fee-table">
+			<tbody>
+				<tr class="tc">
+					<td colspan="5" style="height:35px;font-size:20px;">{:L('充提费率')}</td>
+				</tr>
+				<tr>
+					<th>{:L('币种')}</th>
+					<th>{:L('最小转出数量')}</th>
+					<th>{:L('转入手续费')}</th>
+					<th>{:L('转出手续费')}</th>
+				</tr>
+				<volist name="coin_data" id="vcc">
+					<tr class="tc">
+						<td class="icons"><img width="20" height="20" src="/Upload/coin/{$vcc['img']}" />{$vcc['name']}</td>
+						<td>{$vcc['zc_min']} {$vcc['name']}</td>
+						<td>FREE</td>
+						<td>
+							<eq name="vcc['zc_fee']" value="0">FREE<else/>{$vcc['zc_fee']}%</eq>
+						</td>
+					</tr>
+				</volist>
+				<neq name="keyword" value="">
+					<tr class="tc">
+						<td colspan="5" style="background-color:#4ad098;font-size:16px;color:#fff;">{:L('搜索结果')}</td>
+					</tr>
+				</neq>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+$("title").html("{:L('费率标准')} - {:L('帮助中心')}");
+</script>
+<include file="Public:footer" />

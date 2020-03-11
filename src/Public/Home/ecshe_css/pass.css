@@ -1,0 +1,175 @@
+@charset "utf-8";
+/* CSS Document */
+
+input::-webkit-input-placeholder { font-size: 13px;color: #8b97ab;}
+input:-moz-placeholder { font-size: 13px;color: #8b97ab;}
+input:-ms-input-placeholder { font-size: 13px;color: #8b97ab;}
+
+/* Login_Style */
+.logsbox {
+	margin: 0 auto;
+	padding: 30px;
+	width: 400px;
+	overflow: hidden;
+	background-color: #fff;
+	border-radius: 10px;
+	text-align: center;
+	color: #8388a3;
+	font-size: 14px;
+	box-sizing: border-box;
+	box-shadow: 0px 0px 8px 0px #c8c8c8;
+}
+.logsbox h2 {
+	font-size: 30px;
+    font-weight: 500;
+    color: #22272f;
+}
+
+.logsbox .form-tips {
+	margin: 20px 0 30px 0;
+}
+.logsbox .form-tips a {
+	display: inline-block;
+    position: relative;
+    color: #00a7e1;
+}
+.logsbox .form-tips a:hover {
+    text-decoration: underline;
+}
+.logsbox .form-other {
+	margin-top: 20px;
+}
+.logsbox .form-other a {
+	display: inline-block;
+    position: relative;
+    color: #8388a3;
+}
+
+.logsbox .form-group {
+	margin: 20px 0;
+	position: relative;
+}
+.logsbox .form-group input {
+	padding: 0 10px;
+	width: 100%;
+	height: 45px;
+    border-radius: 3px;
+	border: 1px solid #e3eaec;
+	background: #f6f7f7;
+	color: #22272f;
+	font-size: 14px;
+	box-sizing: border-box;
+}
+
+.logsbox .form-group .imgcode {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 5px;
+	bottom: 0;
+    align-items: center;
+	z-index: 2;
+}
+.logsbox .form-group .imgcode img {
+	cursor: pointer;
+	height: 35px;
+}
+
+.logsbox .form-group .code-num {
+	color: #00a7e1;
+    position: absolute;
+    top: 25%;
+	right: 10px;
+    z-index: 2;
+	cursor: pointer;
+}
+.logsbox .form-group .code-num:hover {
+    text-decoration: underline;
+}
+
+.logsbox .form-agreement {
+	margin: 20px 0;
+	position: relative;
+	text-align: left;
+}
+.logsbox .form-agreement label {
+	display: flex;
+	position: relative;
+}
+.logsbox .form-agreement input {
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+	z-index: 10;
+	margin-top: 2px;
+}
+.logsbox .form-agreement span {
+	margin-left: 20px;
+}
+.logsbox .form-agreement a{
+	color: #8388a3;
+}
+.logsbox .form-agreement a:hover {
+    text-decoration: underline;
+}
+
+.logsbox .form-button .btn-primary {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+    padding: 15px 0;
+	color: #fff;
+    font-size: 18px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	background: linear-gradient(to right, #4286da, #01abab);
+	border-radius: 50px;
+	transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.logsbox .form-button .btn-primary:hover {
+	background: linear-gradient(to right, #5094e8, #07bbbb);
+}
+	
+.flag-container{
+	position:absolute;top:0;bottom:0;right:8px;padding:1px;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.flag-container .selected-flag {
+	background-color: rgba(0,0,0,0.05);
+	position: relative;
+	display: table;
+	padding: 0 0 0 8px;
+	width: 78px;
+	height: 100%;
+	z-index: 1;
+}
+.flag-container .iti-flag {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+	width: 20px;
+    box-shadow: 0px 0px 1px 0px #888;
+    background-repeat: no-repeat;
+    background-color: #DBDBDB;
+}
+
+.flag-container .selected-dial-code {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+.flag-container .iti-arrow{
+	position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 6px;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid #555;
+}

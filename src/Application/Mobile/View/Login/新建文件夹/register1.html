@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('注册')}
+        </div>
+        <div class="logbot">
+            <form>
+                <input type="text" placeholder="{:L('用户名')}" class="logipt" id="username" value="" onblur="regusername()" >
+                <p id="username-msg" style="display: none;font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('6-18个字符,可使用字母、数字,需以字母开头')}<em></em>
+                </p>
+                <input type="password" placeholder="{:L('登录密码')}" class="logipt" id="password" value="" onblur="regpassword()" >
+                <p id="password-msg" data-explain="{:L('密码六位以上')}<em></em>" style="display: none;font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('密码六位以上')}<em></em>
+                </p>
+                <input type="password" placeholder="{:L('重复密码')}" class="logipt" id="repassword" value="" onblur="regrepassword()" >
+                <p id="repassword-msg" data-explain="{:L('重复输入密码，两次需要一致')}<em></em>" style="display: none;font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('重复输入密码，两次需要一致')}<em></em>
+                </p>
+                <input type="text" placeholder="{:L('邀请码（非必填）')}" class="logipt" id="invit" name="invite" value="{$Think.session.invit}"
+                        <notempty name="Think.session.invit">readonly</notempty> >
+                <div class="yzmbox">
+                    <input type="text" placeholder="{:L('验证码')}" class="logipt yzmipt" id="verify" value="" onblur="regverify()">
+                    <img class="codeImg reloadverify" src="{:U('Verify/code')}" title="{:L('换一张')}" onclick="this.src=this.src+'?t='+Math.random()">
+                    <p id="verify-msg" data-explain="{:L('输入验证码')}<em></em>" style="display: none;font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('输入验证码')}<em></em>
+                        </p>
+                </div>
+                <input type="button" class="logbut" value="{:L('下一步')}" name="index_submit" id="loginSubmin" onclick="Update();">
+            </form>
+        </div>
+    </div>
+<script>
+
+    function registerAgreement(){
+        layer.open({
+            type:2,
+            skin:'layui-layer-rim', //加上边框
+            area:['800px','600px'], //宽高
+            title:'{:L('注册协议')}', //不显示标题
+            content:"{:U('Login/webreg')}"
+        });
+    }
+
+
+    // $('input').focus(function(){
+    //     var t=$(this);
+    //     if(t.attr('type')=='text'||t.attr('type')=='password')
+    //         t.css({'box-shadow':'0px 0px 3px #1583fb','border':'1px solid #1583fb','color':'#333' });
+    //     if(t.val()==t.attr('placeholder'))
+    //         t.val('');
+    // });
+    // $('input').blur(function(){
+    //     var t=$(this);
+    //     if(t.attr('type')=='text'||t.attr('type')=='password')
+    //         t.css({'box-shadow':'none','border':'1px solid #e1e1e1','color':'#333' });
+    //     if(t.attr('type')!='password'&&!t.val())
+    //         t.val(t.attr('placeholder'));
+    // });
+    $('.reg_input_box input').each(function(i,d){
+        $(d).focus(function(){
+            var oRegMsg=$('#'+$(this).attr('id')+'-msg');
+            oRegMsg.attr('class')=='form_explain_error'?oRegMsg.attr('class','form_explain').html(oRegMsg.attr('data-explain')).show():oRegMsg.show();
+        })
+        $(d).blur(function(){
+            var oRegMsg=$('#'+$(this).attr('id')+'-msg');
+            $(this).parent().find('.form_explain').hide();
+        })
+    })
+    var mbTest_username=/^(?![^a-zA-Z]+$)(?!\D+$).{5,15}$/;
+    var mbTest_password=/^[a-zA-Z0-9_]{5,15}$/;
+    //输入框消息
+    function formMsg(o, status, msg){
+        $('#'+o+'-msg').attr('class', 'form_explain_'+(status?'pass':'error')).html((typeof msg == 'undefined'? '': msg)+'<em></em>').show();
+        return true;
+    }
+    function regusername(){
+        var username = $('#username').val();
+        if(username==""||username==null){
+            formMsg('username', 0, '{:L('请输入用户名')}');
+            return false;
+        }
+        $.post("{:U('Login/chkUser')}",{username:username},function(ret){
+            if(ret.status){
+                formMsg('username', 1);
+                return true;
+            }else{
+                formMsg('username', 0, ret.info);
+                return false;
+            }
+        },'json');
+    }
+    function regverify(){
+        var verify = $('#verify').val();
+        if(verify==""||verify==null){
+            formMsg('verify', 0, '{:L('请输入验证码')}');
+            return false;
+        }else{
+            formMsg('verify', 1);
+            return true;
+        }
+    }
+
+    function regpassword(){
+        var password = $('#password').val();
+        if(password==""||password==null){
+            formMsg('password', 0, '{:L('请输入登录密码')}');
+            return false;
+        }else{
+            if(!mbTest_password.test(password)){
+                formMsg('password', 0, '{:L('请设置6~16位密码，不含特殊符号！')}');
+                return false;
+            }else{
+                formMsg('password', 1);
+                return true;
+            }
+        }
+    }
+
+    function regrepassword(){
+        var password = $('#password').val();
+        var repassword = $('#repassword').val();
+        if(repassword==""||repassword==null){
+            formMsg('repassword', 0, '{:L('请输入确认密码')}');
+            return false;
+        }else{
+            if(!mbTest_password.test(repassword)){
+                formMsg('repassword', 0, '{:L('请设置6~16位密码，不含特殊符号！')}');
+                return false;
+            }else{
+                if(password!=repassword){
+                    formMsg('repassword', 0, '{:L('确认登录错误')}');
+                    return false;
+                }else{
+                    formMsg('repassword', 1);
+                    return true;
+                }
+            }
+        }
+    }
+    function Update(){
+        var username=$("#username").val();
+        var password=$("#password").val();
+        var repassword=$("#repassword").val();
+        var invit=$("#invit").val();
+        var verify=$("#verify").val();
+        if(username==""||username==null){
+            formMsg('username', 0, '{:L('请输入用户名')}');
+            return false;
+        }
+        if(password==""||password==null){
+            formMsg('password', 0, '{:L('请输入登录密码')}');
+            return false;
+        }
+        if(repassword==""||repassword==null){
+            formMsg('repassword', 0, '{:L('请输入确认密码')}');
+            return false;
+        }
+        if(password!=repassword){
+            formMsg('repassword', 0, '{:L('确认密码错误')}');
+            return false;
+        }
+
+        if(verify==""||verify==null){
+            formMsg('verify', 0, '{:L('请输入验证码')}');
+            return false;
+        }
+        $.post("{:U('Login/upregister')}",{username:username,password:password,repassword:repassword,invit:invit,verify:verify},function(data){
+            if(data.status==1){
+                layer.msg(data.info,{icon:1});
+                //$.cookies.set('cookie_username',username);
+                window.location='/Login/register2';
+            }else{
+                layer.msg(data.info,{icon:2});
+                if(data.url){
+                    window.location=data.url;
+                }
+            }
+        },"json");
+    }
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>{:C('wap_title')}行情</title>
+	<include file="Public:head" />
+</head>
+<body>
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<h1 class="mui-title color_white">{:C('wap_title')}</h1>
+</header>
+  
+<div class="mui-content">
+	<div class="mui-slider">
+		<div class="mui-slider-group">
+			<div class="mui-slider-item"><a href="#"><img src="__PUBLIC__/Mobile/ecshe_img/banner.jpg" /></a></div>
+			<div class="mui-slider-item"><a href="/Financing/index.html"><img src="__PUBLIC__/Mobile/ecshe_img/banner1.jpg" /></a></div>
+			<div class="mui-slider-item"><a href="/Exchange/index.html"><img src="__PUBLIC__/Mobile/ecshe_img/banner2.jpg" /></a></div>
+		</div>
+		<div class="mui-slider-indicator">
+			<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+		</div>
+	</div>
+
+
+<div class="mui-content">
+	<div class="">
+		<div id="slider" class="mui-slider mui-bar-bg">
+			<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div class="mui-scroll">
+					<volist name="jiaoyiqu" id="v">
+						<a class="mui-control-item <eq name='key' value='0'>mui-active</eq>" data="{$key}" onclick="trade_qu(this)">{$v}</a>
+					</volist>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="" style="padding-top:10px;">
+	<div class="bg-fff">
+		<ul class="table-head">
+			<li style="width:43%;padding-left:15px;"><i></i>交易对 / 成交量</li>
+			<li class="tr" style="width:28%;"><i></i>最新价</li>
+			<li class="tr" style="width:26.99%;padding-right:16px;">涨跌幅</li>
+		</ul>
+	</div>
+</div>
+
+<div class="mui-content cur-padding-bottom" style="padding-top:-5px;">
+	<ul class="mui-table-view coins_list" id="coins_list"></ul>
+</div>
+
+<script>
+function trends() {
+	$.getJSON('/ajax/index_b_trends?t=' + Math.random(), function (d) {
+		trends = d;
+		allcoin();
+	});
+}
+function allcoin(cb) {
+	var trade_qu_id = $('.mui-scroll .mui-active').attr('data');
+	$.get('/ajax/allcoin_a/id/' + trade_qu_id + '?t=' + Math.random(), cb ? cb : function (data) {
+		var datas;
+		if (data.status == 1) { datas = data.url; }
+		renderPage(datas);
+		t = setTimeout('allcoin()', 5000);
+	}, 'json');
+}
+function renderPage(ary) {
+	var html = '';
+	for (var i in ary) {
+		ifcolor_1 = (ary[i][8] >= 0 ? 'btn-up' : 'btn-down');
+		ifcolor_2 = (ary[i][8] >= 0 ? 'icon-up' : 'icon-down');
+		html += '<li class="mui-table-view-cell mui-collapse-content"><a href="/Trade/index/market/' + ary[i][9] + '/"><dt class="fl market"style="width:43%"><div class="fl imgs"><img src="/Upload/coin/' + ary[i][10] + '"width="25"height="25"/></div><div class="fl cname"><p><span class="coin_name">' + ary[i][0] + '</span><span> / ' + ary[i][1] + '</span></p><p>24h量 ' + formatCount(ary[i][7]) + '</p></div></dt><dt class="fl deal"style="width:30%"><div><p>' + ary[i][2] + '</p><p>￥' + ary[i][14] + '</p></div></dt><dt class="fr float"style="width:23.66%"><span class="fr ' + ifcolor_1 + '">' + (parseFloat(ary[i][8]) < 0 ? '' : '+') + ((parseFloat(ary[i][8]) < 0.01 && parseFloat(ary[i][8]) > -0.01) ? "0.00" : (parseFloat(ary[i][8])).toFixed(2)) + '%</span></dt></a></li>';
+	}
+	$('#coins_list').html(html);
+}
+function formatCount(count) {
+	var countokuu = (count / 100000000).toFixed(3);
+	var countwan = (count / 10000).toFixed(3);
+	if (count > 100000000) {return countokuu.substring(0, countokuu.lastIndexOf('.') + 3) + '亿';}
+	if (count > 10000) {return countwan.substring(0, countwan.lastIndexOf('.') + 3) + '万';}else {return count;}
+}
+function trade_qu(o){
+	$('.mui-control-item').removeClass('mui-active');
+	$(o).addClass('mui-active');
+	allcoin();
+}
+trends();
+</script>
+<script>
+$(document).ready(function(){
+	$('#menu_2').addClass('mui-active');
+});
+</script>
+<include file="Public:footer" />
+</body>
+</html>

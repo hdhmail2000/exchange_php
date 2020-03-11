@@ -1,0 +1,115 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/user.css')}">
+
+<style>
+.crumbs{
+	margin: 0 auto;
+	margin-top: 35px;
+	padding: 0 30px;
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+.crumbs li{
+	float: left;
+	font-size: 16px;
+	color: #575757;
+}
+.crumbs li.on,.crumbs li.on a{
+	color: #018bc0;
+}
+.crumbs li span{
+	margin: 0 10px;
+}
+</style>
+
+<div class="crumbs">
+	<ul>
+		<li><a href="{:U('Financing/index')}">{:L('币生币')}</a><span>&gt;</span></li>
+		<li class="on">{:L('理财记录')}</li>
+	</ul>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="SettingRight" style="width: 100%;">
+		<div class="titles">
+			<h3 class="fl">{:L('理财记录')}</h3>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="">{:L('项目标题')}</th>
+					<th width="">{:L('存币模式')}</th>
+					<th width="">{:L('存币类型')}</th>
+					<th width="">{:L('存币数量')}</th>
+					<th width="">{:L('利率')}</th>
+					<th width="">{:L('存入期限')}</th>
+					<th width="">{:L('累计次数')}</th>
+					<th width="">{:L('累计获利')}</th>
+					<th width="">{:L('存币时间')}</th>
+					<th width="">{:L('状态')}</th>
+					<th width="">{:L('操作')}</th>
+				</tr>
+				<volist name="list" id="vos">
+					<tr>
+						<td>{$vos['money']['name']}</td>
+						<td>{$vos['money']['type']}</td>
+						<td style="text-transform:uppercase;">{$vos['money']['coinname']}</td>
+						<td>{$vos['num']*1}</td>
+						<td>{$vos['money']['fee']}%</td>
+						<td>{$vos['money']['tian']}</td>
+						<td>{$vos['times']}</td>
+						<td>{$vos['allfee']*1}</td>
+						<td>{$vos.addtime|addtime}</td>
+						<td>
+							<eq name="vos.status" value="0"> 
+								<font color="#0096dd">{:L('已完成')}</font> 
+							<else />
+								<font color="#23a800">{:L('涨息中')}</font>
+							</eq>
+							| <a href="{:U('Financing/dlog',array('id'=>$vos['id']))}">{:L('详细记录')}</a>
+						</td>
+						<td>
+							<eq name="vos['money']['type']" value="1">
+								<eq name="vos['status']" value="0">
+									<font title="定期项目不可提前取出">--</font>
+								<else/>
+									<a href="javascript:beforeGet('{$vos[\'id\']}','{$vos[\'money\'][\'fee\']}')" style="color: green;" title="活期项目可提前取出">{:L('提前取出')}</a>
+								</eq>
+							<else/>
+								<font title="定期项目不可提前取出">--</font>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+<script>
+function beforeGet(id,fee){
+	var msg = fee ?  '提前取出本金需要支付' + fee + '% 的利息,确定提前取出?' : '确定提前提取本金?'
+	layer.confirm(msg, {
+		btn: ['确定','取消'] //按钮
+	}, function(){
+		$.post('{:U(\'/Financing/beforeGet\')}',{id:id},function(ret){
+			if(ret.status){
+				layer.msg(ret.info);
+				window.setTimeout("window.location.reload()",1000);
+			}else{
+				layer.msg(ret.info);
+			}
+		},'json');
+		layer.closeAll();
+	}, function(){
+		layer.closeAll();
+	});
+}
+</script>
+<script>
+$("title").html("{:L('理财记录')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

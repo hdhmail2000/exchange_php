@@ -1,0 +1,93 @@
+<include file="Public:header_new" />
+<link href="__PUBLIC__/layui/css/layui.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/layui/layui.js"></script>
+<style>
+    .layui-form-label{width: 150px;}
+    .botinfo{padding: 20px 0px;}
+</style>
+	<ul class="main-advert m-top100">
+		<volist name="news_list1" id="vo">
+			<li><a href="{:U('Article/detail','id='.$vo['id'])}">{$vo['title']|msubstr=0,17,'utf-8'}</a></li>
+			<span>/</span>
+		</volist>
+		<li><a href="#">{:L("更多公告")}</a></li>
+	</ul>
+<div class="usernewout">
+    
+    <div class="usncont">
+        <!-- 左侧导航 -->
+        <include file="Ptpbc:left" />
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>{:L('购买')}</h1>
+            <div class="botinfo">
+                <form class="layui-form" action="{:U('buy_action')}" method="post">
+                    <input type="hidden" name="id" value="{$data.id}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:L('购买'.$data['title'].'数量')}</label>
+                        <div class="layui-input-inline">
+                            <input id="num" type="number" name="num" min="{$data['quota'][0]}" max="{$data['quota'][1]}" value="{$data['quota'][0]}" required  lay-verify="required" placeholder="请输入购买数量" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux"> ~ <span class="price">{$data['quota'][1]}*$data['price']}</span> {$data.unit}</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:L('支付方式')}</label>
+                        <div class="layui-input-block">
+                            <volist name="data.pay_list" id="vo" key="k" >
+                                <input type="radio" name="payment" value="{$vo.payment}:{$vo.receive}" title="{:L($vo['payment'])}">
+                            </volist>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">{:L('立即提交')}</button>
+                        </div>
+                    </div>
+                </form>
+                <div style="margin-top: 20px; padding: 10px 50px; line-height: 180%; background: #EEE;">
+                    <b>{:L('交易须知')}</b><br/>
+                    {:L('在您发起交易请求后交易受到平台保护；')}<br/>
+                    {:L('四舍五入和价格的波动可能会影响最终成交的数额；')}<br/>
+                    {:L('商家向你转入币种时将依据当前币种交易率自动交易成艺库（ARTS）。')}<br/>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            layui.use('form',function () {
+                var form=layui.form;
+            })
+            window.onload = function(){
+                var Lheight = $(".usnc_left").outerHeight();
+                var Rheight = $(".usnc_right").outerHeight();
+                var Tall = Lheight > Rheight ? Lheight:Rheight
+                $(".usnc_left").outerHeight(Tall);
+                $(".usnc_right").outerHeight(Tall);
+            }
+            $('#finance_box').addClass('on');
+            $('#finance_index').addClass('on');
+            $('#num').keypress(function () {
+                $('.price').html(($(this).val()*Number("{$data.price}")).toFixed(2));
+            })
+            $('#num').change(function () {
+                if($(this).val()<Number("{$data['quota'][0]}"))$(this).val("{$data['quota'][0]}");
+                if($(this).val()>Number("{$data['quota'][1]}"))$(this).val("{$data['quota'][1]}")
+                $('.price').html(($(this).val()*Number("{$data.price}")).toFixed(2));
+            })
+            $('#num').keypress();
+            $(function($) {
+                $(".ptpbc_list_contact_merchant").hover(function () {
+                    // console.info($(this).attr('mid'));
+                    layer.tips(' <img src="__PUBLIC__/Home/images/3c459279-6da6-46df-94c0-0c6dade905b9.png" width="120">',this,{
+                        tips: [2, '#3595CC']
+                    });
+                });
+            });
+            
+        </script>
+    </div>
+</div>
+
+</div>
+
+<include file="Public:footer" />

@@ -1,0 +1,226 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('User/index')}">用户管理</a> &gt;&gt;</span>
+			<span class="h1-title">实名信息</span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('User/edit2')}" method="post" class="form-horizontal">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<!-- <tr class="controls">
+									<td class="item-label">国家区域 :</td>
+									<td>
+										<select id="area" name="area_id" class="form-control input-10x" placeholder="{:L('select_area')}">
+											<option value="0">选择国家区域</option>
+
+											<volist name="areas" id="vo">
+
+												<option value="{$vo['id']}"  <eq name="data.area_id" value="$vo['id']">selected</eq> >
+													{$vo['name_zh']} ({$vo['name_en']})
+												</option>
+											</volist>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr> -->
+								<tr class="controls">
+									<td class="item-label">UID :</td>
+									<td>
+										{$data.id}
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">用户名 :</td>
+									<td>
+										{$data.username}
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">英文昵称 :</td>
+									<td>
+										{$data.enname}
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">手机 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="mobile" value="{$data.mobile}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">手机认证时间 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="mobiletime" value="{$data['mobiletime']|addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls" style="border-top:1px solid #d0d0d0;">
+									<td class="item-label">认证级别 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="kyc_lv" style="background-color: #fff;color: #000;" value="{$data.kyc_lv}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">国籍 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="idnationality" value="{$data.idnationality}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">真实姓名 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="truename" value="{$data.truename}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">证件类型 :</td>
+									<td>
+										<select name="idtype" class="form-control input-10x">
+											<option value="1"
+											<eq name="data.idtype" value="1">selected</eq>
+											>身份证</option>
+											<option value="2"
+											<eq name="data.idtype" value="2">selected</eq>
+											>护照</option>
+											<option value="3"
+											<eq name="data.idtype" value="3">selected</eq>
+											>驾驶证</option>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">证件号码 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="idcard" style="background-color: #fff;color: #000;" value="{$data.idcard}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">证件照片 :</td>
+									<td>
+										<style>
+											.controls img{width:155px;height:110px;padding:10px;border:2px dashed #bdc3c7;}
+										</style>
+										<eq name="data.idimg1" value="">
+											<img src="__PUBLIC__/Home/ecshe_img/user_icon/idcard1.jpg" style="margin-right:12px;" onclick="showImg('__PUBLIC__/Home/ecshe_img/user_icon/idcard1.jpg');" />
+										<else />
+											<img src="/Upload/idcard/{$data.idimg1}"  style="margin-right:12px;" onclick="showImg('/Upload/idcard/{$data.idimg1}');" />
+										</eq>
+										
+										<eq name="data.idimg2" value="">
+											<img src="__PUBLIC__/Home/ecshe_img/user_icon/idcard2.jpg" style="margin-right:12px;" onclick="showImg('__PUBLIC__/Home/ecshe_img/user_icon/idcard2.jpg');" />
+										<else />
+											<img src="/Upload/idcard/{$data.idimg2}" style="margin-right:12px;" onclick="showImg('/Upload/idcard/{$data.idimg2}');" />
+										</eq>
+										
+										<eq name="data.idimg3" value="">
+											<img src="__PUBLIC__/Home/ecshe_img/user_icon/idcard3.jpg" style="margin-right:12px;" onclick="showImg('__PUBLIC__/Home/ecshe_img/user_icon/idcard3.jpg');" />
+										<else />
+											<img src="/Upload/idcard/{$data.idimg3}" style="margin-right:15px;" onclick="showImg('/Upload/idcard/{$data.idimg3}');" />
+										</eq>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label" style="padding:10px 0;color: #1B58FD;">认证驳回原因 :</td>
+									<td style="padding:10px 0;">
+										<textarea name="idcardinfo" class="form-control input-10x" style="height:120px;">{$data.idcardinfo}</textarea>
+									</td>
+									<td class="item-note" style="padding:10px 0;">填写未通过认证原因</td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label">认证状态 :</td>
+									<td>
+										<select name="idstate" class="form-control input-10x">
+											<option value="0"
+											<eq name="data.idstate" value="0">selected</eq>
+											>未提交</option>
+											<option value="1"
+											<eq name="data.idstate" value="1">selected</eq>
+											>待审核</option>
+											<option value="2"
+											<eq name="data.idstate" value="2">selected</eq>
+											>审核通过</option>
+											<option value="8"
+											<eq name="data.idstate" value="8">selected</eq>
+											>未通过</option>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label">审核时间 :</td>
+									<td>{$data.endtime|addtime}</td>
+									<td class="item-note"></td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">提交</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/>
+											</notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//提交表单
+$('#submit').click(function () {
+	$('#form').submit();
+});
+	
+function showImg(url){
+    var img = "<img src='" + url + "' />";  
+	layer.open({  
+	    type: 1,  
+	    //shade: false,
+	    title: false,
+		loseBtn: 0,
+	    area:['auto','auto'],  
+	    /*area: [img.width + 'px', img.height+'px'],  */
+		area: [img.width + 'px', '650px'],  
+		/*skin: 'layui-layer-nobg', //没有背景色*/
+		shadeClose: true,
+	    content: img, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+/*	    cancel: function () {  
+	        layer.msg('图片查看结束！', { time: 5000, icon: 6 });  
+	    }*/  
+	}); 
+}
+</script>
+<include file="Public:footer"/>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav("{:U('User/index')}");
+</script>
+</block>

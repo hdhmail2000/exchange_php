@@ -1,0 +1,1 @@
+D:\HwsHostMaster\phpweb\php55\php.exe -f  D:\wwwroot\1993.mobi_22fqiz\web\match.php

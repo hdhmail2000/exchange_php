@@ -1,0 +1,158 @@
+<include file="Public:header"/>
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/swiper-4.3.3.min.css')}">
+<style>
+	body {background:#171a25;}
+</style>
+<div class="banner">
+	<div class="banner-brief">
+		<p class="text-1 animated fadeInUp">{:L('数字资产交易平台')}</p>
+		<p class="text-2 animated fadeInUp">{:L('让交易更<span>快捷</span>')} , {:L('让资产更<span>安全</span>')}</p>
+	</div>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<volist name="banner" id="b">
+				<div class="swiper-slide">
+					<div class="icon-items animated zoomIn">
+						<span class="img_icon" style="background:url(__UPLOAD__/ad/{$b['img']}) no-repeat center;background-size: 100%;"></span>
+						<div class="text-content">
+							<p>{$b['name']}</p>
+							<p>{$b['onlinetime']|date='m月d日',###}</p>
+							<p>{$b['subhead']}</p>
+						</div>
+					</div>
+				</div>
+			</volist>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+</div>
+<ul class="main-advert">
+	<volist name="notice_list" id="vov">
+		<li><a href="{:U('Support/index/articles/cid/'.$vov['pid'].'/id/'.$vov['id'])}">{$vov['title']|msubstr=0,30,'utf-8'}</a></li>
+		<span>/</span>
+	</volist>
+	<li><a href="{:U('Support/index')}">{:L("更多公告")}</a></li>
+</ul>
+
+<div class="main-table-box5">
+	<ul class="table-tab">
+		<volist name="jiaoyiqu" id="v">
+			<li class="trade_moshi trade_qu_pai <eq name='key' value='0'>active</eq>" data="{$key}" onclick="trade_qu(this)">{$v} {:L('交易')}</li>
+		</volist>
+	</ul>
+	<ul class="table-head" id="market_coin_tabs">
+		<li style="width: 15%"><i></i>{:L('交易对')}</li>
+		<li style="width: 16%"><i></i>{:L('最新价格')}</li>
+		<li style="width: 10%">24h {:L('涨跌幅')}</li>
+		<li style="width: 16%"><i></i>24h {:L('最高价')}</li>
+		<li style="width: 16%"><i></i>24h {:L('最低价')}</li>
+		<li style="width: 20%"><i></i>24h {:L('成交量')}</li>
+		<li style="width: 7%" class="tr">{:L('操作')}<i></i></li>
+	</ul>
+	<ul class="table-item coins_list" id="coins_list"></ul>
+</div>
+
+<div class="main-summary">
+	<h2 class="title">Global Blockchain Assets Trading Platform</h2>
+	<div class="summary-content">
+		<div class="item">
+			<img src="__PUBLIC__/Home/ecshe_img/img_icon/trait_001.gif"/>
+			<h3>{:L('系统可靠')}</h3>
+			<p>{:L('保障交易的安全、稳定、高效运行')}</p>
+			<p>{:L('全球顶级人才构成的精英团队')}</p>
+		</div>
+		<div class="item">
+			<img src="__PUBLIC__/Home/ecshe_img/img_icon/trait_002.gif" />
+			<h3>{:L('资金保障')}</h3>
+			<p>{:L('银行级数据加密，动态身份验证')}</p>
+			<p>{:L('冷钱包存储，金融级架构，多重安全防护')}</p>
+		</div>
+		<div class="item">
+			<img src="__PUBLIC__/Home/ecshe_img/img_icon/trait_003.gif" />
+			<h3>{:L('极致体验')}</h3>
+			<p>{:L('充提迅速、多国语言')}</p>
+			<p>{:L('高性能撮合交易引擎，快速交易体验')}</p>
+		</div>
+		<div class="item">
+			<img src="__PUBLIC__/Home/ecshe_img/img_icon/trait_004.gif" />
+			<h3>{:L('专业服务')}</h3>
+			<p>{:L('专业的国际服务团队')}</p>
+			<p>{:L('及时响应用户问题，为您保驾护航')}</p>
+		</div>
+	</div>
+</div>
+
+<div class="box-main-warings">
+	<div class="main-warings">
+		<img src="__PUBLIC__/Home/ecshe_img/icon_waring.png" />
+		<span>{:L('数字资产是创新的投资产品，价格波动较大，具有较高的投资风险，请您投资前对数字资产充分认知，理性判断自己的投资能力，审慎做出投资决策。')}</span>
+	</div>
+</div>
+
+
+<div class="main-download">
+	<div class="title">
+		<h2>{:L("多终端覆盖")}</h2>
+		<h3>{:L("支持iOS、Android、Windows、Mac等客户端全业务功能")}</h3>
+	</div>
+	<div class="listshow">
+		<div class="list-ld">
+			<img src="__PUBLIC__/Home/ecshe_img/download-1.png" height="120" />
+			<ul>
+				<li><a onclick="Downloads()">MAC {:L("下载")}</a></li>
+				<li><a onclick="Downloads()">{:L("Win32位")} {:L("下载")}</a></li>
+				<li><a onclick="Downloads()">{:L("Win64位")} {:L("下载")}</a></li>
+			</ul>
+		</div>
+		<div class="list-rd">
+			<img src="__PUBLIC__/Home/ecshe_img/download-2.png" height="120" />
+			<ul>
+				<li><a onclick="Downloads()">IOS {:L("下载")}</a></li>
+				<li><a onclick="Downloads()">Android {:L("下载")}</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<script>
+function trends() {
+	$.getJSON('/ajax/index_b_trends?t=' + Math.random(), function (d) {
+		trends = d;
+		allcoin();
+	});
+}
+function allcoin(cb) {
+	var trade_qu_id = $('.table-tab .active').attr('data');
+	$.get('/ajax/allcoin_a/id/' + trade_qu_id + '?t=' + Math.random(), cb ? cb : function (data) {
+		var datas;
+		if (data.status == 1) { datas = data.url; }
+		renderPage(datas);
+		t = setTimeout('allcoin()', 5000);
+	}, 'json');
+}
+function renderPage(ary) {
+	var html = '';
+	for (var i in ary) {
+		ifcolor_1 = (ary[i][8] >= 0 ? 'btn-up' : 'btn-down');
+		ifcolor_2 = (ary[i][8] >= 0 ? 'icon-up' : 'icon-down');
+		html += '<li><dl><dt class="fl market" style="width: 15%"><i></i><a href="/trade/index/market/' + ary[i][9] + '/"><img src="/Upload/coin/' + ary[i][10] + '" width="22" height="22" /><span class="coin_name">' + ary[i][0] + '</span><span> / ' + ary[i][1] + '</span></a></dt><dd class="fl" style="width: 16%"><i></i>' + ary[i][2] + '</dd><dd class="fl float" style="width: 10%"><span class="' + ifcolor_1 + '"><i class="' + ifcolor_2 + '"></i>' + (parseFloat(ary[i][8]) < 0 ? '' : '+') + ((parseFloat(ary[i][8]) < 0.01 && parseFloat(ary[i][8]) > -0.01) ? "0.00" : (parseFloat(ary[i][8])).toFixed(2)) + '%</span></dd><dd class="fl" style="width: 16%"><i></i>' + ary[i][11] + '</dd><dd class="fl" style="width: 16%"><i></i>' + ary[i][12] + '</dd><dt class="fl deal" style="width: 20%"><div><p>' + ary[i][7] + ' ' + ary[i][0] + '</p><p>≈ ' + ary[i][5] + ' ' + ary[i][1] + '</p></div></dt><dd class="fl tr" style="width: 7%"><a href="/trade/index/market/' + ary[i][9] + '/"><img src="__PUBLIC__/Home/ecshe_img/icon_operation.png" /></a><i></i></dd></dl></li>';
+		
+	}
+	$('#coins_list').html(html);
+}
+function trade_qu(o){
+	$('.trade_qu_pai').removeClass('active');
+	$(o).addClass('active');
+	allcoin();
+}
+trends();
+</script>
+<script>
+function Downloads() {
+	layer.msg("{:L('敬请期待')}");
+	return false;
+}
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/ecshe_js/swiper.animate1.0.3.min.js"></script>
+<include file="Public:footer" />

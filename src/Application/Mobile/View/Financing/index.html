@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <style>
+		.back2{
+			position: absolute;
+			margin-right: 20px;
+			width: 70px!important;
+			font-size: 0.7rem!important;
+			color: #fff!important;
+			background: inherit!important;
+			text-align: right!important;
+		}
+		.back2 a{
+			color: #fff!important;
+		}
+	</style>
+</head>
+
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+        	<span class="back"><a href="javascript:history.go(-1)"></a></span>
+			{:L('币生币')}
+			<span class="back2" style="left:inherit;right:0;"><a href="{:U('Financing/log')}">理财记录</a></span>
+        </div>
+        <div class="chgbox">
+            <ul>
+                <volist name="list" id="vo">
+                    <li>
+                        <div class="jf_top">
+                            <img src="__UPLOAD__/coin/{:C('coin')[$vo['coinname']]['img']}" alt="" />&nbsp;&nbsp;{:L($vo['name'])}
+                            <a href="{:U('Financing/adds',array('id'=>$vo['id']))}" style="color: #73bee4;float: right;vertical-align: middle;line-height: 22px;">{:L('去存币')}</a>
+                        </div>
+                        <table class="jf_table">
+                            <tr>
+                            	<td style="padding-top: 10px;">{:L('存入币种')}</td>
+                                <td style="padding-top: 10px;">{:L('周期性利率')}</td>
+                                <td style="padding-top: 10px;">{:L('存入期限')}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px;"><b>{$vo['coinname']}</b></td>
+                                <td style="padding-bottom: 10px;"><b>{$vo['fee']}%</b></td>
+                                <td style="padding-bottom: 10px;"><b>{$vo['tian']}</b></td>
+                            </tr>
+                        </table>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+        <script>
+        $("#status-selectTest").change(function() {
+            var status = $("#status-selectTest option:selected").val();
+            window.location = '/Finance/mycz/status/' + status + '/.html';
+        });
+
+
+        function myczHuikuan(id) {
+            $.post("{:U('Finance/myczHuikuan')}", { id: id }, function(data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, { icon: 1 });
+                    window.location.reload();
+                } else {
+                    layer.msg(data.info, { icon: 2 });
+                }
+            }, "json");
+        }
+
+        function myczChakan(id) {
+
+            // layer.open({
+            //     title: '人民币充值',
+            //     type: 2,
+            //     area: ['650px', '500px'],
+            //     content: ["{:U('Pay/mycz')}?id=" + id, 'no']
+            // });
+            window.location = "{:U('Pay/mycz')}?id=" + id;
+
+        }
+        </script>
+    </div>
+</body>
+
+</html>

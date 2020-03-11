@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('委托管理')}/{$coin_info.title}({$coin_info.name|strtoupper=###})
+        </div>
+
+            <div class="selbox">
+                <select name="type-selectTest" id="type-selectTest">
+                 <option value="0"<eq name="type" value="0">selected</eq>>{:L('买卖')}
+                 </option>
+                 <option value="1"<eq name="type" value="1">selected</eq>>{:L('买入')}
+                 </option>
+                 <option value="2"<eq name="type" value="2">selected</eq>>{:L('卖出')}
+                 </option>
+               </select>
+                <select name="status-selectTest" id="status-selectTest" style="float: right;">
+                 <option value="0"<eq name="status" value="0">selected</eq>>{:L('状态')}
+                 </option>
+                 <option value="1"<eq name="status" value="1">selected</eq>>{:L('交易中')}
+                 </option>
+                 <option value="2"<eq name="status" value="2">selected</eq>>{:L('已完成')}
+                 </option>
+                 <option value="3"<eq name="status" value="3">selected</eq>>{:L('已撤销')}
+                 </option>
+               </select>
+            </div>
+
+
+        <div class="chgbox">
+            <ul>
+
+            <empty name="list">
+                <li>
+                    <div class="chglist_top" style="text-align: center;">
+                        <span class="state wait" style="float: none;color:#B7B6B6">
+                            {:L('暂无数据')}
+                        </span>
+                    </div>
+                </li>
+
+            <else />
+                <volist name="list" id="vo">
+                    <li>
+                        <div class="weituo_top">
+                            <!-- {$vo['demark']} -->
+                            {$vo.addtime|date='m-d H:i:s',###}
+                            <span class="state wait" style="float: right;">
+                                <eq name="vo.status" value="0">{:L('交易中')} | <a style="color: #da251d;" class="cancel" id="{$vo.id}" href="javascript:void(0);">{:L('撤销')}</a></eq> <eq name="vo.status" value="1">{:L('已完成')}</eq> <eq name="vo.status" value="2">{:L('已撤销')}</eq></span>
+                        </div>
+                        <table class="weituo_bot">
+                            <tr>
+                                <td style="padding-top: 10px;">{:L('委托价格')}</td>
+                                <td style="padding-top: 10px;">{:L('委托数量')}</td>
+                                <td style="padding-top: 10px;">{:L('已成交量')}</td>
+                                <td style="padding-top: 10px;">{:L('买入卖出')}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px;"><b>{$vo['price']|NumToStr}</b></td>
+                                <td style="padding-bottom: 10px;"><b>{$vo['num']|NumToStr}</b></td>
+                                <td style="padding-bottom: 10px;"><b>{$vo['deal']|NumToStr}</b></td>
+                                <td style="padding-bottom: 10px;">
+                                    <b>
+                                        <eq name="vo.type" value="1"> <font class="buy">{:L('买入')}</font> <else /> <font class="sell">{:L('卖出')}</font></eq>
+                                    </else>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <th>委托时间</th>
+                                <th>品种名称</th>
+                                <th>买入卖出</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo.addtime|date='m-d H:i:s',###}</td>
+                                <td>
+                                     {$coin_info.title}({$coin_info.name|strtoupper=###})
+                                </td>
+                                <td><eq name="vo.type" value="1"> <font class="buy">买入</font> <else /> <font class="sell">卖出</font></eq></td>
+                            </tr>
+                            <tr>
+                                <th>委托价格</th>
+                                <th>委托数量</th>
+                                <th>已成交量</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo['price']|NumToStr}</td>
+                                <td>{$vo['num']|NumToStr}</td>
+                                <td>{$vo['deal']|NumToStr}</td>
+                            </tr> -->
+                        </table>
+                    </li>
+                </volist>
+            </empty>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+    </div>
+<include file="Public:footer" />
+<script>
+    $("#type-selectTest,#status-selectTest").change(function(){
+        var type=$("#type-selectTest option:selected").val();
+        var status=$("#status-selectTest option:selected").val();
+        var market='{$coin_info.name}';
+        window.location='/Finance/mywt/type/'+type+'/status/'+status+'/market/'+market+'.html';
+    });
+
+    $('.cancel').click(function(){
+        var type1=$("#type-selectTest option:selected").val();
+        var status1=$("#status-selectTest option:selected").val();
+        var market1='{$coin_info.name}';
+        $.post("{:U('Trade/chexiao')}",{id : $(this).attr('id'), },function(data){
+            if(data.status==1){
+                layer.msg(data.info,{icon : 1 });
+                window.location='/Finance/mywt/type/'+type1+'/status/'+status1+'/market/'+market1+'.html';
+            }else{
+                layer.msg(data.info,{icon : 2 });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('币种提现')}/{$coin_info.name|strtoupper}
+        </div>
+
+        <div class="chgbox">
+            <ul>
+            <empty name="list">
+                <li>
+                    <div class="chglist_top" style="text-align: center;">
+                        <span class="state wait" style="float: none;color:#B7B6B6">
+                            {:L('暂无提现记录')}
+                        </span>
+                    </div>
+                </li>
+
+            <else />
+                <volist name="list" id="vo">
+                    <li>
+                        <!-- <div class="chglist_top">
+                        {$vo.username}
+                            <span class="state wait">
+                            接收地址</span>
+                        </div> -->
+                        <table class="qbtable">
+                            <tr>
+                                <td colspan="3" class="bankid">
+                                    {$vo.addtime|addtime}
+                                    <span style="float: right;">
+                                        <eq name="vo.status" value="1">
+                                            <font color="#ff8800">{:L('转出成功')} </font>
+                                            <else/>
+                                            {:L('正在处理')}
+                                        </eq>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="padding-top: 10px;">
+                                    {:L('提现币种：')}{$vo.coinname|strtoupper}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    {:L('接收地址')}：{$vo.username}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    {:L('转出数量')}：{$vo['num']}
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td colspan="3">
+                                    转出费用：{$vo['fee']}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="padding-bottom: 10px;">
+                                    实际到账：{$vo['mum']}
+                                </td>
+                            </tr> -->
+
+                            <!-- <tr>
+                                <th width="">转出数量</th>
+                                <th width="">转出费用</th>
+                                <th width="">实际到账</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo['num']}</td>
+                                <td>{$vo['fee']}</td>
+                                <td>{$vo['mum']}</td>
+                            </tr>
+                            <tr>
+                                <th width="">品种</th>
+                                <th width="">转出时间</th>
+                                <th width="">状态</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo.coinname|strtoupper}</td>
+                                <td>{$vo.addtime|addtime}</td>
+                                <td><eq name="vo.status" value="1">
+                                            <font color="#ff8800">转出成功 </font>
+                                            <else/>
+                                            正在处理
+                                        </eq></td>
+                            </tr> -->
+                        </table>
+                    </li>
+                </volist>
+            </empty>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+        <button type="button" class="addbankbut" value="" onclick="Update()" id="btn" style="border:1px solid rgba(255,255,255, .2);color:rgba(255,255,255, .5);background: transparent;outline: none;"><img src="__PUBLIC__/Mobile/images/addbank.png">{:L('提现申请')}</button>
+    </div>
+<script>
+    function Update() {
+        window.location = '/Finance/myzcadd/coin/{$coin_info.name}';
+    }
+</script>
+</body>
+</html>

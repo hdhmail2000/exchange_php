@@ -1,0 +1,115 @@
+<include file="Public:header"/>
+<style>
+	.tab-wrap ul{
+		padding-bottom: 20px;
+		overflow: hidden;
+	}
+	.tab-wrap ul li {
+		float: left;
+		margin: 0 15px 15px 15px;
+		width: 22%;
+		height: 120px;
+		border: #ecebeb 2px solid;
+		text-align: center;
+		border-radius: 10px;
+	}
+	.tab-wrap ul li:hover {
+		border: #adcfff 2px solid;
+	}
+	.tab-wrap ul li:hover h3 {
+		color: #307be4;
+	}
+	.tab-wrap ul li h3 {
+		margin-top: 30px;
+		margin-bottom: 5px;
+		font-size: 25px;
+		font-weight: 600;
+		color: #4291ff;
+	}
+	.tab-wrap ul li p {
+		font-size: 14px;
+		color: #ABABAB;
+	}
+</style>
+
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">ETH钱包高级管理</span>
+		</div>
+		<div class="tab-wrap">
+			<ul>
+				<li style="width:25%;">
+					<a target="_blank" href="https://etherscan.io/address/{$coin_info['dj_yh']}">
+						<h3>查询总钱包金额</h3>
+						<p>点击执行功能</p>
+					</a>
+				</li>
+				<li style="width:50%;">
+					<a target="_blank" href="/tokencover.php">
+						<h3 style="margin-top:20px;">ETH钱包汇总</h3>
+						<p style="margin-bottom:0;">汇总地址：{$coin_info['dj_yh']}</p>
+						<p>点击执行功能（慎重操作）</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="main-title-h">
+			<span class="h1-title">补单功能</span>
+			<span style="padding:0;font-size:16px;color:red;">（转入资产未到账进行补单）</span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Config/ethsenior')}" method="post" class="form-horizontal" >
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+                                <tr class="controls">
+                                    <td class="item-label">补单币种 :</td>
+                                    <td>
+										<select name="coins" class="form-control input-10x">
+											<volist name="coin_list" id="v">
+												<option value="{$v['name']}">{$v['title']}</option>
+											</volist>
+										</select>
+                                    </td>
+                                    <td class="item-note"></td>
+                                </tr>
+								<tr class="controls">
+									<td class="item-label">区块高度 :</td>
+									<td><input type="text" class="form-control input-10x" name="number" value=""></td>
+									<td class="item-note">以太坊区块浏览器：<a target="_blank" href="https://etherscan.io">访问</a>
+									</td>
+								</tr>
+                                
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button type="submit" class="btn btn-return" target-form="form-horizontal" id="submit" style="width:300px;">执行</button>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+
+				<script type="text/javascript">
+					//提交表单
+					$('#submit').click(function(){
+						$('#form').submit();
+					});
+				</script>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<include file="Public:footer"/>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L(C('web_name'))}
+        </div>
+        <div class="logbot">
+            <form>
+                <input type="text" placeholder="{:L('手机号码')}" id="index_username" class="logipt" onblur="usernames()" >
+                <input type="password" placeholder="{:L('登录密码')}" id="index_password" class="logipt" onblur="passwords()">
+                <input style="" type="text" id='index_ga' value="" placeholder="{:L('谷歌验证码，未绑定不用填')}" class="logipt">
+                <div class="yzmbox">
+                    <input type="text" placeholder="{:L('验证码')}" class="logipt yzmipt" id="index_verify" onblur="verifys()">
+                    <img id="codeImg reloadverifyindex" src="{:U('Verify/code')}" onclick="this.src=this.src+'?t='+Math.random()" >
+                </div>
+                <input type="button" class="logbut" value="{:L('登录')}"  onclick="upLoginIndex();">
+                <div class="phonebox">
+                    <span class="phright">
+                        <a href="{:U('Login/register')}">{:L('免费注册')}</a>
+                        <a href="{:U('Login/findpwd')}">{:L('忘记密码')}</a>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    // 检测用户名
+    function usernames(){
+        var username = $('#index_username').val();
+        if(username==""||username==null){
+            layer.tips('{:L('请输入手机号码')}','#index_username',{tips:3});
+            return false;
+        }
+    }
+    // 检测密码
+    function passwords(){
+        var password = $('#index_password').val();
+        if(password==""||password==null){
+            layer.tips('{:L('密码格式为6~16位，不含特殊符号！')}','#index_password',{tips:3});
+            return false;
+        }
+    }
+    // 检测验证码
+    function verifys(){
+        var verify = $('#index_verify').val();
+        if(verify==""||verify==null){
+            layer.tips('{:L('请输入验证码')}','#index_verify',{tips:3});
+            return false;
+        }
+    }
+
+    function upLoginIndex() {
+
+        var username = $("#index_username").val();
+        var password = $("#index_password").val();
+        var verify = $("#index_verify").val();
+        var ga = $("#index_ga").val();
+
+        if (username == "" || username == null) {
+            layer.tips('{:L('请输入手机号码')}', '#index_username', {tips: 3});
+            return false;
+        }
+        if (password == "" || password == null) {
+            layer.tips('{:L('密码格式为6~16位，不含特殊符号！')}', '#index_password', {tips: 3});
+            return false;
+        }
+        if (verify == "" || verify == null) {
+            layer.tips('{:L('请输入验证码')}', '#index_verify', {tips: 3});
+            return false;
+        }
+
+        $.post("{:U('Login/submit')}", {
+            username: username,
+            password: password,
+            ga: ga,
+            verify:verify,
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location = '/User/index';
+            } else {
+                //刷新验证码
+                $(".reloadverifyindex").click();
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+</script>
+</html>

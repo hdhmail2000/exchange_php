@@ -1,0 +1,17 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/pass.css">
+
+<div class="logsbox" style="margin-top:100px;margin-bottom:50px;">
+	<img src="__PUBLIC__/Home/ecshe_img/success.jpg">
+	<h2 style="margin:25px 0 5px 0;">{:L('注册成功')}</h2>
+	<div class="form-tips" style="font-size: 16px;">{:L('用户名')} : {$user.username}</div>
+	<div class="form-button">
+		<a class="btn btn-primary" href="{:U('User/index')}">{:L('去交易')}</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('#menu_top_index').addClass('current');
+	$('title').html('{:L('注册成功')} - '+'{:L(C('web_title'))}');
+</script>
+<include file="Public:footer_pass" />

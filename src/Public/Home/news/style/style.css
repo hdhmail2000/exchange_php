@@ -1,0 +1,3790 @@
+@charset "utf-8";
+.outlogbox {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    padding: 50px 0;
+}
+
+.outlogbox .logbox {
+    width: 840px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.outlogbox .logbox h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.outlogbox .logbox .desc {
+    font-size: 14px;
+    color: #73bee4;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.outlogbox .logbox .inbox {
+    width: 838px;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #eee;
+    margin-top: 30px;
+    padding: 30px 0;
+}
+
+.outlogbox .logbox .inbox .boxrow {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.outlogbox .logbox .inbox .boxrow label {
+    width: 260px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    margin-right: 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    line-height: 40px;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox {
+    width: 360px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .iptbox {
+    width: 358px;
+    height: 38px;
+    border: 1px solid #d6dbdd;
+    outline: none;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .iptbox.yzm {
+    width: 168px;
+    vertical-align: top;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .yzmimg {
+    display: inline-block;
+    width: 170px;
+    height: 40px;
+    margin-left: 16px;
+    vertical-align: top;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .yzmimg img {
+    width: 170px;
+    height: 40px;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox.nolabel {
+    margin-left: 280px;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .iptbut {
+    width: 360px;
+    height: 40px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: #73bee4;
+    font-size: 16px;
+    color: #fff;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .linkbox {
+    text-align: right;
+    font-size: 14px;
+    color: #999;
+    line-height: 32px;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .linkbox a {
+    color: #999;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .linkbox a.yellow {
+    color: #73bee4;
+}
+
+.outlogbox .logbox .regtop {
+    width: 500px;
+    height: 55px;
+    margin: 0 auto;
+    background: url(../images/regbg.png) center 12px no-repeat;
+}
+
+.outlogbox .logbox .regtop ul li {
+    float: left;
+    width: 125px;
+    height: 55px;
+    text-align: center;
+}
+
+.outlogbox .logbox .regtop ul li .topnumb {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #e6e6e6;
+    text-align: center;
+    line-height: 24px;
+    font-size: 14px;
+    color: #fff;
+    background: #fff url(../images/graybg.png) center no-repeat;
+}
+
+.outlogbox .logbox .regtop ul li p {
+    text-align: center;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 28px;
+}
+
+.outlogbox .logbox .regtop ul li .topnumb img {
+    vertical-align: middle;
+}
+
+.outlogbox .logbox .regtop ul li.on .topnumb {
+    background: #fff url(../images/yellowbg.png) center no-repeat;
+}
+
+.outlogbox .logbox .regtop ul li.on p {
+    color: #73bee4;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .linkbox.textleft {
+    text-align: left;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .getyzm {
+    width: 170px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background: #039400;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+}
+
+.outlogbox .logbox .inbox .boxrow .rightbox .rednotice {
+    font-size: 12px;
+    color: #ff0000;
+    line-height: 16px;
+    margin-top: 3px;
+}
+
+.outlogbox .logbox .inbox .regsucc {
+    text-align: center;
+    font-size: 30px;
+    color: #73bee4;
+}
+
+.outlogbox .logbox .inbox .perinfo {
+    width: 496px;
+    height: auto;
+    padding-left: 342px;
+    overflow: hidden;
+    margin-top: 30px;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.outlogbox .logbox .inbox .todeal {
+    display: block;
+    width: 150px;
+    height: 40px;
+    background: #73bee4;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    line-height: 40px;
+}
+
+.outlogbox .logbox .inbox .todeal a {
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.outlogbox .logbox .inbox .todeal:hover {
+    opacity: 0.9;
+    transition: all 0.2s;
+}
+
+.usermain {
+    width: 1198px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin: 50px auto;
+    border: 1px solid #eee;
+    min-height: 700px;
+    background: url(../images/botbg.png) left bottom no-repeat;
+}
+
+.usermain .userm_left {
+    width: 298px;
+    float: left;
+    position: relative;
+    z-index: 1;
+}
+
+.userm_right {
+    width: 899px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    min-height: 660px;
+    padding-bottom: 40px;
+    border-left: 1px solid #eee;
+}
+
+.usermain .userm_left .usemenu li {
+    padding-left: 20px;
+    width: 278px;
+    height: 59px;
+    border-bottom: 1px solid #eee;
+    line-height: 59px;
+    font-size: 18px;
+    color: #999;
+}
+
+.usermain .userm_left .usemenu li .icon {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 26px;
+    height: 28px;
+    background: #ccc;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 28px;
+    margin-right: 10px;
+}
+
+.usermain .userm_left .usemenu li .icon img {
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+.usermain .userm_left .usemenu li a {
+    color: #999;
+}
+
+.usermain .userm_left .usemenu li.on .icon {
+    background: #73bee4;
+}
+
+.usermain .userm_left .usemenu li.on a {
+    color: #73bee4;
+    font-weight: 900;
+}
+
+.usermain .userm_left .usemenu li.on {
+    background: #fff url(../images/yellowarrow.png) 267px center no-repeat;
+    padding-right: 1px;
+}
+
+.userm_right .urcont {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.userm_right .urcont h2 {
+    color: #73bee4;
+    line-height: 59px;
+    border-bottom: 1px solid #eee;
+}
+
+.userm_right .urcont .topinfo {
+    width: 858px;
+    height: 102px;
+    border: 1px solid #eee;
+    margin-top: 10px;
+    padding: 20px 0;
+    box-shadow: 0 0 2px #f6f6f6;
+}
+
+.userm_right .urcont .topinfo ul li {
+    display: table-cell;
+    width: 200px;
+    height: 102px;
+    vertical-align: middle;
+}
+
+.userm_right .urcont .topinfo ul li.cnyleft {
+    width: 120px;
+    border-right: 1px solid #eee;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    line-height: 20px;
+}
+
+.userm_right .urcont .topinfo ul li.cnyleft .cnyicon {
+    display: block;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    margin: 0 auto;
+}
+
+.userm_right .urcont .topinfo ul li.cnyleft .cnyicon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 4px;
+}
+
+.userm_right .urcont .topinfo ul li.moneyinfo {
+    width: 245px;
+    height: 45px;
+    background: url(../images/moneyright.png) right center no-repeat;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #666;
+}
+
+.userm_right .urcont .topinfo ul li.moneyinfo h3 {
+    line-height: 26px;
+}
+
+.userm_right .urcont .topinfo ul li.moneyinfo .little {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.gray {
+    color: #ccc;
+}
+
+.black {
+    color: #333;
+}
+
+.userm_right .urcont .topinfo ul li:last-child {
+    background: transparent;
+}
+
+.userm_right .urcont .botinfo {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.userm_right .urcont .botinfo table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userm_right .urcont .botinfo table tr th {
+    height: 43px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.userm_right .urcont .botinfo table tr th.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .botinfo table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    text-align: left;
+    padding: 10px 0;
+    padding-left: 20px;
+    transition: all 0.3s;
+}
+
+.userm_right .urcont .botinfo table tr td.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .botinfo table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+}
+
+.userm_right .urcont .botinfo table tr td .cnybox img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 1px;
+}
+
+.userm_right .urcont .botinfo table tr td .todeal {
+    transition: all 0.3s;
+    display: block;
+    width: 58px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #73bee4;
+    line-height: 28px;
+    text-align: center;
+    font-size: 14px;
+    color: #73bee4;
+}
+
+.userm_right .urcont .botinfo table tr:hover td {
+    background: #fff5e5;
+    transition: all 0.3s;
+}
+
+.userm_right .urcont .botinfo table tr:hover td .todeal {
+    transition: all 0.3s;
+    background: #ff9900;
+    border: 1px solid #ff9900;
+    color: #fff;
+}
+
+
+
+
+
+
+/***********recharge*******************/
+
+.userm_right .urcont .rechtop {
+    width: 860px;
+    height: auto;
+    border-bottom: 1px solid #eee;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.userm_right .urcont .rechtop .rechtop_title {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.userm_right .urcont .rechtop .h2 {
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    color: #333;
+    line-height: 24px;
+}
+
+.userm_right .urcont .rechtop .little {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.userm_right .urcont .rechtop .price {
+    font-size: 14px;
+    color: #666;
+}
+
+.userm_right .urcont .rechmid {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.userm_right .urcont .rechmid .rechipt_box {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.userm_right .urcont .rechmid .rechipt_box label {
+    float: left;
+    width: 90px;
+    margin-right: 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    line-height: 40px;
+    vertical-align: top;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox {
+    width: 360px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox .paysel {
+    width: 360px;
+    height: 40px;
+    border: 1px solid #d6dbdd;
+    outline: none;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox .rechipt {
+    width: 348px;
+    height: 38px;
+    border: 1px solid #d6dbdd;
+    font-size: 14px;
+    color: #666;
+    text-indent: 10px;
+    padding-right: 10px;
+    outline: none;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox .rechipt.text_right {
+    text-align: right;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .notice {
+    display: table-cell;
+    width: 365px;
+    height: 40px;
+    overflow: hidden;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ff9900;
+    padding-left: 10px;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox.mrl110 {
+    margin-left: 110px;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox .rechbut {
+    width: 360px;
+    height: 40px;
+    background: #73bee4;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+}
+
+.userm_right .urcont .rech_notice {
+    width: 820px;
+    height: auto;
+    overflow: hidden;
+    padding: 25px 20px;
+    background: #ffebcc;
+    margin-top: 20px;
+}
+
+.userm_right .urcont .rech_notice h4 {
+    font-weight: normal;
+    color: #ff9900;
+    margin-bottom: 10px;
+}
+
+.userm_right .urcont .rech_notice p {
+    font-size: 14px;
+    color: #ff9900;
+    line-height: 24px;
+}
+
+.userm_right .urcont .rechtable {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.userm_right .urcont .rechtable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userm_right .urcont .rechtable table tr th {
+    height: 43px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.userm_right .urcont .rechtable table tr th.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .rechtable table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    padding: 10px 0;
+    padding-left: 20px;
+    transition: all 0.3s;
+}
+
+.userm_right .urcont .rechtable table tr td.last {
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .rechtable table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+}
+
+.userm_right .urcont .rechtable table tr td .cnybox img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 1px;
+}
+
+.userm_right .urcont .rechtable table tr td .todetail {
+    font-size: 12px;
+    color: #73bee4;
+}
+
+.userm_right .urcont .rechtable table tr th select {
+    width: 98px;
+    height: 30px;
+    border: 1px solid #eee;
+    text-indent: 5px;
+    font-size: 14px;
+    color: #666;
+    outline: none;
+}
+
+.doing {
+    color: #0081d3;
+}
+
+.success {
+    color: #73bee4;
+}
+
+.done {
+    color: #ff9900;
+}
+
+.tan_recharge {
+    display: none;
+    width: 760px;
+    padding: 0 20px;
+    height: 530px;
+    background: #fff;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.tan_recharge .tan_title {
+    width: 760px;
+    height: 60px;
+    border-bottom: 1px solid #eee;
+}
+
+.tan_recharge .tan_title h4 {
+    font-weight: normal;
+    color: #666;
+    line-height: 60px;
+    float: left;
+}
+
+.tan_recharge .tan_title .closebut {
+    display: block;
+    float: right;
+    line-height: 60px;
+    cursor: pointer;
+}
+
+.tan_recharge .tan_title .closebut img {
+    vertical-align: middle;
+}
+
+.tan_recharge h3 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+.tan_recharge .notice {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    padding: 13px 0;
+    background: #fff5e5;
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.tan_recharge .tan_info {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.tan_recharge .tan_info .tan_info_left {
+    float: left;
+    width: 400px;
+    height: auto;
+    overflow: hidden;
+    font-size: 16px;
+    color: #999;
+    margin-left: 110px;
+}
+
+.tan_recharge .tan_info .tan_info_left p {
+    margin-bottom: 13px;
+}
+
+.tan_recharge .tan_info .tan_info_left p b {
+    margin-left: 25px;
+}
+
+.tan_recharge .tan_info .tan_info_right {
+    width: 110px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    line-height: 25px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    word-spacing: -1px;
+}
+
+.tan_recharge .tan_info .tan_info_right img {
+    width: 102px;
+    height: 102px;
+}
+
+.tan_recharge .tan_bot {
+    width: 608px;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #eee;
+    margin-top: 25px;
+    padding: 25px 70px;
+    font-size: 14px;
+    color: #999;
+    line-height: 22px;
+}
+
+.tan_recharge .donepay {
+    display: block;
+    width: 160px;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 15px;
+    background: #0081d3;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox .rechipt.halfipt {
+    width: 168px;
+}
+
+.userm_right .urcont .rechmid .rechipt_box .iptbox .yzmbut {
+    width: 170px;
+    height: 40px;
+    border: none;
+    background: #f6f6f6;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    float: right;
+    outline: none;
+}
+
+.orange {
+    color: #ff9900;
+}
+
+.userm_right .urcont .withtable {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.userm_right .urcont .withtable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userm_right .urcont .withtable table tr th {
+    height: 43px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.userm_right .urcont .withtable table tr th.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .withtable table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    padding: 10px 0;
+    padding-left: 20px;
+    transition: all 0.3s;
+}
+
+.userm_right .urcont .withtable table tr td.last {
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .withtable table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+}
+
+.userm_right .urcont .withtable table tr td .cnybox img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 1px;
+}
+
+.userm_right .urcont .withtable table tr td .todetail {
+    font-size: 12px;
+    color: #73bee4;
+}
+
+.userm_right .urcont .withtable table tr th select {
+    width: 98px;
+    height: 30px;
+    border: 1px solid #eee;
+    text-indent: 5px;
+    font-size: 14px;
+    color: #666;
+    outline: none;
+}
+
+.userm_right .urcont .rechtop .whichcoin {
+    width: 200px;
+    height: 40px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    color: #666;
+}
+
+.userm_right .urcont .rechtop .whichcoin img {
+    width: 22px;
+}
+
+.userm_right .urcont .rechtop .selectwrap {
+    width: 200px;
+    height: 40px;
+    font-size: 14px;
+    color: #666;
+    margin: 0 auto;
+    position: relative;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.userm_right .urcont .rechtop .selectwrap .selul {
+    width: 160px;
+    height: 38px;
+    border: none;
+    background: #fff;
+    outline: none;
+}
+
+.userm_right .urcont .rechtop .selectwrap .select {
+    width: 188px;
+    padding-left: 10px;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: url(../images/selbut.png) 175px center no-repeat;
+}
+
+.userm_right .urcont .rechtop .selectwrap .select img {
+    width: 22px;
+    vertical-align: middle;
+}
+
+.userm_right .urcont .rechtop .selectwrap ul {
+    width: 198px;
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 32;
+}
+
+.userm_right .urcont .rechtop .selectwrap ul li {
+    height: 32px;
+    line-height: 32px;
+    background: #fff;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.userm_right .urcont .rechtop .selectwrap ul li:hover {
+    background: #f0f0f0;
+}
+
+.userm_right .urcont .rechtop .selectwrap ul li img {
+    width: 22px;
+    vertical-align: middle;
+}
+
+.userm_right .urcont .outtable {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.userm_right .urcont .outtable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userm_right .urcont .outtable table tr th {
+    height: 43px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.userm_right .urcont .outtable table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    padding: 10px 0;
+    padding-left: 20px;
+    transition: all 0.3s;
+}
+
+.userm_right .urcont .outtable table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+}
+
+.userm_right .urcont .outtable table tr td .cnybox img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 1px;
+}
+
+.userm_right .urcont .outtable table tr td .todetail {
+    font-size: 12px;
+    color: #73bee4;
+}
+
+.userm_right .urcont .outtable table tr th select {
+    width: 98px;
+    height: 30px;
+    border: 1px solid #eee;
+    text-indent: 5px;
+    font-size: 14px;
+    color: #666;
+    outline: none;
+}
+
+.userm_right .urcont .entrustable {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.userm_right .urcont .entrustable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userm_right .urcont .entrustable table tr th {
+    height: 43px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.userm_right .urcont .entrustable table tr th.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .entrustable table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    padding: 10px 0;
+    padding-left: 20px;
+    transition: all 0.3s;
+}
+
+.userm_right .urcont .entrustable table tr td.last {
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.userm_right .urcont .entrustable table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+}
+
+.userm_right .urcont .entrustable table tr td .cnybox img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 1px;
+}
+
+.userm_right .urcont .entrustable table tr td .todetail {
+    font-size: 12px;
+    color: #73bee4;
+}
+
+.userm_right .urcont .entrustable table tr th select {
+    width: 98px;
+    height: 30px;
+    border: 1px solid #eee;
+    text-indent: 5px;
+    font-size: 14px;
+    color: #666;
+    outline: none;
+}
+
+.userm_right .urcont .entrustable table tr th select.wd70 {
+    width: 70px;
+}
+
+.buy {
+    color: #73bee4;
+}
+
+.sell {
+    color: #029401;
+}
+
+.finish {
+    color: #999;
+}
+
+.cancel {
+    color: #8093ff;
+	font-weight: 400;
+}
+
+
+
+/*******************news*********************************/
+
+.newmain {
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    margin: 50px auto;
+}
+
+.newmain .nwmleft .textcenter {
+    text-align: center;
+}
+
+.newmain .nwmleft {
+    width: 870px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+}
+
+.newmain .nwmleft h2 {
+    color: #666;
+    margin-bottom: 35px;
+}
+
+.newmain .nwmleft .pubdate {
+    font-size: 14px;
+    color: #999;
+    margin-top: -20px;
+}
+
+.newmain .nwmleft .nwdtsbox {
+    font-size: 16px;
+    color: #666;
+    line-height: 25px;
+    margin-top: 10px;
+    padding-left: 80px;
+}
+
+.newmain .nwmleft .nwdtsbox p {
+    margin: 10px 0;
+}
+
+.newmain .nwmleft .nwdtsbox img {
+    max-width: 100%;
+}
+
+.newmain .nwmleft .nwlist li {
+    width: 830px;
+    height: 157px;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    background: #f6f6f6;
+    overflow: hidden;
+}
+
+.newmain .nwmleft .nwlist li h3 {
+    margin-top: 15px;
+}
+
+.newmain .nwmleft .nwlist li h3 a {
+    color: #666;
+}
+
+.newmain .nwmleft .nwlist li .time {
+    font-size: 14px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+.newmain .nwmleft .nwlist li .desc {
+    font-size: 16px;
+    color: #999;
+    line-height: 24px;
+    margin-top: 20px;
+}
+
+.newmain .nwmleft .nwlist li .desc a {
+    color: #999;
+}
+
+.newmain .nwmleft .nwlist li:hover {
+    background: #73bee4;
+}
+
+.newmain .nwmleft .nwlist li:hover *,
+.newmain .nwmleft .nwlist li:hover * a {
+    color: #fff;
+}
+
+.newmain .nwmleft .morelist {
+    transition: all 0.2s;
+    display: block;
+    width: 160px;
+    height: 40px;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 40px;
+    background: #f6f6f6;
+    font-size: 16px;
+    color: #999;
+    text-align: center;
+    line-height: 40px;
+}
+
+.newmain .nwmleft .morelist a {
+    color: #999;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.newmain .nwmleft .morelist:hover {
+    opacity: 0.8;
+    transition: all 0.2s;
+}
+
+.newmain .nwmright {
+    width: 298px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    min-height: 500px;
+    padding-bottom: 150px;
+    border: 1px solid #eee;
+    background: url(../images/botbg.png) left bottom no-repeat;
+    position: relative;
+    left: -110px;
+    top: 20px;
+}
+
+.newmain .nwmright h3 {
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.newmain .nwmright h3 img {
+    vertical-align: middle;
+    margin: 0 10px 0 20px;
+}
+
+.newmain .nwmright .nwmenu li {
+    width: 100%;
+    height: 43px;
+    border-bottom: 1px solid #eee;
+    line-height: 43px;
+    font-size: 14px;
+}
+
+.newmain .nwmright .nwmenu li a {
+    color: #666;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.newmain .nwmright .nwmenu li .img2 {
+    display: none;
+}
+
+.newmain .nwmright .nwmenu li .img3 {
+    display: none;
+}
+
+.newmain .nwmright .nwmenu li.semenu1:hover .img1 {
+    display: none;
+}
+
+.newmain .nwmright .nwmenu li.semenu1:hover .img2 {
+    display: none;
+}
+
+.newmain .nwmright .nwmenu li.semenu1:hover .img3 {
+    display: inline-block;
+    *display: block;
+    *zoom: 1;
+}
+
+.newmain .nwmright .nwmenu li img {
+    vertical-align: middle;
+    width: 20px;
+    margin: 0 10px 0 40px;
+}
+
+.newmain .nwmright .nwmenu li:hover,
+.newmain .nwmright .nwmenu li.on {
+    background: #73bee4;
+}
+
+.newmain .nwmright .nwmenu li:hover .img2,
+.newmain .nwmright .nwmenu li.on .img2 {
+    display: inline-block;
+}
+
+.newmain .nwmright .nwmenu li:hover .img1,
+.newmain .nwmright .nwmenu li.on .img1 {
+    display: none;
+}
+
+.newmain .nwmright .nwmenu li:hover a,
+.newmain .nwmright .nwmenu li.on a {
+    color: #fff;
+}
+
+.newmain .nwmright .nwmenu .botmenu ul li {
+    text-indent: 75px;
+}
+
+
+
+
+
+
+/*******************************deal*********************************************/
+
+.dealtop {
+    width: 1198px;
+    height: 105px;
+    border: 1px solid #eee;
+    border-top: none;
+    margin: 0 auto;
+    padding: 20px 0;
+    box-shadow: 0 2px 2px #f6f6f6;
+    overflow: hidden;
+}
+
+.dealtop .first {
+    width: 120px;
+    height: 104px;
+    float: left;
+    border-right: 1px solid #eee;
+}
+
+.dealtop .first .topimg {
+    display: block;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+}
+
+.dealtop .first .topimg img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 4px;
+}
+
+.dealtop .first p {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    line-height: 22px;
+}
+
+.dealtop .td {
+    width: 153px;
+    height: 104px;
+    display: table-cell;
+    vertical-align: middle;
+    background: url(../images/moneyright.png) right center no-repeat;
+}
+
+.dealtop .td .title {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.dealtop .td h3 {
+    text-align: center;
+    color: #999;
+    margin-top: 10px;
+}
+
+.dealtop .td h3 .little {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.dealtop .td h3.yellow {
+    color: #ff9900;
+}
+
+.dealtop .td:last-child {
+    background: transparent;
+}
+
+.dealtop .td h3.orange {
+    /*color: #73bee4;*/
+    color: #f90d2e;
+}
+
+.dealtop .td h3.green {
+    color: #039400;
+}
+
+.graphicbox {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 26px;
+    margin-bottom: 30px;
+}
+
+.graphicbox .graphd {
+    width: 1200px;
+    height: 38px;
+    border-bottom: 2px solid #eee;
+}
+
+.graphicbox .graphd ul li {
+    float: left;
+    width: 130px;
+    height: 40px;
+    line-height: 38px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: #999;
+}
+
+.graphicbox .graphd ul li.on {
+    background: url(../images/tdon.png) bottom center no-repeat;
+    font-weight: 900;
+    color: #73bee4;
+}
+
+.graphicbox .grapbd {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 10px;
+    min-height: 300px;
+}
+
+.graphicbox .grapbd ul li {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.graphicbox .grapbd ul li img {
+    max-width: 100%;
+}
+
+.captial_box {
+    width: 1198px;
+    height: 58px;
+    border: 1px solid #eee;
+    margin: 0 auto;
+}
+
+.captial_box h3 {
+    float: left;
+    width: 108px;
+    height: 58px;
+    background: url(../images/capitalbg.png) right center no-repeat;
+    line-height: 58px;
+    color: #666;
+    padding-left: 20px;
+}
+
+.captial_box ul {
+    float: left;
+    width: 1070px;
+    height: 58px;
+}
+
+.captial_box ul li {
+    float: left;
+    width: 204px;
+    padding-left: 10px;
+    height: 58px;
+    line-height: 58px;
+    font-size: 14px;
+    color: #666;
+}
+
+.green {
+    color: #039400;
+}
+
+.dealbot {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.dealbot .dealb_left {
+    width: 870px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+}
+
+.dealbot .dealb_right {
+    width: 308px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    border: 1px solid #eee;
+}
+
+.dealbot .dealb_left .buy_sell_box {
+    width: 870px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box {
+    width: 378px;
+    height: 430px;
+    padding: 0 20px;
+    float: left;
+    border: 1px solid #f2a679;
+    background: #fef6f2;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box h3 {
+    height: 60px;
+    line-height: 60px;
+    color:#f90d2e;
+    border-bottom: 1px solid #f1e9e6;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box h3 img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox {
+    width: 378px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox label {
+    width: 72px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    font-size: 14px;
+    line-height: 36px;
+    color: #666;
+    text-align: right;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox .rightbox {
+    width: 306px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    line-height: 36px;
+    font-size: 14px;
+    color: #999;
+    position: relative;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox .rightbox .dts {
+    display: block;
+    float: right;
+    color: #73bee4;
+    cursor: pointer;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox .rightbox .rightipt {
+    width: 304px;
+    height: 34px;
+    border: 1px solid #eee;
+    text-indent: 10px;
+    outline: none;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox .rightbox .rightipt.pasipt {}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox .rightbox .setbox {
+    width: 40px;
+    height: 36px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
+    background: url(../images/passwordicon.png) center no-repeat;
+    cursor: pointer;
+}
+
+.dealbot .dealb_left .buy_sell_box .buybut {
+    width: 378px;
+    height: 40px;
+    background: #73bee4;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 12px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box.sell_box {
+    width: 378px;
+    height: 430px;
+    padding: 0 20px;
+    float: right;
+    border: 1px solid #7bc679;
+    background: #f2faf2;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box h3.green {
+    color: #039400;
+}
+
+.dealbot .dealb_left .buy_sell_box .sellbut {
+    width: 378px;
+    height: 40px;
+    background: #039400;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 12px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.dealbot .dealb_left .deal_record {
+    width: 868px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 30px;
+    border: 1px solid #eee;
+}
+
+.dealbot .dealb_left .deal_record h3 {
+    color: #666;
+    line-height: 58px;
+}
+
+.dealbot .dealb_left .deal_record h3 img {
+    vertical-align: middle;
+    margin: 0 10px 0 20px;
+}
+
+.dealbot .dealb_left .deal_record table {
+    width: 868px;
+    table-layout: fixed;
+    word-break: break-all;
+}
+
+.dealbot .dealb_left .deal_record table tr th {
+    background: #f6f6f6;
+    font-size: 14px;
+    color: #666;
+    line-height: 43px;
+    border-top: 1px solid #eee;
+}
+
+.dealbot .dealb_left .deal_record table tr td {
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.dealbot .dealb_left .deal_record table tr.buy td {
+    color: #f90d2e;
+    /*color: #73bee4;*/
+}
+
+.dealbot .dealb_left .deal_record table tr.sell td {
+    color: #039400;
+}
+
+.dealbot .dealb_right h3 {
+    color: #666;
+    line-height: 58px;
+    color: #666;
+}
+
+.dealbot .dealb_right h3 img {
+    vertical-align: middle;
+    margin: 0 10px 0 20px;
+}
+
+.dealbot .dealb_right table {
+    width: 308px;
+    table-layout: fixed;
+    word-break: break-all;
+}
+
+.dealbot .dealb_right table tr th {
+    background: #f6f6f6;
+    font-size: 14px;
+    color: #666;
+    line-height: 43px;
+    border-top: 1px solid #eee;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.dealbot .dealb_right table tr td {
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 10px 0;
+    padding-left: 5px;
+    text-align: left;
+}
+
+.dealbot .dealb_right table tr.buy td {
+    color: #f90d2e;
+}
+
+.dealbot .dealb_right table tr.sell td {
+    color: #039400;
+}
+
+
+
+
+
+
+/**************************拖拽进度条****************************************/
+
+ul.roll {
+    width: 260px;
+    margin-top: 16px;
+    float: left;
+}
+
+.scale_panel {
+    color: #999;
+    width: 250px;
+    position: absolute;
+    line-height: 18px;
+    left: 3px;
+    top: -0px;
+}
+
+.scale_panel .r {
+    float: right;
+}
+
+.scale span {
+    background: url(../images/scroll.png) no-repeat;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    left: -2px;
+    top: -3px;
+    cursor: pointer;
+}
+
+.scale {
+    background-color: #eee;
+    width: 250px;
+    height: 6px;
+    position: relative;
+    font-size: 0px;
+    border-radius: 6px;
+}
+
+.scale div {
+    background-repeat: repeat-x;
+    background-color: #73bee4;
+    width: 0px;
+    position: absolute;
+    height: 6px;
+    width: 0;
+    left: 0;
+    bottom: 0;
+    border-radius: 6px;
+}
+
+.roll li {
+    font-size: 12px;
+    position: relative;
+    list-style: none;
+}
+
+.dealbot .dealb_left .buy_sell_box .buy_box .iptbox .rightbox .fright {
+    float: right!important;
+    font-size: 14px;
+    color: #999;
+}
+
+.scale div.greenbar {
+    background: #039400;
+}
+
+
+
+
+
+
+/*********************个人中心新*************************************/
+
+.usernewout {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+	padding-top: 50px;
+    padding-bottom: 50px;
+    background: #f6f6f6;
+}
+
+.usernewout .titlenotice {
+    text-align: center;
+    font-size: 12px;
+    color: #73bee4;
+    line-height: 40px;
+}
+
+.usernewout .usncont {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.usernewout .usncont .usnc_left {
+    float: left;
+    width: 180px;
+    height: auto;
+    overflow: hidden;
+    background: #fff;
+    padding-bottom: 50px;
+}
+
+.usernewout .usncont .usnc_left .ulmenubox {
+    width: 180px;
+    height: auto;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+}
+
+.usernewout .usncont .usnc_left .ulmenubox h4 {
+    line-height: 62px;
+    color: #666;
+    font-weight: normal;
+}
+
+.usernewout .usncont .usnc_left .ulmenubox h4 img {
+    vertical-align: middle;
+    margin: 0 10px 0 20px;
+}
+
+.usernewout .usncont .usnc_left .ulmenubox ul li {
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.usernewout .usncont .usnc_left .ulmenubox ul li a {
+    color: #666;
+}
+
+.usernewout .usncont .usnc_left .ulmenubox ul li.on {
+    background: rgba(0, 0, 0, .1);
+}
+
+.usernewout .usncont .usnc_left .ulmenubox ul li.on a {
+    color: #73bee4;
+    font-weight: 900;
+}
+
+.usernewout .usncont .usnc_right {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    background: #fff;
+    min-height: 500px;
+    padding: 0 30px;
+    padding-bottom: 50px;
+}
+
+.usernewout .usncont .usnc_right h1 {
+    color: #394aa9;
+    line-height: 63px;
+    border-bottom: 1px solid #eee;
+    font-size: 17px;
+}
+
+.usernewout .usncont .usnc_right .topinfo {
+    width: 928px;
+    height: 102px;
+    border: 1px solid #eee;
+    margin-top: 10px;
+    padding: 20px 0;
+    box-shadow: 0 0 2px #f6f6f6;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li {
+    display: table-cell;
+    width: 200px;
+    height: 102px;
+    vertical-align: middle;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.cnyleft {
+    width: 120px;
+    border-right: 1px solid #eee;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    line-height: 20px;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.cnyleft .cnyicon {
+    display: block;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    margin: 0 auto;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.cnyleft .cnyicon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 4px;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.moneyinfo {
+    width: 245px;
+    height: 45px;
+    background: url(../images/moneyright.png) right center no-repeat;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #666;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.moneyinfo h3 {
+    line-height: 26px;
+    margin-top: 6px;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.moneyinfo .little {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.usernewout .usncont .usnc_right .topinfo ul li.last {
+    width: 330px;
+    background: transparent;
+}
+
+.usernewout .usncont .usnc_right .botinfo {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.usernewout .usncont .usnc_right .botinfo table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr th {
+    height: 50px;
+    background: #118fff;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 900;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr th.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    color: #5a5a5a;
+    text-align: left;
+    padding: 10px 0;
+    padding-left: 20px;
+    transition: all 0.3s;
+    vertical-align: middle;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr td.last {
+    padding: 0px;
+    text-align: center!important;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr td img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr td .todeal {
+    font-size: 14px;
+    color: #73bee4;
+    cursor: pointer;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr:hover td {
+    background: #fff5e5;
+    transition: all 0.3s;
+}
+
+.usernewout .usncont .usnc_right .botinfo table tr td .ft12 {
+    font-size: 14px;
+}
+
+
+
+
+
+
+/*******************************了解恒金币*************************************/
+
+.abtmain {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.abtmain {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 26px;
+    margin-bottom: 50px;
+}
+
+.abtmain .abthd {
+    width: 1200px;
+    height: 38px;
+    border-bottom: 2px solid #eee;
+}
+
+.abtmain .abthd ul li {
+    float: left;
+    width: 130px;
+    height: 40px;
+    line-height: 38px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: #999;
+}
+
+.abtmain .abthd ul li a {
+    color: #999;
+}
+
+.abtmain .abthd ul li.on {
+    background: url(../images/tdon.png) bottom center no-repeat;
+    font-weight: 900;
+    color: #73bee4;
+}
+
+.abtmain .abthd ul li.on a {
+    font-weight: 900;
+    color: #73bee4;
+}
+
+.abtmain .abtbd {
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 10px;
+    min-height: 300px;
+}
+
+
+
+
+
+
+/* .abtmain .abtbd ul li{width:100%;height:auto;overflow:hidden;} */
+
+.abtmain .abtbd ul li img {
+    max-width: 100%;
+}
+
+.abtdts {
+    width: 1160px;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #eee;
+    padding: 0 19px;
+}
+
+.abtdts .abtdts_top {
+    width: 1160px;
+    height: auto;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+}
+
+.abtdts .abtdts_top .title_top h4 {
+    color: #666;
+    float: left;
+    line-height: 30px;
+}
+
+.abtdts .abtdts_top .title_top {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.abtdts .abtdts_top .title_top .rightbut {
+    width: 400px;
+    height: 30px;
+    float: right;
+    text-align: right;
+}
+
+.abtdts .abtdts_top .title_top .rightbut ul {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.abtdts .abtdts_top .title_top .rightbut ul li {
+    float: left;
+    width: 118px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    border: 1px solid #eee;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+.abtdts .abtdts_top .title_top .rightbut ul li a {
+    color: #73bee4;
+    transition: all 0.2s;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.abtdts .abtdts_top .title_top .rightbut ul li:hover,
+.abtdts .abtdts_top .title_top .rightbut ul li.on {
+    transition: all 0.2s;
+    border: 1px solid #73bee4;
+    background: #73bee4;
+}
+
+.abtdts .abtdts_top .title_top .rightbut ul li:hover a,
+.abtdts .abtdts_top .title_top .rightbut ul li.on a {
+    color: #fff;
+    transition: all 0.2s;
+}
+
+.abtdts .abtdts_top .title_bot {
+    width: 1160px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 15px;
+    padding-bottom: 20px;
+}
+
+.abtdts .abtdts_top .title_bot .leftimg {
+    float: left;
+    width: 88px;
+    height: 88px;
+    border: 1px solid #efefef;
+    border-radius: 50%;
+}
+
+.abtdts .abtdts_top .title_bot .leftimg img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 4px;
+}
+
+.abtdts .abtdts_top .title_bot .rightext {
+    width: 1000px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    margin-left: 20px;
+    padding-top: 8px;
+}
+
+.abtdts .abtdts_top .title_bot .rightext .name,
+.abtdts .abtdts_top .title_bot .rightext .date {
+    font-size: 12px;
+    color: #666;
+    line-height: 18px;
+}
+
+.abtdts .abtdts_top .title_bot .rightext .desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+    margin-top: 10px;
+}
+
+.abtdts .abtdts_bot {
+    width: 1160px;
+    height: auto;
+    overflow: hidden;
+    margin: 30px auto;
+}
+
+.abtdts .abtdts_bot h4 {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.abtdts .abtdts_bot table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.abtdts .abtdts_bot table tr td {
+    border: 1px solid #eee;
+    line-height: 20px;
+    padding: 10px 0;
+    padding-left: 20px;
+    table-layout: fixed;
+    word-break: break-all;
+    font-size: 14px;
+    color: #999;
+}
+
+.abtdts .abtdts_bot table tr td .dark {
+    color: #666;
+}
+
+
+
+
+
+
+/***************充值******************************/
+
+.usernewout .usncont .usnc_right .rech_top {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+}
+
+.usernewout .usncont .usnc_right .rech_top .moneyleft {
+    font-size: 14px;
+    color: #666;
+    margin: 20px 0;
+}
+
+.usernewout .usncont .usnc_right .rech_top .moneyleft span {
+    color: #333;
+    font-size: 14px;
+}
+
+.usernewout .usncont .usnc_right .rech_top .moneyleft b {
+    color: #333;
+    font-size: 18px;
+}
+
+.usernewout .usncont .usnc_right .rech_box {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.usernewout .usncont .usnc_right .rech_hd {
+    width: 927px;
+    height: 36px;
+    border-left: 1px solid #eee;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    background: #fff;
+}
+
+.usernewout .usncont .usnc_right .rech_hd ul li {
+    float: left;
+    width: 158px;
+    height: 34px;
+    border-right: 1px solid #eee;
+    text-align: center;
+    line-height: 34px;
+    font-size: 14px;
+    color: #666;
+    border-top: 2px solid #eee;
+    cursor: pointer;
+}
+
+.usernewout .usncont .usnc_right .rech_hd ul li.on {
+    border-top: 2px solid #73bee4;
+    padding-bottom: 1px;
+    background: #fff;
+}
+
+.usernewout .usncont .usnc_right .rech_bd {
+    width: 890px;
+    padding: 0 19px;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #eee;
+    margin-top: 36px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box {
+    width: 860px;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box label {
+    float: left;
+    width: 90px;
+    margin-right: 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    line-height: 40px;
+    vertical-align: top;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox {
+    width: 360px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .paysel {
+    width: 360px;
+    height: 40px;
+    border: 1px solid #d6dbdd;
+    outline: none;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .rechipt {
+    width: 348px;
+    height: 38px;
+    border: 1px solid #d6dbdd;
+    font-size: 14px;
+    color: #666;
+    text-indent: 10px;
+    padding-right: 10px;
+    outline: none;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .rechipt.text_right {
+    text-align: right;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .notice {
+    display: table-cell;
+    width: 365px;
+    height: 40px;
+    overflow: hidden;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ff9900;
+    padding-left: 10px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox.mrl110 {
+    margin-left: 110px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .rechbut {
+    width: 360px;
+    height: 50px;
+    background: #73bee4;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    margin-top: 10px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .attention {
+    font-size: 12px;
+    color: #73bee4;
+    margin-top: 5px;
+}
+
+.attention a {
+    color: #73bee4;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .rechipt.wd328 {
+    width: 318px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .dot {
+    display: block;
+    float: right;
+    font-size: 14px;
+    color: #333;
+    line-height: 40px;
+    font-weight: 900;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .recharge_atten {
+    width: 890px;
+    height: auto;
+    min-height: 80px;
+    overflow: hidden;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding: 20px 0;
+    font-size: 12px;
+    color: #999;
+    line-height: 18px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .recharge_atten a {
+    color: #999;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .recharge_atten a:hover {
+    color: #73bee4;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .recharge_atten h5 {
+    color: #333;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.usernewout .usncont .usnc_right .recharge_list {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 45px;
+}
+
+.usernewout .usncont .usnc_right .recharge_list .rech_list_top {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.usernewout .usncont .usnc_right .recharge_list .rech_list_top h4 {
+    float: left;
+    color: #666;
+}
+
+.usernewout .usncont .usnc_right .recharge_list .rech_list_top .rlt_right {
+    display: block;
+    float: right;
+    font-size: 12px;
+    color: #999;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr th {
+    height: 33px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+    text-align: center;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr th.last {
+    padding: 0px;
+    text-align: center;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr td {
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    padding: 10px 0;
+    transition: all 0.3s;
+    vertical-align: middle;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr td.last {
+    padding: 0px;
+    text-align: center!important;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr td .cnybox {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
+    float: left;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr td img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr td .todeal {
+    font-size: 12px;
+    color: #73bee4;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr:hover td {
+    background: #fff5e5;
+    transition: all 0.3s;
+}
+
+.usernewout .usncont .usnc_right .recharge_list table tr td .ft12 {
+    font-size: 12px;
+}
+
+.lightgray {
+    color: #999;
+}
+
+
+
+
+
+
+/*******************新提现******************************/
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .rechipt.halfipt {
+    width: 168px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .yzmbut {
+    width: 170px;
+    height: 40px;
+    border: none;
+    background: #039400;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+    outline: none;
+}
+
+
+
+
+
+
+/*********************转出虚拟币******************************************/
+
+.usernewout .usncont .usnc_right .leftmoney {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+.usernewout .usncont .usnc_right .leftmoney .select {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 188px;
+    padding-left: 10px;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: url(../images/selbut.png) 175px center no-repeat;
+}
+
+.usernewout .usncont .usnc_right .leftmoney .select img {
+    width: 22px;
+    vertical-align: middle;
+}
+
+.usernewout .usncont .usnc_right .leftmoney .selul {
+    width: 160px;
+    height: 38px;
+    border: none;
+    background: #fff;
+    outline: none;
+    font-size: 14px;
+    color: #666;
+}
+
+.usernewout .usncont .usnc_right .leftmoney .howmuch {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+    line-height: 40px;
+    vertical-align: top;
+}
+
+.usernewout .usncont .usnc_right .leftmoney .howleft {
+    font-size: 18px;
+    color: #333;
+    font-weight: 900;
+    line-height: 40px;
+    vertical-align: top;
+}
+
+
+/* 数据分页 */
+.pages {
+    clear: both;
+    margin: 15px 15px 0px;
+    text-align: center;
+	font-size: 13px;
+}
+.pages a {
+    background-color: #fff;
+    padding: 5px 12px;
+    border-radius: 3px;
+	border: 1px solid #b5b5b5;
+    margin: 0 2px;
+    color: #646464;
+	font-size: 13px;
+}
+.pages a:hover {
+	background-color: #ececec;
+    text-decoration: none;
+}
+.pages .current {
+    background-color: #106cde;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin: 0 2px;
+}
+
+.pages a.arr {
+    width: 19px;
+    height: 19px;
+    display: inline-block;
+    border-radius: 0;
+    border: 0;
+}
+
+.pages a.arr.prev {
+    background-position: -182px -286px;
+}
+
+.pages a:hover.arr.prev {
+    background-position: -182px -265px;
+}
+
+.pages a.arr.next {
+    background-position: -206px -265px;
+}
+
+.pages a:hover.arr.next {
+    background-position: -206px -286px;
+}
+
+
+
+
+
+
+/*****************转入************************/
+
+.usernewout .usncont .usnc_right .rech_bd .shiftto {
+    width: 890px;
+    height: auto;
+    overflow: hidden;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .shiftto .walletadres {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .shiftto .walletadres b {
+    color: #333;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .shiftto #wallet {
+    display: inline-block;
+    margin: 0 auto;
+    border: 1px solid #73bee4;
+    font-size: 18px;
+    font-weight: 900;
+    color: #73bee4;
+    padding: 20px 30px;
+    margin-top: 20px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .shiftto #qrcode-wallet {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .shiftto #qrcode-wallet p {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
+
+
+
+
+
+
+/*******************安全中心*********************************/
+
+.usernewout .usncont .usnc_right .safetopbox {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    margin: 25px 0;
+}
+
+.safe_center {
+    width: 102px;
+    height: 102px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    margin-left: 320px;
+}
+
+.safe_center .sc_level {
+    float: left;
+    width: 102px;
+    height: 102px;
+    margin-right: 0px;
+    position: relative
+}
+
+.sc_level_1,
+.sc_level_2,
+.sc_level_3,
+.sc_level_4 {
+    width: 102px;
+    height: 102px;
+    background: url(../images/safe_level.png) no-repeat left top
+}
+
+.sc_level_2 {
+    background-position: -110px 0px
+}
+
+.sc_level_3 {
+    background-position: -220px 0px
+}
+
+.sc_level_4 {
+    background-position: -330px 0px
+}
+
+.usernewout .usncont .usnc_right .safetopbox .safetop_info {
+    padding-top: 20px;
+    width: 200px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+    margin-left: 30px;
+}
+
+.sc_statu {
+    width: 100%;
+    height: 110px;
+}
+
+.sc_statu li {
+    float: left;
+    width: 307px;
+    border-right: 1px solid #efefef;
+    height: 100px
+}
+
+.sc_statu em {
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    background: url(../images/safe_style.png) no-repeat left 0px;
+}
+
+.sc_statu .sc_statu_type_1 {
+    background-position: left -0px
+}
+
+.sc_statu .sc_statu_type_2 {
+    background-position: left -100px
+}
+
+.sc_statu .sc_statu_type_3 {
+    background-position: left -200px
+}
+
+.sc_statu .sc_statu_type_1_1 {
+    background-position: left -50px
+}
+
+.sc_statu .sc_statu_type_2_1 {
+    background-position: left -150px
+}
+
+.sc_statu .sc_statu_type_3_1 {
+    background-position: left -250px
+}
+
+.sc_statu dl {
+    width: 100%;
+    text-align: center;
+}
+
+.sc_statu dt {
+    height: 28px;
+    line-height: 28px;
+    font-size: 16px
+}
+
+.sc_statu dd {
+    font-size: 12px;
+    color: #888;
+    height: 24px;
+    line-height: 24px;
+    width: 110px;
+    margin: 0 auto;
+    padding-left: 20px;
+}
+
+.usernewout .usncont .usnc_right .rz_box {
+    width: 928px;
+    height: 100px;
+    padding: 20px 0;
+    border: 1px solid #eee;
+    box-shadow: 0px 1px 0px #f6f6f6;
+}
+
+.sc_info_list {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.sc_info_list dl {
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px
+}
+
+.sc_info_list dt {
+    width: 100px;
+    float: left;
+    font-size: 12px;
+    color: #666;
+    padding-left: 20px;
+}
+
+.sc_info_list dd {
+    float: left
+}
+
+.sc_info_list dd p {
+    width: 615px;
+    color: #888
+}
+
+.sc_info_list dd p span {
+    float: left;
+    padding-left: 22px;
+    margin-right: 50px;
+    color: #888;
+    line-height: 24px;
+    margin-top: 8px
+}
+
+.sc_info_list dd .changepw {
+    width: 173px;
+    text-align: right;
+    color: #888;
+    padding-right: 20px;
+}
+
+.sc_info_list dd .changepw a {
+    color: #e55600
+}
+
+.sc_info_list dd .changepw a:hover {
+    text-decoration: underline
+}
+
+.alpass,
+.nopass {
+    background: url(../images/icon.png) no-repeat -84px -86px
+}
+
+.nopass {
+    background-position: left -240px
+}
+
+.sc_statu dd a {
+    margin-left: 19px;
+    color: #e55600
+}
+
+.sc_statu dd a:hover {
+    text-decoration: underline
+}
+
+.usernewout .usncont .usnc_right .safeftbox {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+
+
+
+
+
+/**********************实名认证***********************************/
+
+.band_succ {
+    line-height: 34px;
+    margin-top: 5px;
+    font-size: 16px;
+    color: #690;
+}
+
+.band_succ em {
+    height: 34px;
+    width: 34px;
+    margin-right: 15px;
+    float: left;
+    background: url(../images/icon.png) no-repeat left -116px
+}
+
+.set_verify {
+    padding-left: 50px!important;
+    padding-bottom: 28px
+}
+
+.set_verify li {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px
+}
+
+.set_verify li span {
+    color: #888;
+    font-size: 12px;
+    margin-left: 12px
+}
+
+.save_verify {
+    margin-top: 21px
+}
+
+.save_verify input {
+    width: 130px;
+    height: 35px;
+    cursor: pointer;
+    border-radius: 3px;
+    background: #e55600;
+    color: #fff;
+    border: none
+}
+
+.save_verify input:hover {
+    background: #ff660b;
+}
+
+.set_verify_img {
+    width: 740px;
+    margin-left: 50px;
+    border: 1px solid #fcdbc8;
+    background: #fffffa;
+    padding-top: 8px;
+    padding-bottom: 24px;
+    position: relative;
+    padding-left: 14px
+}
+
+.sv_title {
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 6px;
+    color: #f00;
+    font-size: 14px
+}
+
+.sv_text {
+    font-size: 12px;
+    line-height: 24px
+}
+
+.sv_text p {
+    padding-left: 20px;
+    clear: both;
+}
+
+.sv_text span {
+    float: left;
+    margin-left: -20px
+}
+
+.set_verify_img_pic {
+    margin: 11px 0px 19px 20px
+}
+
+.sv_pic {
+    margin-right: 10px;
+    cursor: pointer;
+    vertical-align: bottom
+}
+
+.sv_pic img {
+    display: block
+}
+
+.set_verify_img_pic span {
+    line-height: 24px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+
+.sv_text img {
+    vertical-align: middle
+}
+
+.hide_btn {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    background: url(../images/icon.png) no-repeat left -35px;
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    cursor: pointer
+}
+
+.hide_active {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    background: url(../images/icon.png) no-repeat -23px -35px;
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    cursor: pointer
+}
+
+.usernewout .usncont .usnc_right .pwtrade {
+    width: 930px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.band_succ {
+    line-height: 34px;
+    margin-top: 5px;
+    font-size: 16px;
+    color: #690;
+}
+
+.band_succ em {
+    height: 34px;
+    width: 34px;
+    margin-right: 15px;
+    float: left;
+    background: url(../images/icon.png) no-repeat left -116px
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .yzmimg {
+    display: inline-block;
+    width: 170px;
+    height: 40px;
+    margin-left: 6px;
+    vertical-align: top;
+}
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box .iptbox .yzmimg img {
+    width: 170px;
+    height: 40px;
+}
+
+.usernewout .usncont .usnc_right .rech_bd.safe_rech_bd {
+    padding-bottom: 30px;
+    margin-top: 10px;
+}
+
+
+
+
+
+
+/*******************************登录后banner右侧*****************************************/
+
+#login-bar {
+    width: 260px;
+    height: 350px;
+    background: #fff;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    z-index: 99999;
+    padding: 0 30px;
+}
+
+#login-bar h2 {
+    text-align: center;
+    color: #333;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 30px;
+}
+
+#login-bar dl {
+    width: 258px;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #eee;
+    margin-top: 30px;
+    border-bottom: none;
+}
+
+#login-bar dl dd {
+    border-bottom: 1px solid #eee;
+    padding: 7px 0 7px 10px;
+    font-size: 14px;
+    color: #999;
+}
+
+#login-bar dl dd .orange {
+    color: #73bee4;
+}
+
+#login-bar .login_box_2_btn {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 20px;
+    margin-left: 14px;
+}
+
+#login-bar .login_box_2_btn a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    float: left;
+    /*padding:8px 15px;*/
+    border: 1px solid #73bee4;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #73bee4;
+    transition: all 0.2s;
+    margin-right: 26px;
+}
+
+#login-bar .login_box_2_btn a:last-child {
+    margin-right: 0px;
+}
+
+#login-bar .login_box_2_btn a:hover {
+    transition: all 0.2s;
+    color: #fff;
+    background: #73bee4;
+    border: 1px solid #73bee4;
+}
+
+#login-bar .gotocenter {
+    transition: all 0.2s;
+    background: #73bee4;
+    width: 260px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-top: 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+#login-bar .gotocenter a {
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#login-bar .gotocenter:hover {
+    transition: all 0.2s;
+    opacity: 0.9;
+}
+
+#login-bar .service_qq {
+    text-align: right;
+    margin-top: 5px;
+    color: #73bee4;
+    font-size: 14px;
+}
+
+
+
+
+
+
+/********************谷歌验证********************************/
+
+.usernewout .usncont .usnc_right .rech_bd .rechmid h4.yanzheng {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.dv_info {
+    width: 680px;
+    padding-left: 52px;
+    line-height: 20px;
+    padding-top: 12px;
+    margin-bottom: 14px
+}
+
+.dv_info p {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 12px
+}
+
+.dv_title {
+    height: 32px;
+    line-height: 30px;
+    padding-left: 64px;
+    font-size: 14px;
+    margin-top: 5px
+}
+
+.dv_title em {
+    float: left;
+    width: 33px;
+    height: 32px;
+    margin-left: -39px;
+    background: url(../images/number.png) no-repeat left 0px
+}
+
+.dv_title .dv_num_1 {
+    background-position: left 0px
+}
+
+.dv_title .dv_num_2 {
+    background-position: left -35px
+}
+
+.dv_title .dv_num_3 {
+    background-position: left -70px
+}
+
+.dv_title .dv_num_4 {
+    background-position: left -105px
+}
+
+.dv_content {
+    margin-left: 39px;
+    margin-top: 3px;
+    border-left: 3px solid #e9e9e9;
+    padding-left: 21px;
+    width: 669px;
+    padding-bottom: 18px;
+    padding-top: 4px
+}
+
+.mbphone_btn dl {
+    height: 40px;
+    padding-left: 15px;
+    line-height: 40px;
+    font-size: 12px
+}
+
+.mbphone_btn dt {
+    float: left;
+    width: 534px
+}
+
+.mbphone_btn dd {
+    float: left
+}
+
+.mbphone_btn dd a {
+    float: left;
+    width: 70px;
+    height: 20px;
+    border: 1px solid #e55600;
+    color: #e55600;
+    border-radius: 5px;
+    -webkit-transition: 0.3s ease all;
+    transition: 0.3s ease all;
+    -o-transition: 0.3s ease all;
+    -moz-transition: 0.3s ease all;
+    -ms-transition: 0.3s ease all;
+    margin-top: 8px;
+    text-align: center;
+    line-height: 20px
+}
+
+.mbphone_btn a:hover {
+    background: #e55600;
+    color: #fff
+}
+
+.dv_content p {
+    line-height: 22px;
+    font-size: 12px;
+    margin-bottom: 10px
+}
+
+.dv_content p b {
+    color: #e55600;
+    font-size: 18px;
+    font-weight: normal
+}
+
+.dv_content p span {
+    color: #e55600
+}
+
+.dv_ewm {
+    margin: 10px 0 12px 3px
+}
+
+.dv_ewm img {
+    display: block
+}
+
+.dv_input {
+    font-size: 14px;
+    line-height: 40px;
+    position: relative
+}
+
+.dv_input input,
+.sv_input input,
+.off_fn_input input {
+    width: 188px;
+    height: 18px;
+    padding: 10px 5px;
+    border: 1px solid #d5d5d5;
+    line-height: 18px
+}
+
+.dv_ts {
+    height: 24px;
+    line-height: 24px;
+    padding: 7px 14px 7px 13px;
+    border: 1px solid #c3c8c8;
+    background: #f9f9f9;
+    position: absolute;
+    left: 314px;
+    top: 0px;
+    width: 240px;
+    font-size: 12px;
+    color: #666
+}
+
+.dv_radio {
+    margin-top: 13px;
+    line-height: 40px;
+    font-size: 14px
+}
+
+.dv_radio label {
+    margin-right: 26px
+}
+
+.dv_submit {
+    padding-left: 103px
+}
+
+.dv_submit input {
+    width: 200px;
+    height: 35px;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #e55600
+}
+
+
+
+
+
+
+/****************银行卡管理*******************/
+
+.usernewout .usncont .usnc_right .recharge_list .addbanks {
+    width: 360px;
+    height: 50px;
+    margin: 0 auto;
+    background: #73bee4;
+    text-align: center;
+    line-height: 50px;
+    font-size: 16px;
+    margin-top: 40px;
+}
+
+.usernewout .usncont .usnc_right .recharge_list .addbanks a {
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#withdrawCnyAddress {
+    padding: 0 20px;
+    width: 760px;
+    height: 530px;
+    background: #fff;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+#withdrawCnyAddress .tan_title {
+    width: 760px;
+    height: 60px;
+    border-bottom: 1px solid #eee;
+}
+
+#withdrawCnyAddress .tan_title h4 {
+    font-weight: normal;
+    color: #666;
+    line-height: 60px;
+    float: left;
+}
+
+#withdrawCnyAddress .tan_title .closebut {
+    display: block;
+    float: right;
+    line-height: 60px;
+    cursor: pointer;
+}
+
+#withdrawCnyAddress .tan_title .closebut img {
+    vertical-align: middle;
+}
+
+#withdrawCnyAddress .PopLayer {
+    margin-top: 20px;
+}
+
+#withdrawCnyAddress .PopLayer li {
+    margin-bottom: 10px;
+}
+
+#withdrawCnyAddress .PopLayer li span {
+    font-size: 14px;
+    color: #666;
+    line-height: 35px;
+    vertical-align: top;
+    margin-right: 5px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 90px;
+    text-align: right;
+}
+
+#withdrawCnyAddress .PopLayer li .cztxinput {
+    width: 340px;
+    height: 33px;
+    border: 1px solid #ccc;
+    text-indent: 10px;
+    font-size: 14px;
+    color: #999;
+}
+
+#withdrawCnyAddress .PopLayer li #bank_bank {
+    width: 342px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+    outline: none;
+}
+
+#withdrawCnyAddress .PopLayer li #bank_bankprov {
+    width: 169px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+    outline: none;
+}
+
+#withdrawCnyAddress .PopLayer li #bank_bankcity {
+    width: 169px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #999;
+    text-indent: 10px;
+    outline: none;
+}
+
+#withdrawCnyAddress .PopLayer li .reg_floatr {
+    color: #73bee4;
+}
+
+#withdrawCnyAddress .PopLayer li #btn {
+    display: block;
+    width: 342px;
+    height: 40px;
+    background: #73bee4;
+    margin-left: 98px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+}
+
+#withdrawCnyAddress .PopLayer li .khname {
+    font-size: 14px;
+    color: #73bee4;
+    font-weight: 900;
+}
+
+.maintain-content {
+    font-size: 14px;
+    width: 1160px;
+    min-height: 300px;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    padding: 20px
+}
+
+.intro-title {
+    margin-top: 20px;
+    font-weight: normal;
+    padding-left: 10px;
+    border-left: 3px solid #e55600;
+    font-size: 16px
+}
+
+.detail-Parameter,
+.link-cc,
+.coin-intro {
+    overflow: hidden;
+    border-bottom: 1px dotted #dcdcdc;
+    width: 100%;
+    padding-bottom: 30px
+}
+
+.detail-Parameter {
+    border-bottom: none
+}
+
+.coin-intro {
+    margin-top: 0;
+    padding-bottom: 0
+}
+
+.left-icon-area {
+    float: left;
+    width: 80px;
+    height: 100%;
+    margin: 20px 0 0 0
+}
+
+.right-detail-area {
+    float: left;
+    width: 1050px;
+    height: 100%;
+    margin: 20px 0 0 20px
+}
+
+.right-detail-area p {
+    margin: 10px 0
+}
+
+.coin-detail-title {
+    font-weight: normal;
+    color: #555
+}
+
+.btn-usul {
+    border-radius: 50px!important;
+    border: 1px solid #e55600;
+    color: #e55600;
+    border-radius: 3px;
+    padding: 6px 9px;
+    transition: all .3s ease-in-out
+}
+
+.btn-usul:hover {
+    background: #e55600;
+    color: white
+}
+
+.link-cc ul {
+    margin-top: 30px;
+    float: left
+}
+
+.link-cc ul li {
+    float: left;
+    margin-left: 20px
+}
+
+.Parameter-table {
+    border: 1px solid #eeeeee;
+    width: 100%;
+    margin-top: 20px
+}
+
+.Parameter-table tr td {
+    border-top: 1px dotted #dcdcdc;
+    border-left: 1px dotted #eeeeee;
+    padding: 0 0 0 10px;
+    height: 40px
+}
+
+.Parameter-table tr td span {
+    color: #888
+}
+
+.Parameter-table tr td:first-child {
+    border-left: none
+}
+
+.Parameter-table tr:first-child td {
+    border-top: none
+}
+
+em {
+    display: none;
+    position: relative;
+    width: 170px;
+    color: #999;
+    font-style: normal;
+    font-size: 12px;
+}

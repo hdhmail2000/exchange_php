@@ -1,0 +1,66 @@
+<include file="Public:header"/>
+<style>
+	.tab-wrap ul{
+		padding-bottom: 20px;
+		overflow: hidden;
+	}
+	.tab-wrap ul li {
+		float: left;
+		margin: 0 15px 15px 15px;
+		width: 22%;
+		height: 120px;
+		border: #ecebeb 2px solid;
+		text-align: center;
+		border-radius: 10px;
+	}
+	.tab-wrap ul li:hover {
+		border: #adcfff 2px solid;
+	}
+	.tab-wrap ul li:hover h3 {
+		color: #307be4;
+	}
+	.tab-wrap ul li h3 {
+		margin-top: 30px;
+		margin-bottom: 5px;
+		font-size: 25px;
+		font-weight: 600;
+		color: #4291ff;
+	}
+	.tab-wrap ul li p {
+		font-size: 14px;
+		color: #ABABAB;
+	}
+</style>
+
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">应用中心</span>
+		</div>
+		<div class="tab-wrap">
+			<ul>
+				<li>
+					<a href="{:U('Money/index')}"><h3>理财中心</h3><p>点击进入配置（锁仓生息）</p></a>
+				</li>
+				<li>
+					<a href="{:U('Config/mining')}"><h3>交易挖矿</h3><p>点击进入配置</p></a>
+				</li>
+				<li>
+					<a href="{:U('Vote/index')}"><h3>投票管理</h3><p>点击进入配置（上币投票）</p></a>
+				</li>
+				<li>
+					<a href="{:U('Fenhong/log')}"><h3>分红管理</h3><p>点击进入配置（持币分红）</p></a>
+				</li>
+				<li>
+					<a href="{:U('Issue/log')}"><h3>认购管理</h3><p>点击进入配置（认购中心）</p></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<include file="Public:footer"/>

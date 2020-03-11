@@ -1,0 +1,175 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/fin.css">
+<script src="__PUBLIC__/Home/js/jquery.copy.js"></script>
+<script src="__PUBLIC__/Home/js/qrcode.js"></script>
+
+<div class="infoBox">
+	<include file="Finance:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('邀请奖励')}</h3>
+		</div>
+
+		<div class="Column_Invite">
+			<div class="invite-banner">
+				<h3>{:L('邀请好友注册，轻松获得交易返佣')}</h3>
+			</div>
+			
+			<div class="InviteLink">
+				<div class="fl">
+					<saon id="codeaa"></saon>
+				</div>
+				<div class="fr">
+					<div class="rechipt_box">
+						<label><b>{:L('邀请码')} : </b></label>
+						<div class="iptbox">
+							<input type="text" class="rechipt" id="invite-input" value="{$user['invit']}" style="width:120px;" readonly/>
+							<input type="button" value="{:L('复制')}" data-clipboard-action="copy" data-clipboard-target="#invite-input" class="rechbut copy_button1" id="copy_button1" style="width:80px;height:39px;"> 
+						</div>
+					</div>
+					<div class="rechipt_box">
+						<label><b>{:L('专属链接')} : </b></label>
+						<div class="iptbox" style="width: 600px;">
+							<input type="text" class="rechipt" id="invite-inputa" value="http://{$_SERVER['HTTP_HOST']}/Login/register?invit={$user['invit']}" style="width:380px;" readonly/>
+							<input type="button" value="{:L('复制')}" data-clipboard-action="copy" data-clipboard-target="#invite-inputa" class="rechbut" id="copy_button2" style="width:80px;height:39px;"> 
+						</div>
+					</div>
+					
+					<div class="rechipt_box" style="margin-top:50px;">
+						<input type="button" value="{:L('生成专属海报')}" class="rechbut" id="generate_button" onclick="addimg();" style="padding:0 30px;width:auto;height:60px;font-size:1rem;">
+						
+<!--						<input type="button" value="{:L('生成充值全返海报')}" class="rechbut" id="generate_button" onclick="addimg2();" style="padding:0 30px;width:auto;height:60px;font-size:1rem;margin-left:30px;">-->
+					</div>
+				</div>
+			</div>
+			
+			<div class="InviteLink" style="font-size:15px;line-height:30px;">
+				<!--p><b style="font-size:16px;">推荐奖励</b></p>
+				<p style="padding-left:20px;">邀请好友实名认证后，赠送一级：20枚RT，二级：15枚RT</p-->
+				
+				<p><b style="font-size:16px;">推荐挖矿</b></p>
+				<p style="padding-left:20px;">
+				邀请规则：<br>
+				01、通过邀请链接邀请好友成功注册1993.MOBI账户<br>
+				02、邀请好友的数量不设上限
+				</p>
+				<p style="padding-left:20px;margin-top:5px;">
+				佣金返还规则：<br>
+				01、邀请人可获得被邀请人交易手续费的20%作为佣金返还<br>
+				02、佣金返还为等值的RT，对应佣金将在被邀请人交易次日进行发放
+				</p>
+			</div>
+			
+			<div style="overflow: hidden;margin-top: 30px;">
+				<a class="btns" href="{:U('Finance/mywd')}">{:L('我的推荐')}</a>
+				<a class="btns" href="{:U('Finance/myyj')}">{:L('佣金记录')}</a>	
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="float_win_pay" id="addimgSet" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('宣传海报图')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content payment_ga">
+		<ul>
+			<li>
+				<center><img src="/Finance/haibao/url/{$user['invit']}" style="height: 400px;"></center>
+			</li>
+			<li>
+				<p style="margin-bottom:10px;font-size:1rem;"><b>手机端用户长按图片保存，电脑端用户右键图片另存为</b></p>
+			</li>
+		</ul>
+    </div>
+</div>
+
+<div class="float_win_pay" id="addimgSet2" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('宣传海报图')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content payment_ga">
+		<ul>
+			<li>
+				<center><img src="/Finance/haibao/url/{$user['invit']}/type/2" style="height: 400px;"></center>
+			</li>
+			<li>
+				<p style="margin-bottom:10px;font-size:1rem;"><b>手机端用户长按图片保存，电脑端用户右键图片另存为</b></p>
+			</li>
+		</ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+$('#codeaa').qrcode({
+	render: "table", //table方式
+	size: 200,
+	text: "http://{$_SERVER['HTTP_HOST']}/Login/register?invit={$user['invit']}" //任意内容
+}); //任意字符串
+</script>
+
+<script src="__PUBLIC__/Home/js/clipboard.min.js"></script>
+<script>
+var clipboard = new Clipboard('#copy_button1');
+clipboard.on('success', function(e) {
+	layer.msg('{:L('复制成功！')}');
+	// console.log(e);
+});
+clipboard.on('error', function(e) {
+	layer.msg('{:L('复制失败！')}');
+	console.log(e);
+});
+	
+var clipboard2 = new Clipboard('#copy_button2');
+clipboard2.on('success', function(e) {
+	layer.msg('{:L('复制成功！')}');
+	// console.log(e);
+});
+clipboard2.on('error', function(e) {
+	layer.msg('{:L('复制失败！')}');
+	console.log(e);
+});
+</script>
+<script>
+function addimg() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addimgSet')
+    });
+}
+function addimg2() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#addimgSet2')
+    });
+}
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+</script>
+<script>
+$("title").html("{:L('邀请奖励')} - {:C('web_title')}");
+$('#menu_5').addClass('on');
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,19 @@
+<div class="usnc_left">
+    <div class="ulmenubox">
+        <h4><img src="__PUBLIC__/Home/news/images/uswicon1.png">ICO{:L('中心')}</h4>
+        <ul>
+            <li id="Issue_index" class=""><a href="/Issue/index.html">ICO{:L('列表')}</a></li>
+            <li id="Issue_buy" class=""><a href="/Issue/buy.html">ICO{:L('认购')}</a></li>
+            <li id="Issue_log" class=""><a href="/Issue/log.html">{:L('认购记录')}</a></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function(){
+		var Lheight = $(".usnc_left").outerHeight();
+		var Rheight = $(".usnc_right").outerHeight();
+		var Tall = Lheight > Rheight ? Lheight:Rheight
+		$(".usnc_left").outerHeight(Tall);
+		$(".usnc_right").outerHeight(Tall);
+	}
+</script>

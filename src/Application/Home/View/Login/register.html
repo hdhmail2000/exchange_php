@@ -1,0 +1,305 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/intel/css/intlTelInput.css">
+<script src="__PUBLIC__/intel/js/intlTelInput.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/pass.css">
+
+<select id="area" name="area_id" class="iptbox" placeholder="{:L('select_area')}" style="display: none">
+	<option value="">{:L('select_area')}</option>
+	<volist name="areas" id="vo">
+		<option value="{$vo['id']}">
+			<eq name="LANG_SET" value="zh-cn">{$vo['name_zh']}<else/>{$vo['name_en']}</eq>
+		</option>
+	</volist>
+</select>
+
+<div class="logsbox" style="margin-top: 50px;margin-bottom: 100px;">
+	<h2>{:L('注册')}</h2>
+	<div class="form-tips">{:L('已有帐号，')}<a href="{:U('Login/index')}">{:L('马上登录')}</a></div>
+	<div class="form-group">
+		<input type="tel" autocomplete="off" id="mobile" placeholder="{:L('请输入您的手机号')}" onblur="regmobile()" />
+	</div>
+	<div class="form-group">
+		<input type="text" autocomplete="off" id="verify" placeholder="{:L('图形验证码')}" onblur="regverify()" />
+		<div class="imgcode">
+			<img src="{:U('Verify/code')}" title="{:L('换一张')}" onclick="this.src=this.src+'?t='+Math.random()" id="verifycode">
+		</div>
+	</div>
+	<div class="form-group">
+		<input type="text" autocomplete="off" id="mobilecode" placeholder="{:L('动态验证码')}" />
+		<a class="code-num" id="regBtn" onclick="SendCode()">{:L('获取验证码')}</a>
+	</div>
+
+	<div class="form-group">
+		<input type="password" autocomplete="off" id="password" onblur="regpassword()" placeholder="{:L('设置密码')}" />
+	</div>
+	<div class="form-group">
+		<input type="password" autocomplete="off" id="repassword" onblur="regrepassword()" placeholder="{:L('确认密码')}" />
+	</div>
+	<div class="form-group">
+		<input type="text" autocomplete="off" id="invit" name="invite" placeholder="{:L('邀请码（选填）')}" value="{$Think.session.invit}" <notempty name="Think.session.invit">readonly</notempty> />
+	</div>
+	<div class="form-agreement">
+		<label><input type="checkbox" id="regweb"><span>{:L('阅读并同意')}</span><a href="{$registerAgreement}" target="_blank">{:L('《用户服务协议》')}</a></label>
+	</div>
+	<div class="form-button">
+		<input type="button" name="index_submit" id="loginSubmin" onclick="Update();" class="btn btn-primary" value="{:L('注册')}">
+	</div>
+</div>
+<script type="text/javascript">
+   $("#mobile").intlTelInput({
+      allowDropdown: true,
+      // autoHideDialCode: true,
+      // autoPlaceholder: "off",
+      dropdownContainer: "body",
+      // excludeCountries: ["us"],
+      // formatOnDisplay: true,
+      // geoIpLookup: function(callback) {
+      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+      //     var countryCode = (resp && resp.country) ? resp.country : "";
+      //     callback(countryCode);
+      //   });
+      // },
+      initialCountry: "cn",
+      nationalMode: true,
+      // onlyCountries: ['us', 'fr', 'ca', 'jp','kr','de','cn','ru'],
+      // placeholderNumberType: "MOBILE",
+      // preferredCountries: ['cn', 'jp'],
+      separateDialCode: true,
+      utilsScript: "/Public/intel/js/utils.js"
+    });
+</script>
+<script>
+function registerAgreement() {
+    layer.open({
+        type: 2,
+        skin: 'layui-layer-rim',
+        area: ['800px', '600px'],
+        title: '{$Think.lang.user_registration_agreement}',
+        content: "{:U('Login/webreg')}"
+    });
+}
+
+$('input').focus(function() {
+    var t = $(this);
+    if (t.attr('type') == 'text' || t.attr('type') == 'password')
+        t.css({ 'box-shadow': '0px 0px 3px #1583fb', 'border': '1px solid #1583fb', 'color': '#333' });
+    if (t.val() == t.attr('placeholder'))
+        t.val('');
+});
+$('input').blur(function() {
+    var t = $(this);
+    if (t.attr('type') == 'text' || t.attr('type') == 'password')
+        t.css({ 'box-shadow': 'none', 'border': '1px solid #e1e1e1', 'color': '#333' });
+    if (t.attr('type') != 'password' && !t.val())
+        t.val(t.attr('placeholder'));
+});
+$('.reg_input_box input').each(function(i, d) {
+    $(d).focus(function() {
+        var oRegMsg = $('#' + $(this).attr('id') + '-msg');
+        oRegMsg.attr('class') == 'form_explain_error' ? oRegMsg.attr('class', 'form_explain').html(oRegMsg.attr('data-explain')).show() : oRegMsg.show();
+    })
+    $(d).blur(function() {
+        var oRegMsg = $('#' + $(this).attr('id') + '-msg');
+        $(this).parent().find('.form_explain').hide();
+    })
+})
+
+// Input box message
+function formMsg(o, status, msg) {
+    $('#' + o + '-msg').attr('class', 'form_explain_' + (status ? 'pass' : 'error')).html((typeof msg == 'undefined' ? '' : msg) + '<em></em>').show();
+    return true;
+}
+</script>
+<script>
+var mbTest_username = /^(?![^a-zA-Z]+$)(?!\D+$).{5,15}$/;
+function regmobile() {
+    var mobile = $('#mobile').val();
+    var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+    var isValid = $("#mobile").intlTelInput("isValidNumber");//验证手机号码是否正确
+
+   // console.log(isValid)
+   // console.log(intlNumber['dialCode'])
+
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+//  if (isValid!=true) {
+//     layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+//     return false;
+//  }
+//}
+    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(mobile))){
+        layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+        return false;
+    }
+}
+function regverify() {
+    var verify = $('#verify').val();
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请输入图形验证码 }', '#verify', { tips: 3 });
+        return false;
+    }
+}
+	
+var mbTest_password = /^[a-zA-Z0-9_]{5,15}$/;
+function regpassword() {
+    var password = $('#password').val();
+    if (password == "" || password == null) {
+        layer.tips('{$Think.lang.请输入登录密码 }', '#password', { tips: 3 });
+        return false;
+    } else {
+        if (!mbTest_password.test(password)) {
+            layer.tips('{$Think.lang.密码格式为6~16 位， 不含特殊符号！ }', '#password', { tips: 3 });
+            return false;
+        }
+    }
+}
+function regrepassword() {
+    var password = $('#password').val();
+    var repassword = $('#repassword').val();
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认密码 }', '#repassword', { tips: 3 });
+        return false;
+    } else {
+        if (!mbTest_password.test(repassword)) {
+            layer.tips('{$Think.lang.密码格式为6~16 位， 不含特殊符号！ }', '#repassword', { tips: 3 });
+            return false;
+        } else {
+            if (password != repassword) {
+                layer.tips('{$Think.lang.两次输入的密码不一致 }', '#repassword', { tips: 3 });
+                return false;
+            }
+        }
+    }
+}
+	
+function SendCode() {
+    var mobile = $("#mobile").val();
+	var verify = $('#verify').val();
+    var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+    var intnum =  intlNumber['dialCode'];//获取国家代码
+    var isValid = $("#mobile").intlTelInput("isValidNumber");//验证手机号码是否正确
+	
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(mobile))){
+        layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+		return false;
+    }
+    // if (isValid!=true) {
+    //     layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+    //     return false;
+    // }
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请先输入图形验证码}', '#verify', { tips: 3 });
+        return false;
+    }
+	
+    $.post("{:U('Verify/regss')}", {
+        mobile: mobile,
+        intnum:intnum,
+        verify: verify
+    }, function(data) {
+        layer.closeAll();
+        // console.log(data.info);
+        if (data.status == 1) {
+            //刷新验证码
+            //$('#regBtn').attr("disabled", "disabled");
+            layer.msg(data.info, { icon: 1 });
+            var obj = $('#regBtn');
+            var wait = 60;
+            var interval = setInterval(function() {
+                obj.css('color', '#a7a7a7');
+				obj.css('cursor', 'default');
+				obj.removeAttr('onclick');
+                obj.text(wait + '{$Think.lang.秒再次发送 }');
+
+                wait--;
+                if (wait < 1) {
+                    //obj.removeAttr("disabled");
+					obj.css('color', '#00a7e1');
+					obj.css('cursor', 'pointer');
+					obj.attr("onclick","SendCode();");
+                    clearInterval(interval);
+                    obj.text('{$Think.lang.获取验证码 }');
+                };
+            }, 1000);
+        } else {
+            obj = $('#regBtn');
+            //刷新验证码
+            layer.msg(data.info, { icon: 2 });
+            $("#verifycode").click();
+            //$('#regBtn').removeAttr("disabled");
+			obj.attr("onclick","SendCode()");
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+
+function Update() {
+    var area_id = $("#area").val();
+    /*var enname = $("#enname").val();*/
+    var mobile = $("#mobile").val();
+    var password = $("#password").val();
+    var repassword = $("#repassword").val();
+    var invit = $("#invit").val();
+    var verify = $("#verify").val();
+    var mobilecode = $("#mobilecode").val();
+    var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+    var qz = intlNumber['dialCode'];//获取国家代码前缀
+	var tokens = "{:session('__token__')}"; //令牌
+
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请输入图形验证码}', '#verify', { tips: 3 });
+        return false;
+    }
+	if(mobilecode=="" || mobilecode == null) {
+		layer.tips('{$Think.lang.请输入手机验证码}','#mobilecode',{tips:3});
+		return false;
+	}
+    if (password == "" || password == null) {
+        layer.tips('{$Think.lang.请输入登录密码}', '#password', { tips: 3 });
+        return false;
+    }
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认密码}', '#repassword', { tips: 3 });
+        return false;
+    }
+    if (password != repassword) {
+        layer.tips('{$Think.lang.两次输入的密码不一致}', '#repassword', { tips: 3 });
+        return false;
+    }
+	if (!$("#regweb").is(':checked')) {
+		layer.tips("{$Think.lang.请勾选用户服务协议}", '#regweb', {tips: 3});
+		return false;
+	}
+	
+    $.post("{:U('Login/upregister')}", { area_id:area_id,mobile: mobile, password: password, repassword: repassword, verify: verify, invit: invit, mobilecode: mobilecode, qz: qz, token: tokens }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            $.cookies.set('cookie_username', mobile);
+            window.location.href = window.location.href;
+        } else {
+			$("#verify").val('');
+            layer.msg(data.info, { icon: 2 });
+            $("#verifycode").click();
+            if (data.url) {
+                window.location.href = data.url;
+            }
+        }
+    }, "json");
+}
+</script>
+<script>
+$('title').html('{:L('用户注册')} - '+'{:L(C('web_title'))}');
+</script>
+<include file="Public:footer_pass" />

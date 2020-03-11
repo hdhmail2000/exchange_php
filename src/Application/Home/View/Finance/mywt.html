@@ -1,0 +1,103 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('委托管理')}</h3>
+			
+			<div class="select fr">
+				<img src="__UPLOAD__/coin/{$coin_list[$market_list[$market]['xnb']]['img']}">
+				<select name="market-selectTest" id="market-selectTest" class="selul">
+					<volist name="market_list" id="vo">
+						<eq name="market" value="$key">
+							<option value="{$vo['name']}" selected="selected">{$vo.xnb|strtoupper} ({$vo.rmb|strtoupper})</option>
+							<else />
+							<option value="{$vo['name']}">{$vo.xnb|strtoupper} ({$vo.rmb|strtoupper})</option>
+						</eq>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="150px">{:L('币种')}</th>
+					<th width="160px">{:L('委托时间')}</th>
+					<th width="100px" class="last">
+						<select name="type-selectTest" id="type-selectTest" class="wd70">
+							<option value="0"<eq name="type" value="0">selected</eq>>{:L('类型')}</option>
+							<option value="1"<eq name="type" value="1">selected</eq>>{:L('买入')}</option>
+							<option value="2"<eq name="type" value="2">selected</eq>>{:L('卖出')}</option>
+						</select>
+					</th>
+					<th width="140px">{:L('委托价格')}</th>
+					<th width="140px">{:L('委托数量')}</th>
+					<th>{:L('已成交量')}</th>
+					<th width="110px" class="last">
+						 <select name="status-selectTest" id="status-selectTest">
+							 <option value="0"<eq name="status" value="0">selected</eq>>{:L('委托状态')}</option>
+							 <option value="1"<eq name="status" value="1">selected</eq>>{:L('交易中')}</option>
+							 <option value="2"<eq name="status" value="2">selected</eq>>{:L('已完成')}</option>
+							 <option value="3"<eq name="status" value="3">selected</eq>>{:L('已撤销')}</option>
+						 </select>
+					</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$coin_list[$market_list[$vo['market']]['xnb']]['title']}  ({$market_list[$vo['market']]['rmb']|strtoupper})</td>
+						<td>{$vo.addtime|date='m-d H:i:s',###}</td>
+						<td>
+							<eq name="vo.type" value="1">
+								<font class="buy">{:L('买入')}</font>
+								<else />
+								<font class="sell">{:L('卖出')}</font>
+							</eq>
+						</td>
+						<td style="text-transform:uppercase;">{$vo['price']|NumToStr} {:Anchor_CNY}</td>
+						<td>{$vo['num']|NumToStr}</td>
+						<td>{$vo['deal']|NumToStr}</td>
+						<td>
+							<eq name="vo.status" value="0">{:L('交易中')} | <a class="cancel" id="{$vo.id}" href="javascript:void(0);">{:L('撤销')}</a></eq>
+							<eq name="vo.status" value="1">{:L('已完成')}</eq>
+							<eq name="vo.status" value="2">{:L('已撤销')}</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$("#type-selectTest,#status-selectTest,#market-selectTest").change(function() {
+	var type = $("#type-selectTest option:selected").val();
+	var status = $("#status-selectTest option:selected").val();
+	var market = $("#market-selectTest option:selected").val();
+	window.location = '/Finance/mywt/type/' + type + '/status/' + status + '/market/' + market + '.html';
+});
+
+$('.cancel').click(function() {
+	$.post("{:U('Trade/chexiao')}", { id: $(this).attr('id'), }, function(data) {
+		if (data.status == 1) {
+			layer.msg(data.info, { icon: 1 });
+			window.setTimeout("window.location='{:U('Finance/mywt')}'", 1000);
+		} else {
+			layer.msg(data.info, { icon: 2 });
+		}
+	});
+});
+</script>
+<script>
+$("title").html("{:L('委托管理')} - {:C('web_title')}");
+$('#menu_3').addClass('on');
+</script>
+<include file="Public:footer" />

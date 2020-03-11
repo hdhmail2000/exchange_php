@@ -1,0 +1,203 @@
+<include file="Public:header"/>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">用户管理</span>
+		</div>
+		<div class="cf">
+			<div class="fl">
+				<button class="btn ajax-post confirm btn-primary" url="{:U('User/status',array('type'=>'idauth'))}" target-form="ids" style="background-color: #1eb544">通过认证</button>
+				<button class="btn ajax-post confirm btn-danger" url="{:U('User/status',array('type'=>'notidauth'))}" target-form="ids">取消认证</button>
+				<span style="margin: 0 10px;"></span>
+				<a class="btn btn-success  " href="{:U('User/edit')}">新 增</a>
+				<button class="ajax-post btn  btn-info " url="{:U('User/status',array('type'=>'resume'))}" target-form="ids">
+				启 用</button>
+				<button class="ajax-post btn  btn-warning  ajax-post" url="{:U('User/status',array('type'=>'forbid'))}" target-form="ids">
+				禁 用</button>
+				<button class="btn ajax-post confirm btn-danger " url="{:U('User/status',array('type'=>'del'))}" target-form="ids">
+				删 除</button>
+				<button class="btn btn-success" url="{:U('Finance/userExcel')}" target-form="ids" id="submit" type="submit">导出选中</button>
+				
+				<span style="margin-left:10px;">待审核：<b style="color:#4787ff;">{$tongji['dsh']*1}</b>人</span>
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<select style="width:135px;float:left;margin-right:10px;" name="idstate" class="form-control">
+							<option value="" <empty name="Think.get.idstate">selected</empty> >全部认证状态</option>
+							<option value="2" <eq name="Think.get.idstate" value="2">selected</eq> >认证待审核</option>
+							<option value="3" <eq name="Think.get.idstate" value="3">selected</eq> >认证已通过</option>
+							<option value="9" <eq name="Think.get.idstate" value="9">selected</eq> >认证未通过</option>
+							<option value="1" <eq name="Think.get.idstate" value="1">selected</eq> >未提交</option>
+						</select>
+						<select style="width:120px;float:left;margin-right:10px;" name="status" class="form-control">
+							<option value="" <empty name="Think.get.status">selected</empty> >全部状态</option>
+							<option value="1" <eq name="Think.get.status" value="1">selected</eq> >冻结状态</option>
+							<option value="2" <eq name="Think.get.status" value="2">selected</eq> >正常状态</option>
+						</select>
+						<select style="width:120px;float:left;margin-right:10px;" name="field" class="form-control">
+							<option value="username"
+							<empty name="Think.get.field">selected</empty>
+							>用户名</option>
+							<option value="mobile"
+							<eq name="Think.get.field" value="mobile">selected</eq>
+							>手机号码</option>
+							<option value="truename"
+							<eq name="Think.get.field" value="truename">selected</eq>
+							>真实姓名</option>
+							<option value="idcard"
+							<eq name="Think.get.field" value="idcard">selected</eq>
+							>身份证号</option>
+						</select>
+
+						<script type="text/javascript" src="/Public/layer/laydate/laydate.js"></script>
+
+						<input type="text" name="name" class="search-input form-control" value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+						//搜索功能
+						$(function () {
+							$('#search').click(function () {
+								$('#formSearch').submit();
+							});
+						});
+						//回车搜索
+						$(".search-input").keyup(function (e) {
+							if (e.keyCode === 13) {
+								$("#search").click();
+								return false;
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<form id="form" action="{:U('User/userExcel')}" method="post" class="form-horizontal">
+				<table class="">
+					<thead>
+					<tr>
+						<th class="row-selected row-selected">
+							<input class="check-all" type="checkbox"/>
+						</th>
+						<th class="">ID</th>
+						<th class="">用户名</th>
+						<th class="">手机号</th>
+						<th class="">认证状态</th>
+						<th class="">实名接口</th>
+						<th class="">实名信息</th>
+						<th class="">注册时间</th>
+						<th class="">推荐人</th>
+						<!-- <th class="">推广总收益</th> -->
+						<!-- <th class="">推广人数</th> -->
+						<!-- <th class="">推广总业绩</th> -->
+						<th class="">状态</th>
+						<th class="">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					<notempty name="list">
+						<volist name="list" id="vo">
+							<tr>
+								<td>
+									<input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/>
+								</td>
+								<td>{$vo.id}</td>
+								<td title="登录该用户"><a href=" {:U('User/loginadmin?id='.$vo['id'].'&pass='.$vo['password'])}" target="_blank">{$vo.username}</a></td>
+								<td>{$vo.mobile}</td>
+								<td>
+									认证级别：<b>{$vo.kyc_lv}</b><br>
+									<eq name="vo.idstate" value="0"><b>未提交</b></eq>
+									<eq name="vo.idstate" value="1"><b style="color:#F39309">待审核</b></eq>
+									<eq name="vo.idstate" value="2"><b style="color:#11B419">已通过</b></eq>
+									<eq name="vo.idstate" value="8"><b style="color:#FC383C">未通过</b></eq>
+								</td>
+								<td>
+									<eq name="vo.idapi" value=""><b>人工审核</b></eq>
+									<eq name="vo.idapi" value="0"><b style="color:#11B419">匹配</b></eq>
+									<eq name="vo.idapi" value="5"><b style="color:#FC383C">不匹配</b></eq>
+									<eq name="vo.idapi" value="14"><b style="color:#FC383C">无效证件</b></eq>
+									<eq name="vo.idapi" value="96"><b>调用失败</b></eq>
+								</td>
+								<td>
+									姓名：{$vo.truename}<br>
+									国籍：{$vo.idnationality}<br>
+									证件类型：
+									<eq name="vo.idtype" value="0">未知</eq>
+									<eq name="vo.idtype" value="1">身份证</eq>
+									<eq name="vo.idtype" value="2">护照</eq>
+									<eq name="vo.idtype" value="3">驾驶证</eq>
+									<br>证件号码：<b style="color: #0383FB">{$vo.idcard}</b><br>
+								</td>
+								<td>{$vo.addtime|addtime}</td>
+								<td>
+									<neq name="vo.invit_1"><a href="{:U('User/index?name='.$vo['invit_1'].'&field=username')}">1代：{$vo['invit_1']}</a><br></neq>
+									<neq name="vo.invit_2"><a href="{:U('User/index?name='.$vo['invit_2'].'&field=username')}">2代：{$vo['invit_2']}</a><br></neq>
+									<neq name="vo.invit_3"><a href="{:U('User/index?name='.$vo['invit_3'].'&field=username')}">3代：{$vo['invit_3']}</a><br></neq>
+								</td>
+								<!-- <td>{$vo.tmoney}</td> -->
+								<!-- <td>{$vo.tmember}</td> -->
+								<!-- <td>{$vo.ttotal}</td> -->
+								<td>
+									<eq name="vo.status" value="0">冻结</eq>
+									<eq name="vo.status" value="1">正常</eq>
+								</td>
+								<td>
+									<a href="{:U('User/edit?id='.$vo['id'])}" class="btn btn-primary btn-xs" >编辑</a>
+									
+									<eq name="vo.idstate" value="1">
+										<a href="{:U('User/edit2?id='.$vo['id'])}" class="btn btn-primary btn-xs" style="background-color:#F39309">实名信息</a>
+										<else />
+										<a href="{:U('User/edit2?id='.$vo['id'])}" class="btn btn-primary btn-xs" >实名信息</a>
+									</eq>
+								</td>
+							</tr>
+						</volist>
+						<else/>
+						<td colspan="12" class="text-center empty-info"><i class="glyphicon glyphicon-exclamation-sign"></i>暂无数据</td>
+					</notempty>
+					</tbody>
+				</table>
+			</form>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//提交表单
+	$('#submit').click(function () {
+		$('#form').submit();
+	});
+	$(".page > div").children("a").each(function(){
+		var ahref = $(this).attr('href');
+		var ahrefarr = ahref.split("/");
+		var ahlength = ahrefarr.length;
+		var newhref = '';
+		for(var i=0;i<ahlength;i++){
+			if(i<3 && i>0){
+				newhref += "/"+ahrefarr[i];
+			}
+			if(i==3){
+				newhref += "/"+ahrefarr[i]+".html?";
+			}
+			if(i>=4 && i%2==0){
+				newhref += "&"+ahrefarr[i]+"="+ahrefarr[i+1];
+			}
+		}
+		$(this).attr("href",newhref);
+	});
+</script>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:U('User/index')}");
+	</script>
+</block>

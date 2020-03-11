@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/cityselect.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('添加钱包地址')}
+        </div>
+        <div class="logbot">
+            <form>
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('币种')}: {$coin_list[$coin]['title']}({$coin|strtoupper})<em></em>
+                </p>
+                <input type="text" placeholder="{:L('钱包标识')}" class="logipt" name="name" id="qianbao_name" value="" >
+                <input type="text" placeholder="{:L('钱包地址')}" class="logipt" name="name" id="qianbao_addr" value="" >
+                <input  name="name" id="qianbao_paypassword" type="password" class="logipt" placeholder="{:L('交易密码')}">
+                <a href="{:U('Login/findpaypwd')}" class="reg_floatr" style="color:#ff8800;font-size: 14px;line-height: 20px;">{:L('忘记密码')}?</a>
+                <input type="button" class="logbut" value="{:L('立即添加')}" name="index_submit" id="loginSubmin" onclick="Update()">
+            </form>
+        </div>
+    </div>
+<script>
+    $("#qianbao_type").change(function () {
+        var coin = $("#qianbao_type option:selected").val();
+        window.location = '/User/qianbao/coin/' + coin + '.html';
+    });
+
+
+    var coin = "{$coin}";
+
+
+    $("#city_1").citySelect({
+        nodata: "none",
+        required: false
+    });
+
+    $('#dialogBoxShadow').height($(document).height());
+    function closeAddress() {
+        $("#withdrawCnyAddress").hide();
+        $("#dialogBoxShadow").hide();
+    }
+    function showA() {
+        $("#withdrawCnyAddress").show();
+        $("#dialogBoxShadow").show();
+    }
+    function Update() {
+        var name = $('#qianbao_name').val();
+        var addr = $('#qianbao_addr').val();
+        var paypassword = $('#qianbao_paypassword').val();
+        if (name == "" || name == null) {
+            layer.tips('{:L('请输入钱包标识')}', '#qianbao_name', {tips: 3});
+            return false;
+        }
+        if (addr == "" || addr == null) {
+            layer.tips('{:L('请输入钱包地址')}', '#qianbao_addr', {tips: 3});
+            return false;
+        }
+        if (paypassword == "" || paypassword == null) {
+            layer.tips('{:L('请输入交易密码')}', '#qianbao_paypassword', {tips: 3});
+            return false;
+        }
+
+
+        $.post("{:U('User/upqianbao')}", {
+            coin: coin,
+            name: name,
+            addr: addr,
+            paypassword: paypassword
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location = "{:U('User/qianbao')}?coin=" + coin;
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+    function UpdateB(id) {
+        layer.config({
+            extend: 'extend/layer.ext.js'
+        });
+        layer.ready(function () {
+            //默认prompt
+            layer.prompt({
+                title: '{:L('输入交易密码，并确认')}',
+                formType: 1
+            }, function (val) {
+                if (val) {
+                    //需要执行的方法
+                    $.post("{:U('User/delqianbao')}", {
+                        id: id,
+                        paypassword: val
+                    }, function (data) {
+                        if (data.status == 1) {
+                            layer.msg(data.info, {icon: 1});
+                            window.location = "{:U('User/qianbao')}?coin=" + coin;
+                        } else {
+                            layer.msg(data.info, {icon: 2});
+                            if (data.url) {
+                                window.location = data.url;
+                            }
+                        }
+                    }, "json");
+
+
+                }
+                ;
+            });
+
+        });
+    }
+</script>
+</body>
+</html>

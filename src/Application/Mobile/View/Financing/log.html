@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('理财记录')}
+        </div>
+
+        <div class="chgbox">
+            <ul>
+				<empty name="list">
+					<li>
+						<div class="chglist_top" style="text-align: center;">
+							<span class="state wait" style="float: none;color:#B7B6B6">
+								{:L('暂无数据')}
+							</span>
+						</div>
+					</li>
+				<else />
+					<volist name="list" id="vo">
+						<li>
+							<div class="weituo_top">
+								( {$vo['money']['name']} ) {$vo.addtime|addtime}
+								<span class="state wait" style="float: right;">
+									<eq name="vo.status" value="0"> 
+										<font color="#0096dd">{:L('已完成')}</font> 
+									<else />
+										<font color="#23a800">{:L('涨息中')}</font>
+									</eq>
+									| <a style="color:#fff" href="{:U('Financing/dlog')}">{:L('详细记录')}</a>
+								</span>
+							</div>
+							<table class="weituo_bot">
+								<tr>
+									<td style="padding-top: 10px;">{:L('存币类型')}</td>
+									<td style="padding-top: 10px;">{:L('利率')}</td>
+									<td style="padding-top: 10px;">{:L('存币数量')}</td>
+									<td style="padding-top: 10px;">{:L('时间')}</td>
+								</tr>
+								<tr>
+									<td style="padding-bottom: 10px;"><b>{$vo['money']['coinname']}</b></td>
+									<td style="padding-bottom: 10px;"><b>{$vo['money']['fee']}%</b></td>
+									<td style="padding-bottom: 10px;"><b>{$vo['num']}</b></td>
+									<td style="padding-bottom: 10px;"><b>{$vo.addtime|addtime}</b></td>
+								</tr>
+							</table>
+						</li>
+					</volist>
+				</empty>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+    </div>
+<script>
+    $("#type-selectTest,#status-selectTest").change(function(){
+        var type=$("#type-selectTest option:selected").val();
+        var status=$("#status-selectTest option:selected").val();
+        var market='{$coin_info.name}';
+        window.location='/Finance/mywt/type/'+type+'/status/'+status+'/market/'+market+'.html';
+    });
+
+    $('.cancel').click(function(){
+        var type1=$("#type-selectTest option:selected").val();
+        var status1=$("#status-selectTest option:selected").val();
+        var market1='{$coin_info.name}';
+        $.post("{:U('Trade/chexiao')}",{id : $(this).attr('id'), },function(data){
+            if(data.status==1){
+                layer.msg(data.info,{icon : 1 });
+                window.location='/Finance/mywt/type/'+type1+'/status/'+status1+'/market/'+market1+'.html';
+            }else{
+                layer.msg(data.info,{icon : 2 });
+            }
+        });
+    });
+</script>
+</body>
+</html>

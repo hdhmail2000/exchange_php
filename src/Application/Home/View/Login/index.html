@@ -1,0 +1,87 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/pass.css">
+
+<div class="logsbox" style="margin-top:100px;margin-bottom:50px;" onkeydown="keyLogin();">
+	<form id="form-login">
+		<h2>{:L('登录')}</h2>
+		<div class="form-tips">{:L('还没账号？')}<a href="{:U('Login/register')}">{:L('立即注册')}</a></div>
+		<div class="form-group">
+			<input type="text" autocomplete="off" name="username" id="login_username" placeholder="{:L('手机号码')}" onblur="if(this.value == '')this.placeholder='{:L('手机号码')}';" onclick="if(this.placeholder == '{:L('手机号码')}')this.placeholder='';" />
+		</div>
+		<div class="form-group">
+			<input type="password" autocomplete="off" name="password" id="login_password" placeholder="{:L('登录密码')}" onblur="if(this.value == '')this.placeholder='{:L('登录密码')}';" onclick="if(this.placeholder == '{:L('登录密码')}')this.placeholder='';" />
+		</div>
+		<div class="form-group">
+			<input type="text" autocomplete="off" name="code" id="login_verify" placeholder="{:L('图形验证码')}" onblur="if(this.value == '')this.placeholder='{:L('图形验证码')}';" onclick="if(this.placeholder == '{:L('图形验证码')}')this.placeholder='';" />
+			<div class="imgcode">
+				<img src="{:U('Verify/code')}" onclick="this.src=this.src+'?t='+Math.random()" title="{:L('换一张')}" id="verifycode">
+			</div>
+		</div>
+		<div class="form-group">
+			<input type="text" id="foot_ga" autocomplete="off" placeholder="{:L('谷歌验证码（未绑定无需填写）')}" onblur="if(this.value == '')this.placeholder='{:L('谷歌验证码（未绑定无需填写）')}';" onclick="if(this.placeholder == '{:L('谷歌验证码（未绑定无需填写）')}')this.placeholder='';" />
+		</div>
+		<div class="form-button">
+			<input type="button" name="index_submit" id="loginSubmin" onclick="upLogin();" class="btn btn-primary" value="{:L('登录')}">
+		</div>
+	</form>
+	<div class="form-other"><a href="{:U('Login/findpwd')}">{:L('忘记密码')}?</a></div>
+</div>
+
+<script type="text/javascript">
+	// Remember the account number
+	var cookieValue = $.cookies.get('cookie_username');
+	if (cookieValue != '' && cookieValue != null) {
+		$("#username").val(cookieValue);
+		$("#autoLogin").attr("checked", true);
+	}
+
+	function upLogin() {
+		var username = $("#login_username").val();
+		var password = $("#login_password").val();
+		var verify = $("#login_verify").val();
+		var foot_ga = $("#foot_ga").val();
+
+		if (username == "" || username == null) {
+			layer.tips('{:L('请输入手机号 ')}','#login_username', { tips: 3 });
+			return false;
+		}
+		if (password == "" || password == null) {
+			layer.tips('{:L('请输入登录密码 ')}', '#login_password', { tips: 3 });
+			return false;
+		}
+		if (verify == "" || verify == null) {
+			layer.tips('{:L('请输入验证码 ')}', '#login_verify', { tips: 3 });
+			return false;
+		}
+
+		$.post("{:U('Login/submit')}",{username:username,password:password,verify:verify,ga:foot_ga},function(data){
+			if(data.status==1){
+				if($("#autologin").attr("checked")=='checked'){
+					$.cookies.set('cookie_username',username);
+				}else{
+					$.cookies.set('cookie_username',null);
+				}
+				$("#login_verify").val('');
+				layer.msg(data.info,{icon:1});
+                window.setTimeout("window.location='/'",1000);
+			}else{
+				$("#login_verify").val('');
+				layer.msg(data.info,{icon:2});
+                $('#verifycode').click();
+				if(data.url){
+                    window.setTimeout("window.location='/'",1000);
+                }
+			}
+		},"json");
+	}
+
+	$('#menu_top_index').addClass('current');
+	$('title').html('{:L('用户登录')} - '+'{:L(C('web_title'))}');
+</script>
+<script language="JavaScript">
+function keyLogin() {
+if (event.keyCode == 13) // The key value of the return key is 13
+	upLogin();
+}
+</script>
+<include file="Public:footer_pass" />

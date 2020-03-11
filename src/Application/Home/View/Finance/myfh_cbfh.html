@@ -1,0 +1,50 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('持币分红')}</h3>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th>{:L('分红时间')}</th>
+					<th>{:L('分红名称')}</th>
+					<th>{:L('分红币种')}</th>
+					<th>{:L('奖励币种')}</th>
+					<th>{:L('分红总额')}</th>
+					<th>{:L('每个分红')}</th>
+					<th>{:L('我的持币')}</th>
+					<th>{:L('我的分红')}</th>	
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$vo.addtime|date='m-d H:i:s',###}</td>
+						<td>{$vo['name']}</td>
+						<td>{$vo['coinname']}</td>
+						<td>{$vo['coinjian']}</td>
+						<td>{$vo['fenzong']|Num}</td>
+						<td>{$vo['price']|Num}</td>
+						<td>{$vo['num']|Num}</td>
+						<td>{$vo['mum']|Num}</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$("title").html("{:L('持币分红')} - {:C('web_title')}");
+$('#menu_7').addClass('on');
+</script>
+<include file="Public:footer" />

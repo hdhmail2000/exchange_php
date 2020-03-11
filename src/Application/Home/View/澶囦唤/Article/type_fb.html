@@ -1,0 +1,42 @@
+<include file="Public:header" />
+<div class="autobox">
+ <div class="now">
+  <a href="/" class="orange">首页</a> &gt;<a href="{:U('Article/type',array('id'=>$shang['id']))}" class="orange"> {$shang.title} </a> &gt; {$data.title}
+ </div>
+ <div class="assets_center clear po_re zin70">
+  <!--左侧菜单-->
+  <div class="coin_menu">
+   <div class="coin_menu_box">
+    <volist name="ArticleTypeList" id="vo">
+    <dl>
+     <dt
+      <eq name="data['name']" value="$key">class="here"</eq>
+      ><a href="{:U('Article/type',array('id'=>$vo['id']))}">{$vo.title}</a>
+     </dt>
+    </dl>
+    </volist>
+   </div>
+  </div>
+  <!--右侧内容-->
+  <div class="assets_content w900 right bg_w mh1500">
+<h1 class="h1news">{$data.title}</h1>
+   <div class="new_list">
+   <div class="rightcontent">
+			
+			<div class="articletime">
+				<span>发布时间：{$data.addtime|date="Y-m-d H:i:s",###}}</span>
+				<span>发布人：{:C('web_title')}</span>
+			</div>
+			<div class="articletext">{$data['content']}</div>
+		</div>
+   </div>
+  </div>
+ </div>
+</div>
+<br>
+<br>
+<script>
+ //菜单高亮
+ $('#article_box').addClass('active');
+</script>
+<include file="Public:footer" />

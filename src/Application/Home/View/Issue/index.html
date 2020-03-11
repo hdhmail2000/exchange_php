@@ -1,0 +1,59 @@
+<include file="Public:header_new"/>
+<style>
+	body {background:#eceff0;}
+</style>
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/apps.css')}">
+<style>
+	.banner{
+		background: url('__PUBLIC__/Home/ecshe_img/app_banner3.jpg') no-repeat center;
+	}
+</style>
+
+<div class="banner">
+	<div class="boxs">
+		<div class="font_title">
+			<h3>{:L('新币预热')}</h3>
+			<p>{:L('致力于帮助区块链项目募集资金，找到支持者，让新鲜有趣的好创意成为现实。')}</p>
+		</div>
+	</div>
+</div>
+
+<div class="main_boxs">
+	<div class="introduce">
+		<div class="tc" style="margin-top:25px;margin-right:25px;">
+			<a class="btn" href="{$text}">新币抢购规则</a>
+			<a class="btn" href="{:U('Issue/log')}">我的参与</a>
+		</div>
+	</div>
+
+	<ul class="list_issue">
+		<volist name="list" id="vo">
+			<li>
+				<a href="{:U('Issue/details',array('id'=>$vo['id']))}">
+					<span class="is-state">{$vo.zhuangtai}</span>
+					<img class="coinimg" src="__UPLOAD__/coin/{:C('coin')[$vo['coinname']]['img']}" width="120" height="120">
+					<h3 class="title tc"><span style="text-transform:uppercase;">{$vo.coinname}</span> ({$vo.name})</h3>
+					<p class="describe tc">{$vo.abstract}</p>
+					
+					<if condition="$vo.show_item eq 1" >
+					<elseif condition="$vo.show_item eq 2"/>
+						<p class="times"><b>{:L('开放时间')} : {$vo.beginTime}</b></p>
+					<else />
+						<div class="process-bar"><div class="process-bar-hover" style="width:{$vo.bili}%"></div></div>
+						<p class="part"><span class="fl">{$vo.tongji} {:L('支持者')}</span><span class="fr">{$vo.bili}%</span></p>
+					</if>
+				</a>
+			</li>
+		</volist>
+	</ul>
+</div>
+
+<script>
+$("title").html("{:L('新币预热')} - {:C('web_title')}");
+
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+</script>
+<include file="Public:footer"/>

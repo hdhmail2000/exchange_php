@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <circle id="peoples-republic-of-china-copy-a" cx="12" cy="12" r="12"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="peoples-republic-of-china-copy-b" fill="#fff">
+      <use xlink:href="#peoples-republic-of-china-copy-a"/>
+    </mask>
+    <use fill="#D8D8D8" xlink:href="#peoples-republic-of-china-copy-a"/>
+    <g mask="url(#peoples-republic-of-china-copy-b)">
+      <g transform="translate(-5.455 -2)">
+        <rect width="44.909" height="29.818" fill="#DE2910" fill-rule="nonzero"/>
+        <polygon fill="#FFDE00" fill-rule="nonzero" points="4.273 0 6.891 8.136 .036 3.108 8.509 3.108 1.654 8.136" transform="translate(9.455 9.09)"/>
+        <polygon fill="#FFDE00" fill-rule="nonzero" points="1.544 0 2.452 2.796 .074 1.068 3.014 1.068 .636 2.796" transform="rotate(-120.964 13.33 -.326)"/>
+        <polygon fill="#FFDE00" fill-rule="nonzero" points="1.545 0 2.454 2.796 .075 1.068 3.015 1.068 .637 2.796" transform="rotate(-98.13 17.312 -3.05)"/>
+        <polygon fill="#FFDE00" fill-rule="nonzero" points="1.545 0 2.454 2.796 .076 1.068 3.015 1.068 .637 2.796" transform="rotate(-74.055 22.7 -5.945)"/>
+        <polygon fill="#FFDE00" fill-rule="nonzero" points="1.545 0 2.453 2.796 .075 1.068 3.015 1.068 .637 2.796" transform="rotate(-51.34 29.998 -9.694)"/>
+      </g>
+    </g>
+  </g>
+</svg>

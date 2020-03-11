@@ -1,0 +1,191 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+<style>
+	.float_win_pay .payment_content{min-width: 650px;}
+</style>
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="User:left" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('提币地址管理')}</h3>
+			
+			<a class="btns fr" style="padding:0 15px;width:auto;" href="javascript:void(0)" onclick="addAddress()">{:L('新增地址')}</a>
+			<div class="select fr">
+				<img src="__UPLOAD__/coin/{$coin_list[$xnb]['img']}">
+				<select name="type" id="qianbao_type" class="selul">
+					<volist name="coin_list" id="vos">
+						<eq name="xnb" value="$key">
+							<option value="{$vos['name']}" selected="selected">{$vos.title} ({$vos['name']|strtoupper})</option>
+							<else/>
+							<option value="{$vos['name']}">{$vos.title} ({$vos['name']|strtoupper})</option>
+						</eq>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="150px">{:L('币种名称')}</th>
+					<th width="100px" class="last">{:L('钱包地址')}</th>
+					<th width="160px">{:L('钱包备注')}</th>
+					<th width="140px">{:L('操作')}</th>
+				</tr>
+				<volist name="userQianbaoList" id="vo">
+					<tr>
+						<td>{$coin_list[$vo['coinname']]['title']}</td>
+						<td>{$vo.addr}</td>
+						<td>
+							<eq name="vo.name" value="">
+								{:L('接收地址')}
+							<else />
+								{$vo.name}
+							</eq>
+						</td>
+						<td>
+							<a class="cancel" href="javascript:void(0)" onclick="UpdateB({$vo['id']})">{:L('删除')}</a>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="float_win_pay" id="PurseAddress" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('添加')} {$coin_list[$xnb]['title']} {:L('钱包地址')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content">
+		<ul>
+			<li>
+				<span class="label-1">{:L('钱包备注')}</span>
+				<input type="text" autocomplete="off" id="qianbao_name" class="input-1" placeholder="{:L('选填')}" />
+			</li>
+			<li>
+				<span class="label-1">{:L('钱包地址')}</span>
+				<input type="text" autocomplete="off" id="qianbao_addr" class="input-1" placeholder="{:L('填写正确的接收地址')}" />
+			</li>
+			<li>
+				<span class="label-1">{:L('交易密码')}</span>
+				<input type="password" autocomplete="off" id="qianbao_paypassword" class="input-1" />
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="Update()" class="btns">{:L('添加')}</a>
+			</li>
+			<li><p class="forget tc"><a href="{:U('Login/findpaypwd')}">{:L('忘记交易密码？')}</a></p></li>
+		</ul>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.4; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+<script>
+$("#qianbao_type").change(function() {
+    var coin = $("#qianbao_type option:selected").val();
+    window.location = '/User/qianbao/coin/' + coin + '.html';
+});
+
+var coin = "{$xnb}";
+
+$('#dialogBoxShadow').height($(document).height());
+
+function closeAddress() {
+    $("#PurseAddress").hide();
+    $("#dialogBoxShadow").hide();
+}
+
+function showA() {
+    $("#PurseAddress").show();
+    $("#dialogBoxShadow").show();
+}
+
+function addAddress() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#PurseAddress')
+    });
+}
+
+function closeCharge() {
+    layer.closeAll();
+}
+
+function Update() {
+    var name = $('#qianbao_name').val();
+    var addr = $('#qianbao_addr').val();
+    var paypassword = $('#qianbao_paypassword').val();
+
+    if (addr == "" || addr == null) {
+        layer.tips('{:L('请填写钱包地址')}', '#qianbao_addr', { tips: 3 });
+        return false;
+    }
+	
+    if (paypassword == "" || paypassword == null) {
+        layer.tips('{:L('请输入交易密码 ')}', '#qianbao_paypassword', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/upqianbao')}", {coin:coin, name:name, addr:addr, paypassword:paypassword}, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.location = "{:U('User/qianbao')}?coin=" + coin;
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+
+function UpdateB(id) {
+    layer.config({
+        extend: 'extend/layer.ext.js'
+    });
+    layer.ready(function() {
+        //默认prompt
+        layer.prompt({
+            title: '{:L(' 输入交易密码， 并确认 ')}',
+            formType: 1
+        }, function(val) {
+            if (val) {
+                //需要执行的方法
+                $.post("{:U('User/delqianbao')}", {
+                    id: id,
+                    paypassword: val
+                }, function(data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, { icon: 1 });
+                        window.location = "{:U('User/qianbao')}?coin=" + coin;
+                    } else {
+                        layer.msg(data.info, { icon: 2 });
+                        if (data.url) {
+                            window.location = data.url;
+                        }
+                    }
+                }, "json");
+            };
+        });
+    });
+}
+</script>
+<script>
+$("title").html("{:L('提币地址管理')} - {:C('web_title')}");
+$('#menu_2').addClass('on');
+</script>
+<include file="Public:footer" />

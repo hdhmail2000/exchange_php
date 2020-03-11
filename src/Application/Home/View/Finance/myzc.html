@@ -1,0 +1,380 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/fin.css">
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/font-awesome.min.css">
+<style type="text/css">
+	
+	.selectBox{
+		position:relative;
+		width: 100%;
+		height: 90px;
+	}
+	.inputCase{
+		position: relative;
+		width: 100%;
+		height: 50px;
+		box-sizing: border-box;
+	}
+	.inputCase input.imitationSelect{
+		display: block;
+		width: 100%;
+		height: 100%;
+		font-size: 16px;
+		color: #999;
+		text-indent: 10px;
+		border: 1px solid #2c3b56;
+       background-color: #2c3b56;
+		box-sizing: border-box;
+		cursor: default;
+	}
+	.inputCase input[type="text"]:focus{
+		box-shadow: 0px 0px 0px 0px;
+	}
+	
+	.inputCase i.fa{
+		position: absolute;
+		right: 10px;
+		top: 20px;
+		color: #4f64dc;
+	}
+	.selectUl{
+		display: none;
+		margin-top: 5px!important;
+		padding: 0;
+		margin: 0;
+		border: 1px solid #1f2636;
+		z-index: 999;
+		background-color: #fff;
+	}
+	.selectUl li{
+		padding: 10px;
+		list-style: none;
+		font-size: 14px;
+		color: #ffffff;
+    border-top: 1px solid #2c3b56;
+    background-color: #1f2636;
+		cursor: pointer;
+	}
+	.selectUl li p{
+		color: #3dc18e;
+		font-weight: 500!important;
+	}
+	.selectUl li:hover{
+		background: #2c3b56;
+		border-top: 1px solid #e4e3e3;
+	}
+	.selectUl li:last-child{
+		border-bottom: 0 none;
+	}
+	
+	.selectUl li.AddAddress{
+		background-color: #f2fff5;
+		color: #3dc18e;
+		font-weight: 500!important;
+		border-top: 1px solid #1f2636;
+	}
+	.selectUl li.AddAddress:hover{
+		background-color: #f2fff5;
+		border-top: 1px solid #1f2636;
+	}
+	
+	.float_win_pay .payment_content{min-width: 650px;}
+	
+</style>
+
+<div class="infoBox">
+	<include file="Finance:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('转出资产')} <span>{$coin_list[$xnb]['name']}</span></h3>
+			
+			<a class="btns fr" style="padding:0 15px;width:auto;" href="{:U('User/qianbao')}?coin={$coin_list[$xnb]['name']}">{:L('地址管理')}</a>
+			<div class="select fr">
+				<img src="__UPLOAD__/coin/{$coin_list[$xnb]['img']}">
+				<select name="type" id="myzc_type" class="selul">
+					<volist name="coin_list" id="vos">
+						<eq name="xnb" value="$key">
+							<option value="{$vos['name']}" selected="selected">{$vos.title} ({$vos['name']|strtoupper})</option>
+						<else/>
+							<option value="{$vos['name']}">{$vos.title} ({$vos['name']|strtoupper})</option>
+						</eq>
+					</volist>
+				</select>
+			</div>
+		</div>
+
+		<div class="Column_Coins">
+			<div class="AssetInfo">
+				<php>$xnbd = $xnb.'d';</php>
+				<div>{:L('可用')}<span>{$xnb_c} {$coin_list[$xnb]['name']}</span></div>
+				<div>{:L('冻结')}<span>{$xnbd_c} {$coin_list[$xnb]['name']}</span></div>
+			</div>
+			
+			<div class="rech_bd" style="padding:0 30px;padding-bottom:30px;">
+			
+				<p style="margin-top:30px;margin-left:28px;width:90%;line-height:30px;font-size:1rem;color:#f89e30;text-transform:uppercase;">{:L('单笔最小提币数量为：')}{$myzc_min} {$coin_list[$xnb]['name']}；{:L('单笔最大提币数量为：')}{$myzc_max} {$coin_list[$xnb]['name']}; {:L('为保障资金安全，我们会对提币进行人工审核，请耐心等待。')}</p>
+				
+				<div class="rechmid">
+					<eq name="Coinx.zc_jz" value="1">
+						<div class="rechipt_box selectBox">
+							<label>{:L('提币地址')}</label>
+							<div class="iptbox">
+								<div class="inputCase">
+									<input class="imitationSelect" type="text" id="myzc_addr" value="" readonly />
+									<i class="fa fa-caret-down"></i>
+								</div>
+								<ul class="selectUl">
+									<li class="AddAddress" onclick="addAddress()">+ {:L('快速添加接收地址')}</li>
+									<volist name="userQianbaoList" id="voh">
+										<li oliName="{$voh.addr}" oliId="">
+											<neq name="voh.name" value="">
+												<p>({$voh.name})</p>
+											</neq>
+											{$voh.addr}
+										</li>
+									</volist>
+								</ul>
+							</div>
+						</div>
+
+						<div class="rechipt_box">
+							<label>{:L('提币数量')}</label>
+							<div class="iptbox">
+								<input type="text" value="" class="rechipt" id="nums">
+							</div>
+						</div>
+<!--						<div class="rechipt_box">
+							<div class="fl" style="width: 31%;">
+								<label>{:L('网络手续费')}</label>
+								<div class="iptbox">
+									<input type="text" value="" class="rechipt">
+								</div>
+							</div>
+							<div class="fl" style="width: 31%;">
+								<label>{:L('平台手续费')}</label>
+								<div class="iptbox">
+									<input type="text" value="{$Coinx['zc_fee']}%" class="rechipt" readonly style="cursor:default;border-color:#f3f3f3;background-color:#f3f3f3;">
+								</div>
+							</div>
+							<div class="fl" style="width: 31%;">
+								<label>{:L('到账数量')}</label>
+								<div class="iptbox">
+									<input type="text" value="" class="rechipt" readonly style="cursor:default;border-color:#f3f3f3;background-color:#f3f3f3;">
+								</div>
+							</div>
+						</div>-->
+						<div class="rechipt_box">
+							<label>{:L('交易密码')}</label>
+							<div class="iptbox">
+								<input type="password" value="" class="rechipt" id="paypassword">
+							</div>
+						</div>
+						<div class="rechipt_box">
+							<div class="iptbox">
+								<input type="button" value="{:L('提交申请')}" class="btns" onclick="Update()">
+								<p class="tc" style="line-height:60px;font-size:14px;color: #fff;">{:L('平台手续费')} {$Coinx['zc_fee']} %</p>
+							</div>
+						</div>
+					<else/>
+						<div class="rechipt_box">
+							<div class="iptbox">
+								<p class="tc" style="line-height:60px;font-size:18px;">{:L('当前币种禁止转出！')}</p>
+							</div>
+						</div>
+					</eq>
+				</div>
+			</div>
+			
+			<div class="recharge_atten_text" style="color:red;">
+				<h5>{:L('转出须知')}</h5>
+				<p>* {:L('为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；')}</p>
+				<p>* {$coin_list[$xnb]['name']}{:L('充值经过 ')}<b> {$coin_list[$xnb]['zr_dz']} </b>{:L(' 个确认后，才允许提现；')}</p>
+				<p>* {:L('可提现金额 ≤ 账户可用资产 - 未经确认的数字资产；')}</p>
+				<p>* {:L('网络转账手续费是不固定的，根据全网拥堵情况进行调整；')}</p>
+				<p>* {:L('遇到问题请发邮件到')} <b style="margin-left:10px;color:#FF8702;text-transform:lowercase;text-transform:lowercase;">{:C('contact_myzc')}</b></p>
+			</div>
+		</div>
+		
+		<div class="titles"><h3>{:L('资产转出记录')}</h3></div>
+		<div class="Column_Coins_LIST">	
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="170px">{:L('转出时间')}</th>
+					<th width="160px">{:L('币种类型')}</th>
+					<th width="300px">{:L('接收地址')}</th>
+					<th width="160px">{:L('提现数量')}</th>
+					<th>{:L('状态')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$vo.addtime|addtime}</td>
+						<td>{$vo.coinname}</td>
+						<td>{$vo.username}</td>
+						<td>{$vo['num']}</td>
+						<td>
+							<eq name="vo.status" value="1">
+								<font color="#e75600">{:L('提现成功')} </font>
+								<else/> {:L('正在处理')}
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="float_win_pay" id="PurseAddress" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('添加')} {$coin_list[$xnb]['title']} {:L('钱包地址')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content">
+		<ul>
+			<li>
+				<span class="label-1">{:L('钱包备注')}</span>
+				<input type="text" autocomplete="off" id="qianbao_name" class="input-1" placeholder="{:L('选填')}" />
+			</li>
+			<li>
+				<span class="label-1">{:L('钱包地址')}</span>
+				<input type="text" autocomplete="off" id="qianbao_addr" class="input-1" placeholder="{:L('填写正确的接收地址')}" />
+			</li>
+			<li>
+				<span class="label-1">{:L('交易密码')}</span>
+				<input type="password" autocomplete="off" id="qianbao_paypassword" class="input-1" />
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="UpAddress()" class="btns">{:L('添加')}</a>
+			</li>
+			<li><p class="forget tc"><a href="{:U('Login/findpaypwd')}">{:L('忘记交易密码？')}</a></p></li>
+		</ul>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.4; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+<script>
+$("#myzc_type").change(function() {
+    var coin = $("#myzc_type option:selected").val();
+    window.location = '/Finance/myzc/coin/' + coin + '.html';
+});
+
+function tiaozhuan() {
+    var coin = $("#myzc_type option:selected").val();
+    window.location = '/Finance/myzc_user/coin/' + coin + '.html';
+}
+
+function Update() {
+    var coin = "{$xnb}";
+    var addr = $('#myzc_addr').val();
+    var num = $("#nums").val();
+    var paypassword = $("#paypassword").val();
+	
+    if (addr == "" || addr == null) {
+        layer.tips('{:L('请选择钱包 ')}', '#myzc_addr', { tips: 3 });
+        return false;
+    }
+    if (num == "" || num == null) {
+        layer.tips('{:L('请输入提现数量 ')}', '#nums', { tips: 3 });
+        return false;
+    }
+    if (paypassword == "" || paypassword == null) {
+        layer.tips('{:L('请输入交易密码 ')}', '#paypassword', { tips: 3 });
+        return false;
+    }
+	
+    var showl = layer.load(0, { shade: [0.5, '#8F8F8F'] }, { time: 5 * 1000 });
+    $.post("{:U('Finance/upmyzc')}", { coin: coin, addr: addr, num: num, paypassword: paypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info,{icon : 1 },function () { window.location = "{:U('Finance/myzc')}?coin=" + coin});
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            layer.close(showl);
+        }
+    }, "json");
+
+}
+	
+function UpAddress() {
+	var coin = "{$xnb}";
+    var name = $('#qianbao_name').val();
+    var addr = $('#qianbao_addr').val();
+    var paypassword = $('#qianbao_paypassword').val();
+
+    if (addr == "" || addr == null) {
+        layer.tips('{:L('请填写钱包地址')}', '#qianbao_addr', { tips: 3 });
+        return false;
+    }
+	
+    if (paypassword == "" || paypassword == null) {
+        layer.tips('{:L('请输入交易密码 ')}', '#qianbao_paypassword', { tips: 3 });
+        return false;
+    }
+
+    $.post("{:U('User/upqianbao')}", {coin:coin, name:name, addr:addr, paypassword:paypassword}, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.location = "{:U('Finance/myzc/')}?coin=" + coin;
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	$(".selectBox .imitationSelect").on("click",function(){
+		$(this).parent().next().toggle();
+		$(this).next().toggleClass("fa-caret-up");
+		if (event.stopPropagation) {   
+			event.stopPropagation();   
+		}else if (window.event) {   
+			window.event.cancelBubble = true;   
+		}
+	});
+	$(".selectUl li").click(function(event){
+		$(this).addClass("actived_li").siblings().removeClass("actived_li");
+		var oliName = $(this).attr("oliName");
+		var oliId = $(this).attr("oliId");
+		$(this).parent().prev().children().val(oliName);
+		$(this).parent().prev().children().attr("oliName",oliName);
+		$(this).parent().prev().children().attr("oliId",oliId);
+	});
+	$(document).click(function(event){
+		$(".inputCase .fa").removeClass("fa-caret-up").addClass("fa-caret-down");
+		$(".selectUl").hide();
+	});
+})
+</script>
+<script>
+function addAddress() {
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#PurseAddress')
+    });
+}
+	
+function closeCharge() {
+    layer.closeAll();
+}
+
+</script>
+<script>
+$("title").html("{:L('转出资产')} - {:C('web_title')}");
+$('#menu_2').addClass('on');
+</script>
+<include file="Public:footer" />

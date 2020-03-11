@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>我的资产</title>
+	<include file="Public:head" />
+</head>
+<body style="background-color: #f3f4f6;">
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:U('Morefind/index')}"></a>
+	<h1 class="mui-title color_white">我的资产</h1>
+</header>
+<div class="mui-content" style="padding:54px 0 20px 0;background-color:#313e51;">
+	<div class="valuation_assets">
+		<p class="title">总资产折合</p>
+		<p class="price">{$cny['zj']} CNY</p>
+		<p class="pricecny">≈ ￥{$cny['zj']}</p>
+	</div>
+</div>
+
+<div class="cur-padding-bottom" style="padding-top:20px;">
+	<ul class="myassets-coinlist">
+		<volist name="coinList" id="vo">
+			<li>
+				<a href="{:U('Finance/coin_show',array('coin'=>$vo['id']))}">
+					<div class="fl coinname">
+						<eq name="vo.token_type" value="1">
+							<img class="smallicon" src="__PUBLIC__/Mobile/ecshe_img/smallicon-erc20.jpg" width="26" height="26" />
+						</eq>
+						<div class="fl imgs"><img src="/Upload/coin/{$vo['img']}" width="50" height="50" /></div>
+						<div class="fl name">{$vo['title']}</div>
+					</div>
+					<div class="fr coinnum tr">
+						<p class="price">{$vo['xnb']}</p>
+						<p>冻结 {$vo['xnbd']}</p>
+						<p>折合￥ {$vo['zhehe']}</p>
+					</div>
+				</a>
+			</li>
+		</volist>
+	</ul>
+</div>
+	
+<script src="__PUBLIC__/Mobile/ecshe_js/mui.min.js"></script>
+<script type="text/javascript">
+	mui.init();
+</script>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<html class="has-topbar has-bottombar">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>交易</title>
+	<include file="Public:head" />
+</head>
+<body>
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<h1 class="mui-title color_white">{$coin_name}/{$coin_type}<i class="icons iconfont icon-ai-arrow-down"></i></h1>
+	<a class="mui-icon mui-pull-right iconfont icon-tongji" href="{:U('Trade/chart',array('market'=>$market))}"></a>
+</header>
+
+<div class="mui-content cur-padding-bottom">
+	<div class="cur-box">
+		<div class="marketinfo">
+			<div class="fl price-show">
+				<h3 id="market_new_price">--</h3>
+				<span>≈ {$rmbprice} {$market_coin}</span>
+			</div>
+			<div class="fr float buy" id="market_change">--</div>
+		</div>
+		
+		<div class="table-entrust">
+			<ul class="table-head">
+				<li class="tl">{:L("买一价")}({$coin_type})</li>
+				<li class="tc">{:L("数量")}({$coin_name})</li>
+				<li class="tr">{:L("卖一价")}({$coin_type})</li>
+			</ul>
+			<div class="table-list">
+				<dl class="fl coinlist-left" id="buylist"></dl>
+				<dl class="fr coinlist-right" id="selllist"></dl>
+			</div>
+		</div>
+		
+		<div class="form-box">
+			<div id="slider" class="form-info">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted form-tab">
+					<a class="mui-control-item mui-active" href="#item1">买入</a>
+					<a class="mui-control-item" href="#item2">卖出</a>
+				</div>
+			</div>
+			
+			<div class="form-trade">
+				<div id="item1" class="mui-control-content mui-active">
+					<p class="info"><span class="fl">{:L("可用")} {$coin_type}</span><span class="fr red" id="buy_usable">--</span></p>
+					<div class="mui-numbox">
+						<span class="num-left">{:L("价格")}</span>
+						<span class="unit-right">{$coin_type}</span>
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="price" id="buy_price" data-numbox-max="100000000" autocomplete="off"  />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+					<div class="mui-numbox">
+						<span class="num-left">{:L("数量")}</span>
+						<span class="unit-right">{$coin_name}</span>
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" name="num" id="buy_num" data-numbox-max="100000000" autocomplete="off" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+					<div class="mui-input-row mui-input-row-g">
+						<label>{:L("交易密码")}</label>
+						<input type="password" name="pwtrade" id="buy_paypassword" class="mui-input-clear" placeholder="请输入交易密码">
+					</div>
+					<p class="info"><span class="fl">{:L("交易额")} {$coin_type}</span><span class="fr red" id="buy_mum">0.0000</span></p>
+					
+					<if condition="$Think.session.userId eq '0'">
+						<button type="button" class="mui-btn mui-btn-red" onclick="tologin();">{:L("请先登录")}</button>
+					<else/>
+						<button type="button" class="mui-btn mui-btn-red" id="buybutton" onclick="tradeadd_buy();">{:L("买入")} {$coin_name}</button>
+					</if>
+				</div>
+				
+				<div id="item2" class="mui-control-content">
+					<p class="info"><span class="fl">{:L("可用")} {$coin_name}</span><span class="fr green" id="sell_usable">--</span></p>
+					<div class="mui-numbox">
+						<span class="num-left">{:L("价格")}</span>
+						<span class="unit-right">{$coin_type}</span>
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input type="number" name="price" id="sell_price" class="mui-numbox-input" data-numbox-max="100000000" autocomplete="off" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+					
+					<div class="mui-numbox">
+						<span class="num-left">{:L("数量")}</span>
+						<span class="unit-right">{$coin_name}</span>
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input type="number" name="num" id="sell_num" class="mui-numbox-input" data-numbox-max="100000000" autocomplete="off" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+					<div class="mui-input-row mui-input-row-g">
+						<label>{:L("交易密码")}</label>
+						<input type="password" name="pwtrade" id="sell_paypassword" class="mui-input-clear" placeholder="请输入交易密码">
+					</div>
+					<p class="info"><span class="fl">{:L("交易额")} {$coin_type}</span><span class="fr green" id="sell_mum">0.0000</span></p>
+					
+					<if condition="$Think.session.userId eq '0'">
+						<button type="button" class="mui-btn mui-btn-green" onclick="tologin();">{:L("请先登录")}</button>
+					<else/>
+						<button type="button" class="mui-btn mui-btn-green" id="sellerbutton" onclick="tradeadd_sell();">{:L("卖出")} {$coin_name}</button>
+					</if>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="cur-box trade_entrust">当前委托<a href="#" class="fr">历史委托</a></div>
+	<div class="cur-box" style="">
+		<dl class="trade_entrust_list">
+			<dt class="title">
+				<span style="width: 12%">类型</span>
+				<span style="width: 25%">价格</span>
+				<span style="width: 28%">待成交量</span>
+				<span style="width: 17%">时间</span>
+				<span style="width: 13%" class="tr">操作</span>
+			</dt>
+			<div class="trade_entrust_" id="entrustlist"></div>
+		</dl>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#menu_3').addClass('mui-active');
+});
+</script>
+<script>
+/** Function Call. start **/
+// bignumber.min.js
+function toNumberStr(num) {
+	num = num || 0;
+    var m = num.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);
+    return num.toFixed(Math.max(0, (m[1] || '').length - m[2]));
+}
+/** Function Call. end **/
+	
+$(function() {
+	getJsonTop();
+	allcoin();
+});
+	
+function getJsonTop(){
+	$.getJSON("/Ajax/getJsonTop?market={$market}&t=" + Math.random(),function(data){
+		if(data){
+			if(data['info']['new_price']){
+				$('#market_new_price').removeClass('buy');
+				$('#market_new_price').removeClass('sell');
+
+				if(data['info']['change'] == 0 || data['info']['change'] > 0){
+					$('#market_new_price').addClass('buy');
+				}else{
+					$('#market_new_price').addClass('sell');
+				}
+
+				$("#market_new_price").html(data['info']['new_price']);
+				$("title").html(data['info']['new_price'] + " | {$coin_name}-{$coin_type} | {:C('web_title')}");
+			}
+			if(data['info']['buy_price']){
+				$('#market_buy_price').removeClass('buy');
+				$('#market_buy_price').removeClass('sell');
+				if($("#market_buy_price").html()>data['info']['buy_price']){
+					$('#market_buy_price').addClass('sell');
+				}
+				if($("#market_buy_price").html()<data['info']['buy_price']){
+					$('#market_buy_price').addClass('buy');
+				}
+				$("#market_buy_price").html(data['info']['buy_price']);
+				$("#sell_best_price").html('￥'+data['info']['buy_price']);
+			}
+			if(data['info']['sell_price']){
+				$('#market_sell_price').removeClass('buy');
+				$('#market_sell_price').removeClass('sell');
+				if($("#market_sell_price").html()>data['info']['sell_price']){
+					$('#market_sell_price').addClass('sell');
+				}
+				if($("#market_sell_price").html()<data['info']['sell_price']){
+					$('#market_sell_price').addClass('buy');
+				}
+				$("#market_sell_price").html(data['info']['sell_price']);
+				$("#buy_best_price").html('￥'+data['info']['sell_price']);
+			}
+			if(data['info']['max_price']){
+				$("#market_max_price").html(data['info']['max_price']);
+			}
+			if(data['info']['min_price']){
+				$("#market_min_price").html(data['info']['min_price']);
+			}
+			if(data['info']['volume']){
+				if(data['info']['volume']>10000){
+					data['info']['volume']=(data['info']['volume']/10000).toFixed(2)+"万"
+				}
+				if(data['info']['volume']>100000000){
+					data['info']['volume']=(data['info']['volume']/100000000).toFixed(2)+"亿"
+				}
+				$("#market_volume").html(data['info']['volume']);
+			}
+			if(data['info']['change'] || data['info']['change'] == 0){
+				$('#market_change').removeClass('buy');
+				$('#market_change').removeClass('sell');
+
+				if(data['info']['change'] == 0){
+					$('#market_change').addClass('buy');
+					$("#market_change").html("+0.00%");
+				}else if(data['info']['change'] > 0){
+					$('#market_change').addClass('buy');
+					$("#market_change").html('+' + data['info']['change']+"%");
+				}else{
+					$('#market_change').addClass('sell');
+					$("#market_change").html(data['info']['change']+"%");
+				}
+			}
+		}
+	});
+	setTimeout('getJsonTop()',5000);
+}
+
+function allcoin(){
+	var trade_qu_id = $('.table-section-title .active').attr('data');
+	$.getJSON("/Ajax/getJsonTop2/id/" + trade_qu_id + "?t=" + Math.random(), function (data) {
+		if(data){
+			var list='';
+			for(var i in data['list']){
+				ifcolor = (data['list'][i]['change'] >= 0 ? 'red' : 'green');
+				
+				list+='<li><dl><a href="/Trade/index/market/'+data['list'][i]['name']+'"><dt class="fl market" style="width: 33%"><i></i><img src="__UPLOAD__/coin/'+data['list'][i]['img']+'" width="20" height="20" alt="" /><span class="coin_name">'+data['list'][i]['coin_name']+'</span></dt><dd class="fl ' + ifcolor + '" style="width: 42%"><i></i>'+data['list'][i]['new_price']+'</dd><dd class="fl tl ' + ifcolor + '" style="width: 25%">' + (parseFloat(data['list'][i]['change']) < 0 ? '' : '+') + ((parseFloat(data['list'][i]['change']) < 0.01 && parseFloat(data['list'][i]['change']) > -0.01) ? "0.00" : (parseFloat(data['list'][i]['change'])).toFixed(2)) + '%<i></i></dd></a></dl></li>';
+			}
+			$("#all_coin").html(list);
+		}
+	});
+	setTimeout('allcoin()',5000);
+}
+function trade_qu(o){
+	$('.trade_qu_pai').removeClass('active');
+	$(o).addClass('active');
+	allcoin();
+}
+</script>
+<script type="text/javascript">
+function tologin() { window.location.href="{:U('Login/index')}"; }
+	
+var market = "{$market}";
+var market_round = "{$C['market'][$market]['round']}";//获取交易数量小数点
+var market_round_num = "{$C['market'][$market]['round']}";
+var market_round_mum = "{$C['market'][$market]['round_mum']}"; //获取交易价小数点	
+var market_round_total = parseInt(market_round)+parseInt(market_round_num);
+var heh = {$C['market'][$market]['hou_price']|NumToStr};
+var userid = "{$Think.session.userId}";
+var trade_moshi = 1;
+var getDepth_tlme = null;
+var trans_lock = 0;
+
+var buy_max = 0;
+var sell_max = 0;
+	
+// Maximum buy
+$("#buy_usable").on("click",function() {
+	$("#buy_num").val('0');
+	$("#buy_mum").val('0.0000');
+	if($("#buy_num").val().trim() != ''){
+		var buyusable = parseFloat( $('#buy_usable').html() ) || 0;
+		var buyprice = parseFloat( $('#buy_price').val() ) || 0;
+		if(buyusable && buyprice) {
+			$(".panel-item .percent_btn_buy").siblings().removeClass("active");
+			//$("#buy_num").val((buyusable / buyprice).toFixed(market_round_num) * 1);
+			$("#buy_num").val( toNumberStr(toNum(parseFloat( buyusable / buyprice ),market_round)) );
+			//$("#buy_mum").html(($('#buy_num').val() * $('#buy_price').val()).toFixed(market_round_mum) * 1);
+			$("#buy_mum").html( toNumberStr(toNum(parseFloat( $('#buy_num').val() * $('#buy_price').val() ),market_round_mum)) );
+		}
+	}
+})
+
+// Maximum sale
+$("#sell_usable").on("click",function() {
+	$("#sell_num").val('0');
+	$("#sell_mum").val('0.0000');
+	if($("#sell_price").val().trim() != 0){
+		$(".panel-item .percent_btn_sell").siblings().removeClass("active");
+		//$("#sell_num").val($(this).html().replace(/[-\s]/g,""));
+		$("#sell_num").val( toNumberStr(toNum(parseFloat( $(this).html() ),market_round)) );
+		//$("#sell_mum").html(($('#sell_num').val() * $('#sell_price').val()).toFixed(market_round_mum) * 1);
+		$("#sell_mum").html( toNumberStr(toNum(parseFloat( $('#sell_num').val() * $('#sell_price').val() ),market_round_mum)) );
+	}
+})
+
+// Transaction password setting
+function layertpwd(){
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: 'autos',
+        skin: 'layui-layer-nobg',
+        shadeClose: true,
+        content: $('#layertpwd')
+    });
+
+	$.get('/user/tpwdsetting', function(d){
+		if (d==1) { $('#only').prop('checked', true); }
+		if (d==2) { $('#every').prop('checked', true); }
+		if (d==3) { $('#none').prop('checked', true); }
+	})
+}
+	
+function closeCharge() {
+    layer.closeAll();
+}
+function closeChargeDD() {
+    layer.close(layer.index);
+}
+	
+// Save the transaction password settings
+function tpwdsettingaa() {
+	var paypassword = $("#aaapaypassword").val();
+	var tpwdsetting = $("input[name='aaatpwdsetting']:checked").val();
+	if (paypassword == "" || paypassword == null) {
+		layer.tips('请输入交易密码', '#paypassword', {tips: 3});
+		return false;
+	}
+	if (tpwdsetting == "" || tpwdsetting == null) {
+		layer.tips('请输入选择一个', '#tpwdsetting', {tips: 3});
+		return false;
+	}
+	$.post('/user/uptpwdsetting', {paypassword: paypassword, tpwdsetting: tpwdsetting}, function (d) {
+		if (d.status) {
+			layer.msg('设置成功', {icon: 1});
+			window.location.reload();
+		} else {
+			layer.msg(d.info, {icon: 2});
+		}
+	}, 'json');
+}
+
+// Buy operation
+function tradeadd_buy(){
+	if(trans_lock){
+		layer.msg("{:L('不要重复提交')}",{icon : 2 });
+		return;
+	}
+	trans_lock = 1;
+	var price = parseFloat($('#buy_price').val());
+	var num = parseFloat($('#buy_num').val());
+	var paypassword = $('#buy_paypassword').val();
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	
+	if(price==""||price==null||!reg.test(price)){
+		layer.tips("{:L('交易价格必须大于')}0",'#buy_price',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	if(num==""||num==null||!reg.test(num)){
+		layer.tips("{:L('交易数量必须大于')}0",'#buy_num',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+
+	//加载层
+	layer.load(2);
+	
+	$.post("{:U('Trade/upTrade')}",{ price:$('#buy_price').val(), num:$('#buy_num').val(), paypassword:$('#buy_paypassword').val(), market:market, type:1 },function(data){
+		layer.closeAll('loading');
+		trans_lock = 0;
+		if(data.status==1){
+			$("#buy_price").val('');
+			$("#buy_num").val('');
+			$("#buy_mum").html('0.0000');
+			$("#sell_price").val('');
+			$("#sell_num").val('');
+			$("#sell_mum").html('0.0000');
+			$('#buy_paypassword').val('');
+			
+			layer.msg(data.info,{icon : 1 });
+		}else{
+			layer.msg(data.info,{icon : 2 });
+		}
+	},'json');
+}
+
+// Selling operation
+function tradeadd_sell(){
+	if(trans_lock){
+		layer.msg("{:L('不要重复提交')}",{icon : 2 });
+		return;
+	}
+	trans_lock = 1;
+	var price=parseFloat($('#sell_price').val());
+	var num=parseFloat($('#sell_num').val());
+	var paypassword=$('#sell_paypassword').val();
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	
+	if(price==""||price==null||!reg.test(price)){
+		layer.tips("{:L('交易价格必须大于')}0",'#sell_price',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	if(num==""||num==null||!reg.test(num)){
+		layer.tips("{:L('交易数量必须大于')}0",'#sell_num',{tips : 3 });
+		trans_lock = 0;
+		return false;
+	}
+	
+	//加载层
+	layer.load(2);
+
+	$.post("{:U('Trade/upTrade')}",{ price:$('#sell_price').val(),num : $('#sell_num').val(), paypassword:$('#sell_paypassword').val(), market:market, type:2 },function(data){
+		layer.closeAll('loading');
+		trans_lock = 0;
+		if(data.status==1){
+			$("#buy_price").val('');
+			$("#buy_num").val('');
+			$("#buy_mum").html('0.0000');
+			$("#sell_price").val('');
+			$("#sell_num").val('');
+			$("#sell_mum").html('0.0000');
+			$('#sell_paypassword').val('');
+			
+			layer.msg(data.info,{icon : 1 });
+		}else{
+			layer.msg(data.info,{icon : 2 });
+		}
+	},'json');
+}
+
+// 我的财产 我的委托
+function getEntrustAndUsercoin(){
+	$.getJSON("/Ajax/getEntrustAndUsercoin?market="+market+"&market_round_mum="+market_round_mum+"&market_round="+market_round+"&t="+Math.random(),function(data){
+		if(data){
+			if(data['entrust']){
+				$('#entrust_over').show();
+				var list = '';
+				var cont = data['entrust'].length;
+				var status_name = '--';
+
+				// 委托信息
+				for(i=0; i<data['entrust'].length; i++){
+					if(data['entrust'][i]['type']==1){
+						if(data['entrust'][i]['status'] == 0){status_name = "{:L('交易中')}";}
+						else if(data['entrust'][i]['status'] == 1){status_name = "{:L('已完成')}";}
+						else if(data['entrust'][i]['status'] == 2){status_name = "{:L('已撤销')}";}
+
+						list += '<dt><span style="width: 12%" class="red">{:L('买')}</span><span class="red" style="width: 25%">'+(data['entrust'][i]['price'])+'</span><span class="red" style="width: 28%">'+((data['entrust'][i]['num']).toFixed(market_round_num) - (data['entrust'][i]['deal']).toFixed(market_round_num))+'</span><span style="width: 17%">'+data['entrust'][i]['addtime2']+'</span><span style="width: 13%" class="tr"><a style="color: #2674FF;" class="cancelaa" id="'+data['entrust'][i]['id']+'" onclick="cancelaa(\''+data['entrust'][i]['id']+'\')" href="javascript:void(0);">{:L('取消')}</a></span></dt>';
+					}else{
+						if(data['entrust'][i]['status'] == 0){status_name = "{:L('交易中')}";}
+						else if(data['entrust'][i]['status'] == 1){status_name = "{:L('已完成')}";}
+						else if(data['entrust'][i]['status'] == 2){status_name = "{:L('已撤销')}";}
+
+						list += '<dt><span style="width: 12%" class="green">{:L('卖')}</span><span class="green" style="width: 25%">'+(data['entrust'][i]['price'])+'</span><span class="green" style="width: 28%">'+((data['entrust'][i]['num']).toFixed(market_round_num) - (data['entrust'][i]['deal']).toFixed(market_round_num))+'</span><span style="width: 17%">'+data['entrust'][i]['addtime2']+'</span><span style="width: 13%" class="tr"><a style="color: #2674FF;" class="cancelaa" id="'+data['entrust'][i]['id']+'" onclick="cancelaa(\''+data['entrust'][i]['id']+'\')" href="javascript:void(0);">{:L('取消')}</a></span></dt>';
+					}
+				}
+				$('#entrustlist').html(list);
+			}else{
+				$('#entrust_over').hide();
+			}
+
+			// 我的财产信息
+			if(data['usercoin']){
+				if(data['usercoin']['rmb']){
+					$("#buy_usable").html(data['usercoin']['rmb'].toFixed(5) * 1);
+					if($('#buy_price').val()>0){
+						//$("#buy_max").html(((data['usercoin']['rmb']/$('#buy_price').val()).toFixed(market_round_mum) * 1));
+						buy_max = toNumberStr(toNum(parseFloat( data['usercoin']['rmb'] / $('#buy_price').val() ),market_round));
+					}else{
+						//$("#buy_max").html(0);
+						buy_max = 0;
+					}
+				}else{
+					$("#buy_usable").html('0.00');
+				}
+
+				if(data['usercoin']['rmbd']){
+					$("#buy_usabled").html(data['usercoin']['rmbd'].toFixed(market_round_num) * 1);
+				}else{
+					$("#buy_usabled").html('0.00');
+				}
+
+				if(data['usercoin']['xnb']){
+					$("#sell_usable").html(data['usercoin']['xnb'].toFixed(market_round_num) * 1);
+					$("#sell_max").html(data['usercoin']['xnb'].toFixed(market_round_num) * 1);
+				}else{
+					$("#sell_usable").html('0.00');
+				}
+
+				if(data['usercoin']['xnbd']){
+					$("#sell_usabled").html(data['usercoin']['xnbd'].toFixed(market_round_num) * 1);
+				}else{
+					$("#sell_usabled").html('0.00');
+				}
+
+				if(data['time_state']==0){
+					$("#buybutton").show();
+					$("#buybutton").attr("onclick","tradeadd_buy();");
+					$("#sellerbutton").show();
+					$("#sellerbutton").attr("onclick","tradeadd_sell();");
+				}else{
+					$("#buybutton").show();
+					$("#buybutton").val("{:L('闭盘期间')}");
+					$("#buybutton").css("background","#ccc");
+					$("#buybutton").attr("onclick","tradaedd_buy();");
+					$("#sellerbutton").show();
+					$("#sellerbutton").val("{:L('闭盘期间')}");
+					$("#sellerbutton").css("background","#ccc");
+					$("#sellerbutton").attr("onclick","tradadedd_sell();");
+				}
+			}
+		}
+	});
+
+	// 账户总资产
+	$.get("/Ajax/allfinance?t="+Math.random()+'&ajax=json',function(data){
+		// $('#user_finance').html(toNum(data,2));//原显示
+		var data = JSON.parse(data);
+		$('#user_finance').html(data);//千分位显示
+	});
+	setTimeout('getEntrustAndUsercoin()',1000);
+}
+
+// 交易买卖委托信息
+function getDepth(){
+	$.get("/Ajax/getDepth?market="+market+"&market_round_mum="+market_round_mum+"&market_round="+market_round+"&trade_moshi=99&t="+Math.random()+'&ajax=json',function(data){
+		var data = JSON.parse(data);
+		if(data){
+			if(data['depth']){
+				var list = '';
+				var sellk = data['depth']['sell'].length;
+				if(data['depth']['sell']){
+					for(i=0; i<data['depth']['sell'].length; i++){
+						list += '<dd onclick="autotrust(this,\'sell\',1,2)"><span class="fl">'+(data['depth']['sell'][i][1])+'</span><span class="fr sell">'+(data['depth']['sell'][i][0])+'</span><i class="turntable_bg_green" style="width: '+(data['depth']['sellpbar'][i])+'%"></i></dd>';
+					}
+				}
+				$("#selllist").html(list);
+				list = '';
+				if(data['depth']['buy']){
+					for(i=0; i<data['depth']['buy'].length; i++){
+						list += '<dd onclick="autotrust(this,\'buy\',0)"><span class="fl buy">'+(data['depth']['buy'][i][0])+'</span><span class="fr">'+(data['depth']['buy'][i][1])+'</span><i class="turntable_bg_red" style="width: '+(data['depth']['buypbar'][i])+'%"></i></dd>';
+					}
+				}
+				$("#buylist").html(list);
+			}
+		}
+	});
+	clearInterval(getDepth_tlme);
+
+	var wait=second=1;
+	getDepth_tlme=setInterval(function(){
+		wait--;
+		if(wait<0){
+			clearInterval(getDepth_tlme);
+			getDepth();
+			wait=second;
+		}
+	},1000);
+}
+
+function closetanchu(){
+	layer.closeAll('loading');
+}
+
+//撤销
+function cancelaa(id){
+	$.post("{:U('Trade/chexiao')}",{id : id },function(data){
+		setTimeout("closetanchu()",4000);
+		if(data.status==1){
+			getEntrustAndUsercoin();
+			layer.msg(data.info,{icon : 1 });
+		}else{
+			layer.msg(data.info,{icon : 2 });
+		}
+	});
+}
+		
+// 执行函数
+$(function(){
+	getJsonTop();
+	getDepth();
+	if(userid>0){ getEntrustAndUsercoin(); }else{ $('#entrust_over').hide(); }
+	xianshi();
+});
+	
+function xianshi(){
+	$('#market_change1').html(heh.toFixed(market_round_num))
+}
+	
+function toNum(num,round){
+	var mum=Math.round(num*Math.pow(10,round))/Math.pow(10,round);
+	if(mum<0){var mum=0;}
+	return mum;
+}
+
+// Price check
+function autotrust(_this, type, cq, nums) {
+	$('#buy_price,#sell_price').val( removeHTMLTag($(_this).children().eq(cq).html()) );
+
+	if(type == 'sell'){
+		if ($('#buy_num').val()) {
+			$('#buy_num').val();
+			$("#buy_mum").html( toNumberStr(toNum(parseFloat( $('#buy_num').val() * $('#buy_price').val() ),market_round_mum)) );
+		} else {
+			$('#buy_num').val('');
+			$('#buy_mum').html('0.0000');
+		}
+		
+		if ($('#sell_num').val()) {
+			$('#sell_num').val()
+			$("#sell_mum").html( toNumberStr(toNum(parseFloat( $('#sell_num').val() * $('#sell_price').val() ),market_round_mum)) );
+		} else {
+			$('#sell_num').val('');
+			$('#sell_mum').html('0.0000');
+		}
+	}
+
+	if(type == 'buy'){
+		if ($('#buy_num').val()) {			
+			$('#buy_num').val();
+			$("#buy_mum").html( toNumberStr(toNum(parseFloat( $('#buy_num').val() * $('#buy_price').val() ),market_round_mum)) );
+		} else {
+			$('#buy_num').val('');
+			$('#buy_mum').html('0.0000');
+		}
+		
+		if ($('#sell_num').val()) {
+			$('#sell_num').val()
+			$("#sell_mum").html( toNumberStr(toNum(parseFloat( $('#sell_num').val() * $('#sell_price').val() ),market_round_mum)) );
+		} else {
+			$('#sell_num').val('');
+			$('#sell_mum').html('0.0000');
+		}
+	}
+}
+
+//过滤HTML标签
+function removeHTMLTag(str) {
+	str = str.replace(/<\/?[^>]*>/g, ''); //去除HTML tag
+	str = str.replace(/[ | ]*\n/g, '\n'); //去除行尾空白
+	//str = str.replace(/\n[\s| | ]*\r/g,'\n'); //去除多余空行
+	str = str.replace(/ /ig, ''); //去掉 
+	return str;
+}
+
+// 买卖价格与数量 绑定键盘与选择事件
+$('#buy_price,#buy_num,#sell_price,#sell_num').css("ime-mode","disabled").bind('keyup change',function(){
+	var buyprice = parseFloat($('#buy_price').val());
+	var buynum = parseFloat($('#buy_num').val());
+	var sellprice = parseFloat($('#sell_price').val());
+	var sellnum = parseFloat($('#sell_num').val());
+	var buymum = buyprice*buynum;
+	var sellmum = sellprice*sellnum;
+	var myrmb = $("#buy_usable").html();
+	var myxnb = $("#sell_usable").html();
+	var buykenum = 0;
+	var sellkenum = 0;
+	
+	if(myrmb>0){
+		buykenum=myrmb/buyprice;
+	}
+	if(myxnb>0){
+		sellkenum=myxnb;
+	}
+	
+	if(buyprice!=null&&buyprice.toString().split(".")!=null&&buyprice.toString().split(".")[1]!=null){
+		if(buyprice.toString().split('.')[1].length>market_round_mum){
+			$('#buy_price').val( toNumberStr(toNum( buyprice ,market_round_mum)) );
+		}
+	}
+	if(buynum!=null&&buynum.toString().split(".")!=null&&buynum.toString().split(".")[1]!=null){
+		if(buynum.toString().split('.')[1].length>market_round_num){
+			$('#buy_num').val( toNumberStr(toNum( buynum ,market_round_num)) );
+		}
+	}
+	if(sellprice!=null&&sellprice.toString().split(".")!=null&&sellprice.toString().split(".")[1]!=null){
+		if(sellprice.toString().split('.')[1].length>market_round_mum){
+			$('#sell_price').val( toNumberStr(toNum( sellprice ,market_round_mum)) );
+		}
+	}
+	if(sellnum!=null&&sellnum.toString().split(".")!=null&&sellnum.toString().split(".")[1]!=null){
+		if(sellnum.toString().split('.')[1].length>market_round_num){
+			$('#sell_num').val( toNumberStr(toNum( sellnum ,market_round_num)) );
+		}
+	}
+	
+	$('#buy_mum').html( toNumberStr(toNum( buymum ,market_round_mum)) );
+	$('#sell_mum').html( toNumberStr(toNum( sellmum ,market_round_mum)) );
+	
+	if(buykenum!=null&&buykenum>0&&buykenum!='Infinity'){
+		$('#buy_max').html( toNumberStr(toNum( buykenum ,market_round_num)) );
+	}
+	if(sellkenum!=null&&sellkenum>0&&sellkenum!='Infinity'){
+		$('#sell_max').html( toNumberStr(toNum( sellkenum ,market_round_num)) );
+	}
+	
+}).bind("paste",function(){
+	return false;
+}).bind("blur",function(){
+	if(this.value.slice(-1)=="."){
+		this.value=this.value.slice(0,this.value.length-1);
+	}
+}).bind("keypress",function(e){
+	var code=(e.keyCode ? e.keyCode : e.which); //compatible:Firefox,IE
+	if(this.value.indexOf(".")==-1){
+		return (code>=48&&code<=57)||(code==46);
+	}else{
+		return code>=48&&code<=57
+	}
+});
+</script>
+
+<include file="Public:footer" />
+<script>
+	mui.init({
+		swipeBack: false
+	});
+	(function($) {
+		$('.mui-scroll-wrapper').scroll({
+			indicators: true //是否显示滚动条
+		});
+		var html2 = '';
+		var html3 = '';
+		var item2 = document.getElementById('item2');
+		var item3 = document.getElementById('item3');
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			if (e.detail.slideNumber === 1) {
+				if (item2.querySelector('.mui-loading')) {
+					setTimeout(function() {
+						item2.querySelector('.mui-scroll').innerHTML = html2;
+					}, 500);
+				}
+			} else if (e.detail.slideNumber === 2) {
+				if (item3.querySelector('.mui-loading')) {
+					setTimeout(function() {
+						item3.querySelector('.mui-scroll').innerHTML = html3;
+					}, 500);
+				}
+			}
+		});
+		var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+		$('.mui-input-group').on('change', 'input', function() {
+			if (this.checked) {
+				sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+				//force repaint
+				sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+			}
+		});
+	})(mui);
+	
+	
+	/**
+	 * 数字输入框
+	 * varstion 1.0.1
+	 * by Houfeng
+	 * Houfeng@DCloud.io
+	 */
+	(function($) {
+		var touchSupport = ('ontouchstart' in document);
+		var tapEventName = touchSupport ? 'tap' : 'click';
+		var changeEventName = 'change';
+		var holderClassName = 'mui-numbox';
+		var plusClassName = 'mui-numbox-btn-plus';
+		var minusClassName = 'mui-numbox-btn-minus';
+		var inputClassName = 'mui-numbox-input';
+
+		var Numbox = $.Numbox = $.Class.extend({
+			/**
+			 * 构造函数
+			 **/
+			init: function(holder, options) {
+				var self = this;
+				if (!holder) {
+					throw "构造 numbox 时缺少容器元素";
+				}
+				self.holder = holder;
+				options = options || {};
+				options.step = parseFloat(options.step || 1);
+				self.options = options;
+				self.input = $.qsa('.' + inputClassName, self.holder)[0];
+				self.plus = $.qsa('.' + plusClassName, self.holder)[0];
+				self.minus = $.qsa('.' + minusClassName, self.holder)[0];
+				self.checkValue();
+				self.initEvent();
+			},
+			/**
+			 * 初始化事件绑定
+			 **/
+			initEvent: function() {
+				var self = this;
+				self.plus.addEventListener(tapEventName, function(event) {
+					var val = parseFloat(self.input.value) + self.options.step;
+					self.input.value = val.toString();
+					$.trigger(self.input, changeEventName, null);
+				});
+				self.minus.addEventListener(tapEventName, function(event) {
+					var val = parseFloat(self.input.value) - self.options.step;
+					self.input.value = val.toString();
+					$.trigger(self.input, changeEventName, null);
+				});
+				self.input.addEventListener(changeEventName, function(event) {
+					self.checkValue();
+					var val = parseFloat(self.input.value);
+					//触发顶层容器
+					$.trigger(self.holder, changeEventName, {
+						value: val
+					});
+				});
+			},
+			/**
+			 * 获取当前值
+			 **/
+			getValue: function() {
+				var self = this;
+				return parseFloat(self.input.value);
+			},
+			/**
+			 * 验证当前值是法合法
+			 **/
+			checkValue: function() {
+				var self = this;
+				var val = self.input.value;
+				if (val == null || val == '' || isNaN(val)) {
+					self.input.value = self.options.min || 0;
+					self.minus.disabled = self.options.min != null;
+				} else {
+					var val = parseFloat(val);
+					if (self.options.max != null && !isNaN(self.options.max) && val >= parseFloat(self.options.max)) {
+						val = self.options.max;
+						self.plus.disabled = true;
+					} else {
+						self.plus.disabled = false;
+					}
+					if (self.options.min != null && !isNaN(self.options.min) && val <= parseFloat(self.options.min)) {
+						val = self.options.min;
+						self.minus.disabled = true;
+					} else {
+						self.minus.disabled = false;
+					}
+					self.input.value = val;
+				}
+			},
+			/**
+			 * 更新选项
+			 **/
+			setOption: function(name, value) {
+				var self = this;
+				self.options[name] = value;
+			}
+		});
+
+		$.fn.numbox = function(options) {
+			var instanceArray = [];
+			//遍历选择的元素
+			this.each(function(i, element) {
+				if (element.numbox) return;
+				if (options) {
+					element.numbox = new Numbox(element, options);
+				} else {
+					var optionsText = element.getAttribute('data-numbox-options');
+					var options = optionsText ? JSON.parse(optionsText) : {};
+					options.step = element.getAttribute('data-numbox-step') || options.step;
+					options.min = element.getAttribute('data-numbox-min') || options.min;
+					options.max = element.getAttribute('data-numbox-max') || options.max;
+					element.numbox = new Numbox(element, options);
+				}
+			});
+			return this[0] ? this[0].numbox : null;
+		}
+
+		//自动处理 class='mui-locker' 的 dom
+		$.ready(function() {
+			$('.' + holderClassName).numbox();
+		});
+
+	}(mui))
+</script>
+</body>
+</html>

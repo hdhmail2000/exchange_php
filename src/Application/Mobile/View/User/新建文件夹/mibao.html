@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('修改密保问题')}
+        </div>
+        <if condition="($mibao_question neq '') OR ($mibao_question neq NULL)">
+        <div class="logbot">
+            <form>
+                <select id="mibao_question" class="logipt">
+                    <option value="">{:L('请选择密保问题')}</option>
+                    <option value="{:L('你父亲的姓名')}">{:L('你父亲的姓名')}</option>
+                    <option value="{:L('你母亲的姓名')}">{:L('你母亲的姓名')}</option>
+                    <option value="{:L('你爱人的姓名')}">{:L('你爱人的姓名')}</option>
+                    <option value="{:L('你的出生日期')}">{:L('你的出生日期')}</option>
+                    <option value="{:L('你父亲的出生日期')}">{:L('你父亲的出生日期')}</option>
+                    <option value="{:L('你母亲的出生日期')}">{:L('你母亲的出生日期')}</option>
+                    <option value="{:L('你爱人的出生日期')}">{:L('你爱人的出生日期')}</option>
+                </select>
+                <input type="text" id="mibao_answer" class="logipt" placeholder="{:L('请输入密保问题答案')}"/>
+                <select id="new_mibao_question" class="logipt">
+                    <option value="">{:L('请选择新密保问题')}</option>
+                    <option value="{:L('你父亲的姓名')}">{:L('你父亲的姓名')}</option>
+                    <option value="{:L('你母亲的姓名')}">{:L('你母亲的姓名')}</option>
+                    <option value="{:L('你爱人的姓名')}">{:L('你爱人的姓名')}</option>
+                    <option value="{:L('你的出生日期')}">{:L('你的出生日期')}</option>
+                    <option value="{:L('你父亲的出生日期')}">{:L('你父亲的出生日期')}</option>
+                    <option value="{:L('你母亲的出生日期')}">{:L('你母亲的出生日期')}</option>
+                    <option value="{:L('你爱人的出生日期')}">{:L('你爱人的出生日期')}</option>
+                </select>
+                <input type="text" id="new_mibao_answer" class="logipt" placeholder="{:L('请输入新密保问题答案')}"/>
+                <div class="yzmbox">
+                    <input type="text" placeholder="{:L('验证码')}" class="logipt yzmipt"  id="mobile_verify" >
+                    <input type="button" value="{:L('获取验证码')}" class="phonebut" id="regBtn"  value="{:L('获取验证码')}" onclick="SendCode()" style="margin-top:15px;background:#ff9900;color:#fff;">
+                <p id="repassword-msg" data-explain="{:L('重复输入密码，两次需要一致')}<em></em>" style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('接收短信的手机')}{$mobile}<em></em>
+                </p>
+                </div>
+                <input type="button" class="logbut" value="{:L('保存')}" onclick="Update()">
+            </form>
+        </div>
+        <else />
+        <div class="logbot">
+            <form>
+                <select id="new_mibao_question" class="logipt">
+                    <option value="">{:L('请选择密保问题')}</option>
+                    <option value="{:L('你父亲的姓名')}">{:L('你父亲的姓名')}</option>
+                    <option value="{:L('你母亲的姓名')}">{:L('你母亲的姓名')}</option>
+                    <option value="{:L('你爱人的姓名')}">{:L('你爱人的姓名')}</option>
+                    <option value="{:L('你的出生日期')}">{:L('你的出生日期')}</option>
+                    <option value="{:L('你父亲的出生日期')}">{:L('你父亲的出生日期')}</option>
+                    <option value="{:L('你母亲的出生日期')}">{:L('你母亲的出生日期')}</option>
+                    <option value="{:L('你爱人的出生日期')}">{:L('你爱人的出生日期')}</option>
+                </select>
+                <input type="text" id="new_mibao_answer" class="logipt" placeholder="{:L('请输入密保问题答案')}"/>
+                <div class="yzmbox">
+                    <input type="text" placeholder="{:L('验证码')}" class="logipt yzmipt"  id="mobile_verify" >
+                    <input type="button" value="{:L('获取验证码')}" class="phonebut" id="regBtn"  value="{:L('获取验证码')}" onclick="SendCode()" style="margin-top:15px;background:#ff9900;color:#fff;">
+                <p id="repassword-msg" data-explain="{:L('重复输入密码，两次需要一致')}<em></em>" style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('接收短信的手机')}{$mobile}<em></em>
+                </p>
+                </div>
+                <input type="button" class="logbut" value="{:L('保存')}" onclick="Update1()">
+            </form>
+        </div>
+        </if>
+    </div>
+<script>
+  function SendCode() {
+	layer.load(0, {shade: [0.5,'#8F8F8F']});
+    $('#regBtn').attr("disabled", "disabled");
+    $.post("{:U('Verify/mibao')}", {}, function (data) {
+	  layer.closeAll();
+      if (data.status == 1) {
+        layer.msg(data.info, {
+          icon: 1
+        });
+        var obj = $('#regBtn');
+        var wait = 120;
+        var interval = setInterval(function () {
+          obj.css('backgroundColor', '#999B9C');
+          obj.val(wait + '{:L('秒再次发送')}');
+          wait--;
+          if (wait < 0) {
+            $('#regBtn').removeAttr("disabled");
+            clearInterval(interval);
+            obj.val('{:L('获取验证码')}');
+            obj.css('backgroundColor', '#ff9900');
+          }
+          ;
+        }, 1000);
+      } else {
+        $('#regBtn').removeAttr("disabled");
+        layer.msg(data.info, {
+          icon: 2
+        });
+      }
+    }, "json");
+  }
+    function Update(){
+    var mibao_question=$("#mibao_question").val();
+    var mibao_answer=$("#mibao_answer").val();
+    var new_mibao_question=$("#new_mibao_question").val();
+    var new_mibao_answer=$("#new_mibao_answer").val();
+    var mobile_verify = $("#mobile_verify").val();
+    if (mobile_verify == "" || mobile_verify == null) {
+      layer.tips('{:L('请输入短信验证码')}', '#mobile_verify', {
+        tips: 3
+      });
+      return false;
+    }
+
+    if(mibao_question==""||mibao_question==null){
+        layer.tips('{:L('请选择密保问题')}','#mibao_question',{tips:3});
+        return false;
+    }
+    if(mibao_answer==""||mibao_answer==null){
+        layer.tips('{:L('请输入密保问题答案')}','#mibao_answer',{tips:3});
+        return false;
+    }
+    if(new_mibao_question==""||new_mibao_question==null){
+        layer.tips('{:L('请选择新密保问题')}','#new_mibao_question',{tips:3});
+        return false;
+    }
+    if(new_mibao_answer==""||new_mibao_answer==null){
+        layer.tips('{:L('请输入新密保问题答案')}','#new_mibao_answer',{tips:3});
+        return false;
+    }
+
+    $.post("{:U('User/upmibao')}",{mobile_verify : mobile_verify,mibao_question : mibao_question,mibao_answer : mibao_answer,new_mibao_question : new_mibao_question,new_mibao_answer:new_mibao_answer },function(data){
+      if(data.status==1){
+        layer.msg(data.info,{icon : 1 });
+        window.location="{:U('User/mibao')}";
+      }else{
+        layer.msg(data.info,{icon : 2 });
+        if(data.url){
+          window.location=data.url;
+        }
+      }
+    },"json");
+  }
+    function Update1(){
+    var mibao_question='';
+    var mibao_answer='';
+    var new_mibao_question=$("#new_mibao_question").val();
+    var new_mibao_answer=$("#new_mibao_answer").val();
+    var mobile_verify = $("#mobile_verify").val();
+    if (mobile_verify == "" || mobile_verify == null) {
+      layer.tips('{:L('请输入短信验证码')}', '#mobile_verify', {
+        tips: 3
+      });
+      return false;
+    }
+    if(new_mibao_question==""||new_mibao_question==null){
+        layer.tips('{:L('请选择密保问题')}','#mibao_question',{tips:3});
+        return false;
+    }
+    if(new_mibao_answer==""||new_mibao_answer==null){
+        layer.tips('{:L('请输入密保问题答案')}','#mibao_answer',{tips:3});
+        return false;
+    }
+
+    $.post("{:U('User/upmibao')}",{mobile_verify : mobile_verify,mibao_question : mibao_question,mibao_answer : mibao_answer,new_mibao_question : new_mibao_question,new_mibao_answer:new_mibao_answer },function(data){
+      if(data.status==1){
+        layer.msg(data.info,{icon : 1 });
+        window.location="{:U('User/mibao')}";
+      }else{
+        layer.msg(data.info,{icon : 2 });
+        if(data.url){
+          window.location=data.url;
+        }
+      }
+    },"json");
+  }
+    function remainTime(){ 
+                    window.location = "{:U('User/index')}";
+                 }
+</script>
+<include file="Public:footer" />
+</body>
+</html>

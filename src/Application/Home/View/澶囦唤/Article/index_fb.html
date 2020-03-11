@@ -1,0 +1,52 @@
+<include file="Public:header" />
+<div class="autobox">
+ <div class="now">
+  <a href="/" class="orange">首页</a> &gt;<a href="{:U('Article/index')}" class="orange"> {$shang.title} </a>
+ </div>
+ <div class="assets_center clear po_re zin70">
+  <!--左侧菜单-->
+  <div class="coin_menu">
+   <div class="coin_menu_box">
+    <volist name="ArticleTypeList" id="vo">
+    <dl>
+     <dt
+      <eq name="shang['name']" value="$key">class="here"</eq>
+      ><a href="{:U('Article/index',array('id'=>$vo['id']))}">{$vo.title}</a>
+     </dt>
+    </dl>
+    </volist>
+   </div>
+  </div>
+  <!--右侧内容-->
+  <div class="assets_content w900 right bg_w mh1500">
+   <h1>{$shang['title']}</h1>
+   <div class="new_list">
+    <ul>
+    
+      <volist name="list" id="vo">
+      
+       <li><a href="{:U('Article/detail','id='.$vo['id'])}" class="title">{$vo.title}</a>
+
+      <span class="list_time" style="float: right;">{$vo.addtime|addtime}</span>
+      </li>
+      
+
+    </volist>
+    
+    
+    
+      
+      
+    </ul>
+   </div>
+  <div class="pages">{$page}</div>
+  </div>
+ </div>
+</div>
+<br>
+<br>
+<script>
+ //菜单高亮
+ $('#article_box').addClass('active');
+</script>
+<include file="Public:footer" />

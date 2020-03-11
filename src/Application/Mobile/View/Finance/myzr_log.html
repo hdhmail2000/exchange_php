@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('币种充值记录')}/{$coin_info.name|strtoupper=###}
+        </div>
+
+        <div class="chgbox">
+            <ul>
+
+            <empty name="list">
+                <li>
+                    <div class="chglist_top" style="text-align: center;">
+                        <span class="state wait" style="float: none;color:#B7B6B6">
+                            {:L('暂无币种充值记录')}
+                        </span>
+                    </div>
+                </li>
+
+            <else />
+                <volist name="list" id="vo">
+                    <li>
+                        <!-- <div class="chglist_top">
+                            {$vo.username}
+                            <span class="state wait">充值地址</span>
+                        </div> -->
+                        <table class="jfcz_table">
+                            <tr>
+                                <td colspan="3" class="bankid">
+                                    {$vo.addtime|date='Y-m-d',###}
+                                    <span style="float: right;">
+                                        <eq name="vo.status" value="1">
+                                            <font color="#23a800">{:L('转入成功')} </font>
+                                            <else/>
+                                            <font color="red">{:L('等待处理')}<br/>{:L('还需要')}{$vo.status|abs}{:L('个确认')}</font>
+                                        </eq>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="padding-top: 10px;">
+                                    {:L('转入币种')}：{$vo.coinname|strtoupper=###}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    {:L('转入数量')}：{$vo['mum']}
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td colspan="3">到账数量：{$vo['mum']}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">转入赠送：{$vo['fee']}</td>
+                            </tr> -->
+                            <tr>
+                                <td colspan="3" style="padding-bottom: 10px;">{:L('充值地址')}：{$vo.username}</td>
+                            </tr>
+                            <!-- <tr>
+                                <th>转入时间</th>
+                                <th>转入币种</th>
+                                <th>转入数量</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo.addtime|date='Y-m-d',###}</td>
+                                <td>{$vo.coinname|strtoupper=###}</td>
+                                <td>{$vo['num']}</td>
+                            </tr> -->
+
+
+
+                            <!-- <tr>
+                                <th>到账数量</th>
+                                <th>转入赠送</th>
+                                <th>状态</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo['mum']}</td>
+                                <td>{$vo['fee']}</td>
+                                <td>
+                                    <eq name="vo.status" value="1">
+                                        <font color="#23a800">转入成功 </font>
+                                        <else/>
+                                        <font color="red">等待处理<br/>还需要{$vo.status|abs}个确认</font>
+                                    </eq>
+                                </td>
+                            </tr> -->
+                        </table>
+                    </li>
+                </volist>
+            </empty>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+    </div>
+<include file="Public:footer" />
+<script>
+    function bianhua(){
+        $("#check").show();
+        $("#button").hide();
+    }
+    function bianhua1(){
+        $("#button").show();
+        $("#check").hide();
+    }
+</script>
+</body>
+</html>

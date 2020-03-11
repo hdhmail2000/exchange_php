@@ -1,0 +1,39 @@
+<include file="Public:header"/>
+
+<div class="main">
+	<div class="container-divider"></div>
+</div>
+
+<div class="container">
+	<nav class="sub-nav">
+		<ol>{:GetPosStr($info['id'])}</ol>
+		
+		<form role="search" class="search" method="get" action="{:U('Support/index/search/')}">
+			<img class="icon" src="__PUBLIC__/Home/ecshe_img/soso.png" />
+			<input type="search" name="so" placeholder="{:L('搜索')}" autocomplete="off" value="{$keyword}">
+		</form>
+	</nav>
+
+	<div class="category-content wdh100">
+		<header class="page-header">
+        	<h1>{$classinfo['title']}</h1>
+		</header>
+		
+		<div class="section-tree" style="flex-direction:column;">
+			<section class="section">
+				<ul>
+					<volist name="classify" id="vo" empty="$empty">
+						<li>
+							<eq name="vo.recommend" value="1"><img src="__PUBLIC__/Home/ecshe_img/recommend.png" /></eq>
+							<a href="{:U('Support/index/articles/cid/'.$info['id'].'/id/'.$vo['id'])}">{$vo['title']}</a>
+						</li>
+					</volist>
+				</ul>
+			</section>
+			<div class="pages">{$page}</div>
+		</div>
+		
+	</div>
+</div>
+
+<include file="Public:footer" />

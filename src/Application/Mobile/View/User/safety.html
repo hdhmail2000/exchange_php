@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('安全设置')}
+        </div>
+        <div class="usermenu">
+            <ul>
+             <!--    <li>
+                    <a href="{:U('User/nameauth')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon1.png"></span>
+                         {:L('实名认证')}
+                         <span class="price green">{:L('已认证')}</span>
+                    </a>
+                </li>-->
+                <li>
+                    <a href="{:U('User/moble')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon2.png"></span>
+                         {:L('手机绑定')}
+                         <span class="price green">{:L('已绑定')}</span>
+                    </a>
+                </li>
+                <li style="">
+                    <a href="{:U('User/ga')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon2.png"></span>
+                         {:L('谷歌验证')}
+                         <span class="price green">{:L('设置')}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('User/password')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon3.png"></span>
+                         {:L('修改登录密码')}
+                         <span class="price gray">{:L('修改')}</span>
+                    </a>
+                </li>
+               <li>
+                    <a href="{:U('Login/findpaypwd')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon4.png"></span>
+                         {:L('设置交易密码')}
+                         <span class="price gray">{:L('设置')}</span>
+                    </a>
+                </li> 
+              
+              <li>
+                    <a href="{:U('User/paypassword')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon4.png"></span>
+                         {:L('修改交易密码')}
+                         <span class="price gray">{:L('修改')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('User/tpwdset')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/saftyicon4.png"></span>
+                         {:L('交易密码输入设置')}
+                         <span class="price gray">{:L('设置')}</span>
+                    </a>
+                </li> 
+          
+          
+          </ul>
+        </div>
+        <div class="usermenu">
+            <ul>
+                <li>
+                    <a href="{:U('User/log')}">
+                        <span class="imgbox"><img src="__PUBLIC__/Mobile/images/usericon10.png"></span>
+                         {:L('登录日志')}
+                         <span class="price gray">{:L('查看')}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

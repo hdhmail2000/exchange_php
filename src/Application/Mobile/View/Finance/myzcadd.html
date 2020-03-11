@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/cityselect.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('币种提现')}
+        </div>
+        <div class="logbot">
+            <form>
+                <style type="text/css">
+                    .gtctable{width: 96%;margin:0 auto;border-collapse: collapse;margin-top:15px;}
+                    .gtctable tr td{border:1px solid rgba(255,255,255, .3);font-size:16px;color: #fff;padding:8px 5px;}
+                    .gtctable tr td img{vertical-align: middle;}
+                </style>
+                <table class="gtctable">
+                    <tr>
+                        <td valign="middle">
+                            <img src="/Upload/coin/{$coin_list[$coin]['img']}" alt="" style="width: 22px; margin-right: 5px;"/> {$coin_list[$coin]['title']}
+                        </td>
+                        <td>
+                            {:L('可用')}{$user_coin[$coin]}
+                        </td>
+                    </tr>
+                </table>
+                <select name="type" id="myzc_addr" class="logipt">
+                    <option value="">--{:L('选择接收地址')}--</option>
+                    <volist name="userQianbaoList" id="vo">
+                        <option value="{$vo.addr}">{$vo.name}|{$vo.addr}</option>
+                    </volist>
+                     <if condition="user.otcuser neq ''">
+                                                <option value="otc" style="color:#ff8800">{:L('转至场外交易账户')}</option>
+                                            </if>
+                    <option value="tianjia" style="color:#ff8800">{:L('新添加一个接收地址')}</option>
+                </select>
+                <input type="text" placeholder="{:L('转出数量')}" class="logipt" name="name"  id="nums" value="" >
+                <p style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                {:L('转出手续费')}{$coin_list[$coin]['zc_fee']}%
+                </p>
+                <div class="yzmbox">
+                    <input type="text" placeholder="{:L('验证码')}" class="logipt yzmipt"  id="moble_verify" >
+                    <input type="button" value="{:L('获取验证码')}" class="phonebut" id="regBtn"  value="{:L('获取验证码')}" onclick="SendCode()" style="margin-top:15px;background:#ff9900;color:#fff;">
+                <p id="repassword-msg" style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">
+                            {:L('接收验证码的手机')}{$moble}<em></em>
+                </p>
+                <input  name="name" id="paypassword" type="password" class="logipt" placeholder="{:L('交易密码')}">
+                <a href="{:U('Login/findpaypwd')}" class="reg_floatr" style="color:#ff8800;font-size: 14px;line-height: 20px;">{:L('忘记密码？')}</a>
+                <input type="button" class="logbut" value="{:L('提交')}" name="index_submit" id="loginSubmin" onclick="Update()">
+            </form>
+        </div>
+    </div>
+<script>
+    var coin ='{$coin}';
+
+    $("#myzc_addr").change(function () {
+        // var coin = $("#myzc_type option:selected").val();
+        var type = $("#myzc_addr option:selected").val();
+        var coin ='{$coin}';
+        if (type == 'tianjia') {
+            window.location = '/User/qianbao?coin=' + coin;
+        }
+    });
+
+    function SendCode() {
+		layer.load(0, {shade: [0.5,'#8F8F8F']});
+        $('#regBtn').attr("disabled", "disabled");
+        $.post("{:U('Verify/myzc')}", {}, function (data) {
+			layer.closeAll();
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                var obj = $('#regBtn');
+                var wait = 60;
+                var interval = setInterval(function () {
+                    obj.css('backgroundColor', '#999B9C');
+                    obj.val(wait + '{:L('秒再次发送')}');
+                    wait--;
+                    if (wait < 0) {
+                        $('#regBtn').removeAttr("disabled");
+                        clearInterval(interval);
+                        obj.val('{:L('获取验证码')}');
+                        obj.css('backgroundColor', '#ff8800');
+                    }
+                    ;
+                }, 1000);
+            }else {
+                //刷新验证码
+                $('#regBtn').removeAttr("disabled");
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+    function Update() {
+        var coin = "{$coin}";
+        var addr = $('#myzc_addr option:selected').val();
+        var num = $("#nums").val();
+        var moble_verify = $("#moble_verify").val();
+        var paypassword = $("#paypassword").val();
+
+        if (addr == "" || addr == null) {
+            layer.tips('{:L('请选择钱包')}', '#myzc_addr', {tips: 3});
+            return false;
+        }
+
+        if (moble_verify == "" || moble_verify == null) {
+            layer.tips('{:L('请输入验证码')}', '#moble_verify', {tips: 3});
+            return false;
+        }
+
+        if (num == "" || num == null) {
+            layer.tips('{:L('请输入转出数量')}', '#nums', {tips: 3});
+            return false;
+        }
+
+        if (paypassword == "" || paypassword == null) {
+            layer.tips('{:L('请输入交易密码')}', '#paypassword', {tips: 3});
+            return false;
+        }
+
+        $.post("{:U('Finance/upmyzc')}", {
+            coin: coin,
+            addr: addr,
+            num: num,
+            paypassword: paypassword,
+            mobile_verify: moble_verify
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location = "{:U('Finance/myzc')}?coin=" + coin;
+            } else {
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+
+    }
+</script>
+</body>
+</html>

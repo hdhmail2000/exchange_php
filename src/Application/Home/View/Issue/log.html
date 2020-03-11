@@ -1,0 +1,226 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/user.css')}">
+
+<style>
+.crumbs{
+	margin: 0 auto;
+	margin-top: 35px;
+	padding: 0 30px;
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+.crumbs li{
+	float: left;
+	font-size: 16px;
+	color: #575757;
+}
+.crumbs li.on,.crumbs li.on a{
+	color: #018bc0;
+}
+.crumbs li span{
+	margin: 0 10px;
+}
+</style>
+
+<div class="crumbs">
+	<ul>
+		<li><a href="{:U('Issue/index')}">{:L('新币预热')}</a><span>&gt;</span></li>
+		<li class="on">{:L('我的参与')}</li>
+	</ul>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="SettingRight" style="width: 100%;">
+		<div class="titles">
+			<h3 class="fl">{:L('我的参与')}</h3>
+		</div>
+      
+      
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th class="">{:L('项目名称')}</th>
+					<th class="">{:L('币种')}</th>
+					<th class="">{:L('单价')}</th>
+					<th class="">{:L('数量')}</th>
+					<th class="">{:L('支付总额')}</th>
+					<th class="">{:L('解冻间隔')}</th>
+					<th class="">{:L('参与时间')}</th>
+					<th class="">{:L('解冻状态')}</th>
+					<th class="">{:L('上次解冻')}</th>
+					<th class="">{:L('状态')}</th>
+                  <th class="">{:L('操作')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+<!--						<td>{$vo['coinname']}</td>
+						<td>{$vo['type']}</td>
+						<td>{$vo['num']*1}</td>
+						<td>
+							<eq name="vo['mum']" value="0">
+								--
+							<else/>
+								{$vo['mum']*1} {:strtoupper($vo['votecoin'])}
+							</eq>
+						</td>
+						<td>{$vo.addtime|addtime}</td>-->
+						
+						<td>{$vo.name}</td>
+						<td>{$C['coin'][$vo['coinname']]['title']}</td>
+						<td>{$vo['price']*1} {$C['coin'][$vo['buycoin']]['title']}</td>
+						<td>{$vo['num']*1} {$C['coin'][$vo['coinname']]['title']}</td>
+						<td>{$vo['mum']*1} {$C['coin'][$vo['buycoin']]['title']}</td>
+						<td>{$vo['jian']}</td>
+						<td>{$vo.addtime|addtime}</td>
+					     <td><eq name="vo['unlock']" value="$vo['ci']">已完成<else />{$vo.unlock}/{$vo.ci}</eq></td>
+						<td>{$vo.endtime|addtime}</td>
+						<td><eq name="vo.status" value="1">完成<else />解冻中</eq></td>
+                         <td><a href="{:U('Issue/unlock',array('id'=>$vo['id']))}"> ,"{:L('立即解冻')}">  </td>               
+                                   
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+  
+  
+
+  
+  
+</div>
+<script>
+$("title").html("{:L('我的参与')} - {:C('web_title')}");
+  
+  
+  
+    var id = $('#ids').val();
+  /*  $.post("{:U('Issue/ajax_log_detail')}", {id: id}, function (data) {
+        if (data) {
+            $('#addtime').val('{:L('创建时间')}：'+ data.addtime);
+
+            // if(data.unlock > 0){
+            //     $('#endtime').val('上次解冻时间：' + data.endtime);
+            // }else{
+            //     $('#endtime').val('首次解冻时间：' + data.endtime);
+            // }
+            $('#endtime').val('{:L('下次解冻时间')}：' + data.endtime);
+            $('#name').val('{:L('认购名称')}：' + data.name);
+            $('#price').val('{:L('认购价格')}：' + data.price);
+            $('#num').val('{:L('认购数量')}：' + data.num);
+            $('#mum').val('{:L('认购总价')}：' + data.mum);
+            $('#unlock').val('{:L('解冻次数')}：' + data.unlock + '/' + data.ci);
+            $('#shen').val('{:L('剩余冻结')}：' + data.shen);
+
+            if(data.status){
+                $('#status').val('{:L('状态：已完成')}');
+                $('#sub').val('{:L('已完成解冻')}');
+                $('#sub').css('background','#69655F');
+                $('#sub').attr('disabled','disabled');
+
+            }else{
+                $('#status').val('{:L('状态：解冻中')}');
+            }
+        } else {
+            layer.msg(data.info, {icon: 2});
+        }
+    }, "json");*/
+
+    $('#sub').click(function () {
+
+        $.post("{:U('Issue/unlock')}", {id: id}, function (data) {
+             console.log(data);
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                    window.location = "{:U('Issue/log')}";
+            } else {
+                // layer.msg('2222');
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+    });
+  
+  
+</script>
+<include file="Public:footer" />
+
+
+
+
+
+
+
+     
+    <!--  
+        </div>
+        <div class="logbot">
+            <form>
+
+                <input type="hidden" value="{$id}" id="ids">
+                <input type="text" readonly class="logipt" id="addtime">
+                <input type="text" readonly class="logipt" id="endtime">
+                <input type="text" readonly class="logipt" id="name">
+                <input type="text" readonly class="logipt" id="price">
+                <input type="text" readonly class="logipt" id="num">
+                <input type="text" readonly class="logipt" id="mum">
+                <input type="text" readonly class="logipt" id="unlock">
+                <input type="text" readonly class="logipt" id="shen">
+                <input type="text" readonly class="logipt" id="status">
+
+                <input type="button" class="logbut" id="sub" value="{:L('立即解冻')}">
+            </form>
+        </div>
+        <include file="Public:footer" />
+    </div>
+<script>
+
+    var id = $('#ids').val();
+    $.post("{:U('Issue/ajax_log_detail')}", {id: id}, function (data) {
+        if (data) {
+            $('#addtime').val('{:L('创建时间')}：'+ data.addtime);
+
+            // if(data.unlock > 0){
+            //     $('#endtime').val('上次解冻时间：' + data.endtime);
+            // }else{
+            //     $('#endtime').val('首次解冻时间：' + data.endtime);
+            // }
+            $('#endtime').val('{:L('下次解冻时间')}：' + data.endtime);
+            $('#name').val('{:L('认购名称')}：' + data.name);
+            $('#price').val('{:L('认购价格')}：' + data.price);
+            $('#num').val('{:L('认购数量')}：' + data.num);
+            $('#mum').val('{:L('认购总价')}：' + data.mum);
+            $('#unlock').val('{:L('解冻次数')}：' + data.unlock + '/' + data.ci);
+            $('#shen').val('{:L('剩余冻结')}：' + data.shen);
+
+            if(data.status){
+                $('#status').val('{:L('状态：已完成')}');
+                $('#sub').val('{:L('已完成解冻')}');
+                $('#sub').css('background','#69655F');
+                $('#sub').attr('disabled','disabled');
+
+            }else{
+                $('#status').val('{:L('状态：解冻中')}');
+            }
+        } else {
+            layer.msg(data.info, {icon: 2});
+        }
+    }, "json");
+
+    $('#sub').click(function () {
+
+        $.post("{:U('Issue/unlock')}", {id: id}, function (data) {
+            // console.log(data);
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                    window.location = "{:U('Issue/log')}";
+            } else {
+                // layer.msg('2222');
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+    });
+  -->
+      

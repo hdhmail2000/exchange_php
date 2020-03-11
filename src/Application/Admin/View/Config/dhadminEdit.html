@@ -1,0 +1,112 @@
+<include file="Public:header"/>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('Config/dhadmin')}">后端导航管理</a> >></span>
+            <span class="h1-title"><empty name="data">新增导航<else/>编辑导航</empty></span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Config/dhadminEdit')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">所属栏目 :</td>
+									<td>
+										<select name="pid" class="form-control input-10x">
+											<option value="">---顶级栏目---</option>
+											<volist name="liste" id="v">
+												<option value="{$v.id}" <eq name="v.id" value="$data['pid']">selected</eq> >{$v.title}</option>
+											</volist>
+										</select>
+									</td>
+									<td class="item-note">* 必填</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">分组 :</td>
+									<td><input type="text" class="form-control input-10x" name="group" value="{$data.group}"></td>
+									<td class="item-note">* 必填</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">链接标题 :</td>
+									<td><input type="text" class="form-control input-10x" name="title" value="{$data.title}"></td>
+									<td class="item-note">* 必填</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">链接地址 :</td>
+									<td><input type="text" class="form-control input-10x" name="url" value="{$data.url}">
+									</td>
+									<td class="item-note">* 必填</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">ICON图标 :</td>
+									<td><input type="text" class="form-control input-10x" name="ico_name" value="{$data.ico_name}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label">仅开发者模式可见 :</td>
+									<td>
+										<select name="is_dev" class="form-control input-10x">
+											<option value="0" <eq name="data.is_dev" value="0">selected</eq> >否</option>
+											<option value="1" <eq name="data.is_dev" value="1">selected</eq> >是</option>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label">排序 :</td>
+									<td><input type="text" class="form-control input-10x" name="sort" value="{$data.sort}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">状态 :</td>
+									<td>
+										<select name="hide" class="form-control input-10x">
+											<option value="0" <eq name="data.hide" value="0">selected</eq> >显示</option>
+											<option value="1" <eq name="data.hide" value="1">selected</eq> >隐藏</option>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">提交
+											</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/></notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//提交表单
+	$('#submit').click(function () {
+		$('#form').submit();
+	});
+</script>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:U('Config/dhadmin')}");
+		$('title').html('配置导航-'+'__WEBTITLE__');
+	</script>
+</block>

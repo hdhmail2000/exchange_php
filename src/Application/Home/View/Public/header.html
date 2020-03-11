@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<title>{:L(C('web_title'))}</title>
+		<meta name="Keywords" content="{:L(C('web_keywords'))}">
+		<meta name="Description" content="{:L(C('web_description'))}">
+		<link rel="stylesheet" type="text/css" href="{:stamp('__PUBLIC__/Home/ecshe_css/main.css')}">
+		<script type="text/javascript" src="__PUBLIC__/Home/ecshe_js/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="{:stamp('__PUBLIC__/Home/news/js/jquery.SuperSlide.2.1.1.js')}"></script>
+		<script type="text/javascript" src="{:stamp('__PUBLIC__/Home/ecshe_js/jquery.cookies.2.2.0.js')}"></script>
+		<script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+	</head>
+	<body>
+		<div class="menu-tabs">
+			<a class="logo" href="/"><img src="__UPLOAD__/public/{:C('web_logo')}" /></a>
+			<div class="tabs">
+				<volist name="daohang" id="vo">
+					<a href="{$vo['url']}">{:L($vo['title'])}</a>
+				</volist>
+			</div>
+			
+			<div class="r-box">
+				<div class="language">
+					<img src="__PUBLIC__/Home/ecshe_img/icon_language.png" />
+                    <php>if(LANG_SET=='zh-cn'){ $nm = '简体中文';}else{ $nm = 'English';}</php>
+                    <label>{:$nm}</label>
+					<img class="arrow-down" src="__PUBLIC__/Home/ecshe_img/icon_arrow_down.png" />
+				</div>
+				<gt name="Think.session.userId" value="0">
+					<style>.menu-tabs .language-box {right: 170px !important;}</style>
+					<div class="uuser">
+						<span><a href="{:U('finance/index')}"><label>{:L(我的资产)}</label></a></span>
+					</div>
+				<else/>
+					<a class="login" href="{:U('Login/index')}">{:L(登录)}</a>
+					<a class="register" href="{:U('Login/register')}">{:L(注册)}</a>
+				</gt>
+			</div>
+			<div class="language-box">
+				<p><a href="{:U('?LANG=en-us')}">English</a></p>
+				<p><a href="{:U('?LANG=zh-cn')}">{:L(中文简体)}</a></p>
+			</div>
+			<div class="uuser-box">
+				<p><a href="{:U('finance/index')}">{:L(财务中心)}</a></p>
+				<p><a href="{:U('User/index')}">{:L(安全中心)}</a></p>
+				<p><a href="{:U('Login/loginout')}">{:L(退出)}</a></p>
+			</div>
+		</div>

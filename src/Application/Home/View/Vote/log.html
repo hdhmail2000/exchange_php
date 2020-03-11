@@ -1,0 +1,72 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/user.css')}">
+
+<style>
+.crumbs{
+	margin: 0 auto;
+	margin-top: 35px;
+	padding: 0 30px;
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+.crumbs li{
+	float: left;
+	font-size: 16px;
+	color: #575757;
+}
+.crumbs li.on,.crumbs li.on a{
+	color: #018bc0;
+}
+.crumbs li span{
+	margin: 0 10px;
+}
+</style>
+
+<div class="crumbs">
+	<ul>
+		<li><a href="{:U('Vote/index')}">{:L('投票上币')}</a><span>&gt;</span></li>
+		<li class="on">{:L('我的投票')}</li>
+	</ul>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="SettingRight" style="width: 100%;">
+		<div class="titles">
+			<h3 class="fl">{:L('我的投票')}</h3>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="">{:L('币种')}</th>
+					<th width="">{:L('投票类型')}</th>
+					<th width="">{:L('票数')}</th>
+					<th width="">{:L('支付信息')}</th>
+					<th width="">{:L('投票时间')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$vo['coinname']}</td>
+						<td>{$vo['type']}</td>
+						<td>{$vo['num']*1}</td>
+						<td>
+							<eq name="vo['mum']" value="0">
+								--
+							<else/>
+								{$vo['mum']*1} {:strtoupper($vo['votecoin'])}
+							</eq>
+						</td>
+						<td>{$vo.addtime|addtime}</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+<script>
+$("title").html("{:L('我的投票')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

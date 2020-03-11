@@ -1,0 +1,38 @@
+<include file="Public:header"/>
+
+<div class="main">
+	<div class="container-divider" style="display: none"></div>
+	<section class="hero">
+		<div class="hero-inner">
+			<form role="search" class="search-full" method="get" action="{:U('Support/index/search/')}">
+				<img class="icon" src="__PUBLIC__/Home/ecshe_img/soso.png" />
+				<input type="search" name="so" id="so" placeholder="{:L('搜索')}" autocomplete="off">
+			</form>
+		</div>
+	</section>
+</div>
+
+<div class="container">
+	<ul class="list">
+		<volist name="classify" id="voc">
+			<li><a href="{:U('Support/index/categories/cid/'.$voc['id'])}">{$voc['title']}</a></li>
+		</volist>
+	</ul>
+	
+	<div class="recent-activity">
+		<h2 class="recent-activity-header">{:L('最近的活动')}</h2>
+		<ul class="recent-activity-list">
+			<volist name="classlist" id="vo" empty="$empty">
+				<li>
+					<a href="{:U('Support/index/articles/cid/'.$vo['pid'].'/id/'.$vo['id'])}">
+						<h3>{$vo['classname']}</h3>
+						<p>{$vo['title']}</p>
+					</a>
+					<span>{:L('文章创建时间：')}{$vo.addtime|date="Y-m-d H:i:s",###}</span>
+				</li>
+			</volist>
+		</ul>
+	</div>
+</div>
+
+<include file="Public:footer" />

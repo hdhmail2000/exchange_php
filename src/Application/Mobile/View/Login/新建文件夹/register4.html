@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('注册成功')}
+        </div>
+        <div class="logbot">
+            <p class="successicon"><img src="__PUBLIC__/Mobile/images/successicon.png"></p>
+            <h3>{:L('恭喜您，注册成功！')}</h3>
+            <div class="infors infors_top">
+                <table class="infor_table">
+                    <tr>
+                        <td class="tdleft">{:L('用户名')}</td>
+                        <td class="tdright">{$user.username}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdleft">{:L('真实姓名')}</td>
+                        <td class="tdright">{$user.truename}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdleft">{:L('证件号码')}</td>
+                        <td class="tdright">{$user.idcard}</td>
+                    </tr>
+                </table>
+                <!-- 用户名：{$user.username}<br/>
+                认证姓名：{$user.truename}<br/>
+                证件号码：{$user.idcard}<br/> -->
+            </div>
+            <a class="gotrade" href="/Index">{:L('去交易')}</a>
+            <div class="infors" style="text-align: left;margin-bottom: 10px;">
+            {:L('您还可以')}
+            </div>
+            <a class="gotrade1" href="/user/ga.html">{:L('开启双重验证')}</a>　　
+        </div>
+    </div>
+</body>
+</html>

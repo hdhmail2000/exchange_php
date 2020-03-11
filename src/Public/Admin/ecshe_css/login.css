@@ -1,0 +1,206 @@
+@charset "utf-8";
+/* CSS Document */
+body{margin:0;padding:0;font-size:12px;line-height:22px;font-family:"Microsoft YaHei",Arial;-webkit-text-size-adjust:none;}
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,p{margin:0;padding:0;}
+input,select,textarea{font-size:12px;line-height:16px;}img{border:0;}ul,li{list-style-type:none;}
+a{color:#333;text-decoration:none;}
+.tc{text-align:center;}.tl{text-align:left;}.tr{text-align:right;}
+.dis{display:block;}.undis{display:none;}
+.fl{float:left;}.fr{float:right;}.cl{clear:both;}.fb{font-weight:bold;}.fnb{font-weight:200;margin-left:-1px;}
+.hr_1,.hr_10{font-size:1px;line-height:1px;clear:both;}
+.hr_1{height:1px;}.hr_10{height:10px;}
+input[type="text"]:focus,input[type="password"]:focus,textarea:focus{outline:none;}
+
+input::-webkit-input-placeholder { font-size: 13px;color: #8b97ab;}
+input:-moz-placeholder { font-size: 13px;color: #8b97ab;}
+input:-ms-input-placeholder { font-size: 13px;color: #8b97ab;}
+
+.topbox {
+	margin: 0 auto;
+	margin-top: 100px;
+	width: 400px;
+	overflow: hidden;
+}
+
+/* Login_Style */
+.logsbox {
+	margin: 0 auto;
+	padding: 30px;
+	width: 400px;
+	overflow: hidden;
+	    background-color: #1f2636;
+	border-radius: 15px;
+	color: #8388a3;
+	font-size: 14px;
+	box-sizing: border-box;
+	box-shadow: 0px 0px 3px 0px #c8c8c8;
+}
+.logsbox h2 {
+	font-size: 30px;
+    font-weight: 500;
+    color: #22272f;
+}
+
+.logsbox .form-tips {
+	margin: 20px 0 30px 0;
+}
+.logsbox .form-tips a {
+	display: inline-block;
+    position: relative;
+    color: #00a7e1;
+}
+.logsbox .form-tips a:hover {
+    text-decoration: underline;
+}
+.logsbox .form-other {
+	margin-top: 20px;
+}
+.logsbox .form-other a {
+	display: inline-block;
+    position: relative;
+    color: #8388a3;
+}
+
+.logsbox .form-group {
+	margin-top: 20px;
+	position: relative;
+}
+
+
+.logsbox .form-group .inputs {
+	padding: 0 10px;
+	width: 100%;
+	height: 45px;
+    border-radius: 3px;
+	    border: 1px solid #55575f;
+    background: #171a25;
+	box-sizing: border-box;
+}
+.logsbox .form-group .focus {
+    border: 1px solid #41afff;
+	-moz-box-shadow:0 0 3px #41afff;
+	-webkit-box-shadow:0 0 3px #41afff;
+	box-shadow:0 0 3px #41afff;
+}
+.logsbox .form-group .inputs i {
+	display: inline-block;
+	margin: -3px 6px 0 3px;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+	background: url(../ecshe_img/icon_login.png) no-repeat;
+}
+.logsbox .form-group .inputs input {
+	display: inline-block;
+	width: 88%;
+	height: 100%;
+	border: none;
+	    color: #fafcff;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #171a25;
+}
+
+.logsbox .form-group .inputs i.icon-login-user {
+	background-position: 0 0;
+}
+.logsbox .form-group .inputs i.icon-login-pwd {
+	background-position: -48px 0;
+}
+.logsbox .form-group .inputs i.icon-login-verifycode {
+	background-position: -24px 0;
+}
+
+
+.logsbox .form-group .imgcode {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 5px;
+	bottom: 0;
+    align-items: center;
+	z-index: 2;
+}
+.logsbox .form-group .imgcode img {
+	cursor: pointer;
+	height: 35px;
+}
+
+.logsbox .form-group .code-num {
+	color: #00a7e1;
+    position: absolute;
+    top: 25%;
+	right: 10px;
+    z-index: 2;
+}
+.logsbox .form-group .code-num:hover {
+    text-decoration: underline;
+}
+
+.logsbox .form-agreement {
+	margin: 20px 0;
+	position: relative;
+	text-align: left;
+}
+.logsbox .form-agreement label {
+	display: flex;
+	position: relative;
+}
+.logsbox .form-agreement input {
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+	z-index: 10;
+	margin-top: 2px;
+}
+.logsbox .form-agreement span {
+	margin-left: 20px;
+}
+.logsbox .form-agreement a{
+	color: #8388a3;
+}
+.logsbox .form-agreement a:hover {
+    text-decoration: underline;
+}
+
+.logsbox .form-button .btn-primary {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+    padding: 15px 0;
+	color: #fff;
+    font-size: 18px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	background-color: #4ea1ff;
+	border-radius: 50px;
+}
+.logsbox .form-button .btn-primary:hover {
+	background-color: #58a6ff;
+}
+
+.icon-loading {
+    display: inline-block;
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    vertical-align: -3px;
+    background: url(../ecshe_img/loading_icon.gif) no-repeat 0 0;
+}
+.form-button .login-btn .in {
+    display: none;
+}
+.form-button .log-in .in {
+    display: inline-block;
+}
+.form-button .log-in .on {
+    display: none;
+}
+
+.check-tips {
+    color: #ff0000;
+    margin-top: 10px;
+	text-align: center;
+}

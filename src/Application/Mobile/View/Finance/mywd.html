@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span> {:L('我的推荐')}
+        </div>
+        <div class="chgbox">
+            <ul>
+                <volist name="list" id="v">
+                    <li>
+                        <div class="chglist_top">
+                            <a href="javascript:void(0)" onclick="Address({$v['id']})" style="color:#73bee4;">
+             <img class="invit_img_{$v['id']}" src="__PUBLIC__/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('一级下家')}({$v.invitss})
+            </a><span class="state wait"></span>
+                        </div>
+                        <table class="chglist_bot">
+                            <tr>
+                                <th>{:L('用户名')}</th>
+                                <th>{:L('注册时间')}</th>
+                                <!-- <th>是否认证</th> -->
+                            </tr>
+                            <tr>
+                                <td>{$v.username}{$v.usermoble}</td>
+                                <td>{$v.addtime|addtime}</td>
+                                <!--  <td><empty name="v.moble"> <font class="buy">未认证 </font> <else /> <font class="sell">已认证 </font></empty></td> -->
+                            </tr>
+                        </table>
+                    </li>
+                    <notempty name="v['invits']">
+                        <volist name="v['invits']" id="vv">
+                            <li class="invit_{$v['id']}" style="display: none;">
+                                <div class="chglist_top">
+                                    <a href="javascript:void(0)" onclick="Address({$vv['id']})" style="color:#73bee4;">
+                            <img class="invita_img_{$v['id']} invit_img_{$vv['id']}" src="__PUBLIC__/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('二级下家')}({$vv.invitss})
+                            </a><span class="state wait"></span>
+                                </div>
+                                <table class="chglist_bot">
+                                    <tr>
+                                        <th>{:L('用户名')}</th>
+                                        <th>{:L('注册时间')}</th>
+                                        <!-- <th>是否认证</th> -->
+                                    </tr>
+                                    <tr>
+                                        <td>{$vv.username}</td>
+                                        <td>{$vv.addtime|addtime}</td>
+                                        <!--      <td><empty name="vv.moble"> <font class="buy">未认证 </font> <else /> <font class="sell">已认证 </font></empty> -->
+                                    </tr>
+                                </table>
+                            </li>
+                            <notempty name="vv['invits']">
+                                <volist name="vv['invits']" id="vvv">
+                                    <li class="invita_{$v['id']} invit_{$vv['id']}" style="display: none;">
+                                        <div class="chglist_top">
+                                            <a href="javascript:void(0)" onclick="Address({$vvv['id']})" style="color:#73bee4;">
+                                    <img class="invita_img_{$v['id']} invit_img_{$vvv['id']}" src="__PUBLIC__/Home/images/jian.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('三级下家')}
+                                </a><span class="state wait"></span>
+                                        </div>
+                                        <table class="chglist_bot">
+                                            <tr>
+                                                <th>{:L('用户名')}</th>
+                                                <th>{:L('注册时间')}</th>
+                                                <!-- <th>是否认证</th> -->
+                                            </tr>
+                                            <tr>
+                                                <td>{$vvv.username}</td>
+                                                <td>{$vvv.addtime|addtime}</td>
+                                                <!--  <td><empty name="vvv.moble"> <font class="buy">未认证 </font> <else /> <font class="sell">已认证 </font></empty></td> -->
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </volist>
+                            </notempty>
+                        </volist>
+                    </notempty>
+                </volist>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+        <script>
+        function Address(id) {
+            var img1 = "__PUBLIC__/Home/images/jia.png";
+            var img2 = "__PUBLIC__/Home/images/jian.png";
+            var img = $(".invit_img_" + id).attr("src");
+
+
+            //alert(img)
+            if (img == img1) {
+                $(".invit_img_" + id).attr("src", img2);
+
+                $(".invit_" + id).show();
+            } else {
+                $(".invit_img_" + id).attr("src", img1);
+                $(".invita_img_" + id).attr("src", img1);
+                $(".invit_" + id).hide();
+                $(".invita_" + id).hide();
+            }
+        }
+
+
+
+
+        function Addressb(id) {
+            var img1 = "__PUBLIC__/Home/images/jia.png";
+            var img2 = "__PUBLIC__/Home/images/jian.png";
+            var img = $(".invit_img_" + id).attr("src");
+
+
+            //alert(img)
+            if (img == img1) {
+                $(".invit_img_" + id).attr("src", img2);
+
+                $(".invit_" + id).show();
+            } else {
+                $(".invit_img_" + id).attr("src", img1);
+                $(".invit_" + id).hide();
+                $(".invita_" + id).hide();
+            }
+        }
+        </script>
+       
+    </div>
+</body>
+
+</html>

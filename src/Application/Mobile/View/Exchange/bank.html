@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>银行卡设置</title>
+	<include file="Public:head" />
+</head>
+<body style="background-color:#f3f4f6;">
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:U('Exchange/index')}"></a>
+	<h1 class="mui-title color_white">银行卡设置</h1>
+	<a class="mui-icon mui-pull-right" href="{:U('Exchange/bankadd')}"><i class="iconfont icon-jiahao"></i></a>
+</header>
+
+<div class="mui-content cur-padding-bottom" style="margin-top:20px;background-color:#f3f4f6;">
+	<ul class="myuser-banklist">
+		<volist name="UserBank" id="vo">
+			<php>
+				$string = $vo['bankcard'];
+				$bankcards = substr($string,0,4)."****".substr($string,-4);
+			</php>
+			<li>
+				<a class="btn-delete" href="javascript:void(0)" onclick="UpdateB({$vo['id']})"><i class="iconfont icon-shanchu"></i></a>
+				<p><h3 class="title">{$vo.bank}</h3></p>
+				<p><h3 class="number">{$bankcards}</h3></p>
+				<p>{$vo.bankprov}{$vo.bankcity}{$vo.bankaddr}</p>
+			</li>
+		</volist>
+	</ul>
+</div>
+
+<script src="__PUBLIC__/Mobile/ecshe_js/mui.min.js"></script>
+<script>
+function UpdateB(id) {
+	mui.init();
+	mui.prompt("{:L('输入交易密码，并确认')}",null,"{:L('提示')}",function(e){
+    	if(e.index == 1){
+			if(e.value){
+				//需要执行的方法
+				$.post("{:U('Exchange/delbank')}", { type:2, id:id, paypassword:e.value }, function(data) {
+					if (data.status == 1) {
+						layer.msg(data.info, { icon: 1 });
+						window.location = "{:U('Exchange/bank')}";
+					} else {
+						layer.msg(data.info, { icon: 2 });
+						if (data.url) {
+							window.location = data.url;
+						}
+					}
+				}, "json");
+			};
+		}else{
+			mui.toast('您取消了输入');
+		}
+	});
+}
+</script>
+</body>
+</html>

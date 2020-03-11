@@ -1,0 +1,173 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/user.css')}">
+
+<style>
+.crumbs{
+	margin: 0 auto;
+	margin-top: 35px;
+	padding: 0 30px;
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+.crumbs li{
+	float: left;
+	font-size: 16px;
+	color: #575757;
+}
+.crumbs li.on,.crumbs li.on a{
+	color: #018bc0;
+}
+.crumbs li span{
+	margin: 0 10px;
+}
+</style>
+
+<div class="crumbs">
+	<ul>
+		<li><a href="{:U('Issue/index')}">{:L('新币预热')}</a><span>&gt;</span></li>
+		<li class="on">{:L('项目详情')}</li>
+	</ul>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:20px;">
+	<div class="IssueDetails">
+		<div class="fl isde-img tc">
+			<img src="__UPLOAD__/public/{$info['image']}" width="300" height="300">
+		</div>
+		<div class="fl isde-info-1">
+			<div class="box">
+				<h3 class="title"><b>{$info['coinname']}</b><span>:</span>{$info['name']}</h3>
+				<p class="projectIntro">{$info['abstract']}</p>
+
+				<neq name="timejd.statuss" value="0">
+					<p class="price">{:L('兑换比例')} : <span class="dh1">{$info['price']*1}{$info['buycoin']} ≈ </span><span class="dh2">1{$info['coinname']}</span></p>
+					<ul class="attribute">
+						<li>
+							<p class="ab-title">{:L('发行额度')}</p>
+							<p>{$info['num']} {$info['coinname']}</p>
+						</li>
+						<li>
+							<p class="ab-title">{:L('已参与量')}</p>
+							<p>{$info['deal']} {$info['coinname']}</p>
+						</li>
+						<li>
+							<p class="ab-title">{:L('锁仓周期')}</p>
+							<p>{$info['ci']}期</p>
+						</li>
+						<li>
+							<p class="ab-title">{:L('解冻间隔')}</p>
+							<p>{$info['jian']}小时</p>
+						</li>
+					</ul>
+					<div class="process-bar"><div class="process-bar-hover" style="width:{$info['bili']}%"></div></div>
+					<p class="part"><span class="fl">{$info['tongji']} {:L('支持者')}</span><span class="fr">{$info['bili']}%</span></p>
+				<else/>
+					<p class="price tc" style="width: 800px;">{:L('路演展示')}</p>
+				</neq>
+			</div>
+		</div>
+		
+		<if condition="$timejd.statuss eq 1">
+			<div class="fr isde-info-2">
+				<p class="title">{:L('可用')} {$info['buycoin']}<span>{$UserCoin['kyye']}</span></p>
+				<p class="title">{:L('限购')} {$info['coinname']}<span style="color:#333;">{$info['limit']}</span></p>
+				<div class="isde-input">
+					<label>{$info['coinname']}</label>
+					<input type="text" id="num" autocomplete="off" value="{$info['min']}" oninput="if(value>{$info['max']})value={$info['max']};if(value.length>15)value=value.slice(0,15);if(value<{$info['min']})value={$info['min']}" title="最小值{$info.min}，最大值{$info.max}" />
+				</div>
+				<p class="tc total">= <span id="isde-mum">0</span> {$info['buycoin']}</p>
+				<div class="isde-input-pass">
+					<input type="password" id="paypassword" autocomplete="off" placeholder="交易密码" />
+				</div>
+				<button type="button" class="isde-btn" onclick="Update()">{:L('立即参与')}</button>
+				<p class="tc times">{:L('结束时间')} : {$info['endtime']}</p>
+			</div>
+		<elseif condition="$timejd.statuss eq 2"/>
+			<div class="fr isde-info-2">
+				<p class="isde-local" style="color:#57b5fd;">{:L('即将上线')}</p>
+				<p class="tc times">{:L('开放时间')} : {$info['beginTime']}</p>
+				<p class="tc times">{:L('结束时间')} : {$info['endtime']}</p>
+			</div>
+		<elseif condition="$timejd.statuss eq 3"/>
+			<div class="fr isde-info-2">
+				<p class="isde-local" style="color:red;">{:L('抢购已结束')}</p>
+				<p class="tc times">{:L('结束时间')} : {$info['endtime']}</p>
+			</div>
+		<else />
+		</if>
+	</div>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:20px;">
+	<div class="contents">{$info['content']}</div>
+</div>
+
+<div class="UserBox" style="margin-bottom:40px;">
+	<div class="contents" style="padding:30px 180px;min-height:100px;color:red;text-align:center;">
+		<img src="__PUBLIC__/Home/ecshe_img/icon_waring.png" style="margin-top:-3px;margin-right:10px;vertical-align:middle;" />{:L('数字资产是创新的投资产品，可能存在矿工预挖、庄家操控、团队解散、技术缺陷等问题；其价格波动较大，具有较高的投资风险，请您投资前对数字资产充分认知，理性判断自己的投资能力，审慎做出投资决策。')}
+	</div>
+</div>
+
+<script>
+var cid = "{$cid}";
+var price = "{$info['price']*1}";
+var trans_lock = 0;
+	
+$("#isde-mum").html((($('#num').val() * price).toFixed(5) * 1));
+
+$('#num').bind('input propertychange', function () {
+    $("#isde-mum").html((($('#num').val() * price).toFixed(5) * 1));
+});
+
+function Update(){
+	var num = $('#num').val();
+	var paypassword = $('#paypassword').val();
+	var logins = "{$logins}";
+	
+	if(trans_lock){
+		layer.msg("{:L('不要重复提交')}",{icon : 2 });
+		return;
+	}
+	trans_lock = 1;
+	
+	if(logins == 0){
+		layer.msg("{:L('请先登录！')}");
+		trans_lock = 0;
+		return false;
+	}
+	if(!num || typeof num == "undefined" || num <= 0){
+		layer.tips("{:L('数量必须大于0')}", '#num', {tips: 1});
+		trans_lock = 0;
+		return false;
+	}
+	if(!paypassword || typeof paypassword == "undefined"){
+		layer.tips("{:L('交易密码必须填写')}", '#paypassword', {tips: 1});
+		trans_lock = 0;
+		return false;
+	}
+	
+	layer.load(2);
+	
+    $.post("{:U('Issue/updata')}", { id:cid, num:num, paypassword:paypassword }, function(data) {
+		layer.closeAll('loading');
+		trans_lock = 0;	
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout("window.location.reload()",1000);
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+</script>
+
+<script>
+$("title").html("{:L('新币预热')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

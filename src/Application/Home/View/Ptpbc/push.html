@@ -1,0 +1,251 @@
+<include file="Public:header_new" />
+<style type="text/css">
+                                    .usernewout .usncont .usnc_right .rech_bd .rechmid .rechipt_box label {
+                                                    float: left;
+                                                    width: 120px;
+                                                    margin-right: 20px;
+                                                    font-size: 14px;
+                                                    color: #666;
+                                                    text-align: right;
+                                                    line-height: 40px;
+                                                    vertical-align: top;
+                                                }
+                                </style>
+<div class="usernewout">
+    <p class="titlenotice"><a style="color:#73bee4;" href="/Article/detail/id/{$notice_info['id']}">{:L('公告：')}{$notice_info['title']|msubstr=0,100,'utf-8',false}</a></p>
+    <div class="usncont">
+        <include file="Ptpbc:left" />
+        <div class="usnc_right">
+            <h1>{:L('发布交易')}</h1>
+            <!-- <div class="leftmoney">{:L('选择币种')}
+                <div class="select"><img src="__UPLOAD__/coin/{$coin_list[$xnb]['img']}">
+                    <select name="type" id="myzc_type" class="selul">
+                        <option value="">{:L('请选择')}</option>
+                        <volist name="coin_list" id="vo">
+                            <eq name="xnb" value="$key">
+                                <option value="{$vo['name']}" selected="selected">{$vo.title}</option>
+                                <else/>
+                                <option value="{$vo['name']}">{$vo.title}</option>
+                            </eq>
+                        </volist>
+                    </select>
+                </div>
+                <span class="howmuch">{:L('可用：')}</span>
+                <span class="howleft">{$user_coin[$xnb]}</span>
+            </div> -->
+            <div class="rech_box">
+                <div class="rech_bd nmt">
+                    <ul>
+                        <li>
+                            <div class="rechmid">
+
+                                <div class="rechipt_box">
+                                    <label>{:L('选择交易')}</label>
+                                    <div class="iptbox">
+                                        <select name="type" id="type" class="paysel">
+                                            <option value="1">{:L('我要买入')}</option>
+                                            <option value="2">{:L('我要卖出')}</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <label>{:L('交易币种')}</label>
+                                    <div class="iptbox">
+                                         <select name="type" id="coin" class="paysel">
+                                         <volist name="coin_list" id="vo">
+                                                <option value="{$vo['name']}">{$vo.title}</option>
+                                        </volist>
+                                    </select>
+                                    <p class="attention">BTC {:L('市场参考价')}:<span  class="orange" style="color:#e75600">{$btc} CNY</span></p>
+                                    <p class="attention">USDT {:L('市场参考价')}:<span  class="orange" style="color:#e75600">{$usdt} CNY</span></p>
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <label>{:L('国家')}</label>
+                                    <div class="iptbox">
+                                         <select name="type" id="gj" class="paysel">
+                                         <volist name="C['NATION']" id="vo">
+                                               <option value="{$key}"
+                                                <eq name="key" value="$data.nation">selected</eq>
+                                                >{:L($vo)}</option>
+                                        </volist>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <label>{:L('币种')}</label>
+                                    <div class="iptbox">
+                                         <select name="type" id="bz" class="paysel">
+                                         <volist name="C['COINTR']" id="vo">
+                                               <option value="{$key}">{:L($vo)}</option>
+                                        </volist>
+                                    </select>
+                                    </div>
+                                </div>
+                                 <div class="rechipt_box">
+                                    <label>{:L('溢价')}%</label>
+                                    <div class="iptbox">
+                                        <input type="number"   class="rechipt" id="yj" oninput="jyjg()">
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <label>{:L('交易价格')}</label>
+                                    <div class="iptbox">
+                                         <label id="jyjg" style="color:red"></label>
+
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <label>{:L('数量')}</label>
+                                    <div class="iptbox">
+                                        <input type="number" value="" class="rechipt" id="num">
+
+                                    </div>
+                                </div>
+                                 <div class="rechipt_box">
+                                    <label>{:L('最小交易额')} CNY</label>
+                                    <div class="iptbox">
+                                        <input type="number" value="" class="rechipt" id="min">
+
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <label>{:L('最大交易额')} CNY</label>
+                                    <div class="iptbox">
+                                        <input type="number" value="" class="rechipt" id="max">
+
+                                    </div>
+                                </div>
+
+                                <div class="rechipt_box">
+                                    <label>{:L('交易密码')}</label>
+                                    <div class="iptbox">
+                                        <input type="password" value="" class="rechipt" id="paypassword">
+                                        <p class="attention">* <a href="{:U('Login/findpaypwd')}" class="orange" style="color:#e75600">{:L('忘记交易密码')}</a></p>
+                                    </div>
+                                </div>
+                                <div class="rechipt_box">
+                                    <div class="iptbox mrl110">
+                                        <input type="button" value="{:L('提交申请')}" class="rechbut" onclick="Update()">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="recharge_atten">
+                                <h5>{:L('虚拟币转出须知')}</h5>
+                                <p>{:L('转出说明：')} {:L('为了您的帐户安全，每笔提现最小数量0.0001，最大数量1000000，如果您有更高的需求，请与网站客服联系。转出到账需要整个网络的确认,因为到账时间根据网络确认时间确定。注意:您收到的虚拟币是提现数量扣除支付手续费后的数量。')}
+                                </p>
+                            </div> -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- <div class="recharge_list">
+                <div class="rech_list_top">
+                    <h4>{:L('虚拟币转出记录')}</h4>
+                </div>
+                <table>
+                    <tr>
+                        <th width="170px">{:L('转出时间')}</th>
+                        <th width="160px">{:L('币种类型')}</th>
+                        <th width="300px">{:L('接收地址')}</th>
+                        <th width="160px">{:L('提现数量')}</th>
+                        <th>{:L('状态')}</th>
+                    </tr>
+                    <volist name="list" id="vo">
+                        <tr>
+                            <td>{$vo.addtime|addtime}</td>
+                            <td>{$vo.coinname}</td>
+                            <td>{$vo.username}</td>
+                            <td>{$vo['num']}</td>
+                            <td>
+                                <eq name="vo.status" value="1">
+                                    <font color="#e75600">{:L('提现成功')} </font>
+                                    <else/> {:L('正在处理')}
+                                </eq>
+                            </td>
+                        </tr>
+                    </volist>
+                </table>
+                <div class="pages">{$page}</div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<script>
+function jyjg(){
+    var coin = $('#coin').val();
+    var yj = $('#yj').val();
+    if(coin=='btc'){
+        var price=({$btc}*(1+yj/100)).toFixed(2);
+    }else{
+         var price=({$usdt}*(1+yj/100)).toFixed(2);
+    }
+    $('#jyjg').html(price+' CNY');
+    // console.log(price);
+}
+
+
+function Update() {
+    var coin = $('#coin').val();
+    var type = $('#type').val();
+    var gj = $('#gj').val();
+    var bz = $('#bz').val();
+    var num = $("#num").val();
+    var min = $("#min").val();
+    var max = $("#max").val();
+    var yj = $("#yj").val();
+    if(coin=='btc'){
+        var price=({$btc}*(1+yj/100)).toFixed(2);
+    }else{
+         var price=({$usdt}*(1+yj/100)).toFixed(2);
+    }
+    var paypassword = $("#paypassword").val();
+     // console.log(gj);
+     if (min <100 || min >50000) {
+        layer.tips('{:L('交易额在100-50000之间 ')}', '#min', { tips: 3 });
+        return false;
+    }
+    if (max <min || max >50000) {
+        layer.tips('{:L('交易额在100-50000之间 ')}', '#max', { tips: 3 });
+        return false;
+    }
+
+    if (num == "" || num == null) {
+        layer.tips('{:L('请输入数量 ')}', '#num', { tips: 3 });
+        return false;
+    }
+
+    if (paypassword == "" || paypassword == null) {
+        layer.tips('{:L('请输入交易密码 ')}', '#paypassword', { tips: 3 });
+        return false;
+    }
+    var showl = layer.load(0, { shade: [0.5, '#8F8F8F'] }, { time: 5 * 1000 });
+    $.post("{:U('Ptpbc/uppush')}", {
+        coin: coin,
+        type: type,
+        min: min,
+        max: max,
+        bz: bz,
+        gj: gj,
+        yj: yj,
+        num: num,
+        price:price,
+        paypassword: paypassword,
+    }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 }, function () { window.location.reload()});
+            // window.location = "{:U('Finance/up')}?coin=" + coin;
+            // window.location.reload()
+        } else {
+            layer.msg(data.info, { icon: 2 }, function () { window.location.reload()});
+            // layer.close(showl);
+        }
+    }, "json");
+
+}
+
+//菜单高亮
+$('#push').addClass('on');
+</script>
+<include file="Public:footer" />

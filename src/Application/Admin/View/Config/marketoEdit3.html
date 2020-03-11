@@ -1,0 +1,110 @@
+<include file="Public:header"/>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('Config/marketo')}">市场列表</a> >></span>
+            <span class="h1-title">编辑机器人交易规则</span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Config/marketoEdit2')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">市场名称 :</td>
+									<td>{$data.name}</td>
+									<td class="item-note"></td>
+								</tr>
+
+								<tr class="controls" style="border-top:1px solid #d0d0d0;">
+									<td class="item-label">开启机器人刷单 :</td>
+									<td>
+										<select name="shuadan" class="form-control input-10x">
+											<option value="0"
+											<eq name="data.shuadan" value="0">selected</eq>
+											>关闭</option>
+											<option value="1"
+											<eq name="data.shuadan" value="1">selected</eq>
+											>开启</option>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">调用外部价格 :</td>
+									<td>
+										<select name="sdtype" class="form-control input-10x">
+											<option value="0" <eq name="data.sdtype" value="0">selected</eq> >关闭</option>
+											<option value="1" <eq name="data.sdtype" value="1">selected</eq> >开启</option>
+										</select>
+									</td>
+									<td class="item-note">使用前需修改文件代码，调用比特儿海外交易所gate.io的价格</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">浮动<b style="color:#019CFF;">最高</b>价格:</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="sdhigh" value="{$data.sdhigh}">
+									</td>
+									<td class="item-note">* 当前价:{$data.new_price}(设置涨跌幅后该设置无效)</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">浮动最低价格:</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="sdlow" value="{$data.sdlow}">
+									</td>
+									<td class="item-note">* 当前价:{$data.new_price}(设置涨跌幅后该设置无效)</td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label">浮动<b style="color:#019CFF;">最高</b>数量:</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="sdhigh_num" value="{$data.sdhigh_num}" oninput="if(value<{$round})value={$round}">
+									</td>
+									<td class="item-note">* 留空默认调用代码内置数量</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">浮动最低数量:</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="sdlow_num" value="{$data.sdlow_num}" oninput="if(value<{$round})value={$round}">
+									</td>
+									<td class="item-note">* 留空默认调用代码内置数量</td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">提交
+											</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/>
+											</notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+				//提交表单
+				$('#submit').click(function () {
+					$('#form').submit();
+				});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:U('Config/marketo')}");
+	</script>
+</block>

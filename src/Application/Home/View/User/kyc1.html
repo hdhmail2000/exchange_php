@@ -1,0 +1,101 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="User:left" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles"><h3>{:L('账户信息')} &gt; {:L('实名认证')} &gt; {:L('初级认证')}</h3></div>
+		<div class="Column_identity">
+			<eq name="user.idstate" value="8">
+				<p style="margin:20px 20px;line-height:25px;padding:20px;background-color:#fff1e0;font-size:1rem;color:#d89c2a;">{:L('认证驳回原因')} : {$user.idcardinfo}</p>
+			</eq>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<th>{:L('国籍')}</th>
+						<td>
+							<input type="text" id="regidnationality" class="select-1">
+						</td>
+						<th>{:L('姓名')}</th>
+						<td><input type="text" id="regtruename" class="select-1"></td>
+					</tr>
+					<tr>
+						<th>{:L('证件类型')}</th>
+						<td>
+							<select name="type" id="regidtype" class="select-1">
+								<option value="1" selected="selected">{:L('身份证')}</option>
+								<option value="2">{:L('护照')}</option>
+								<option value="3">{:L('驾驶证')}</option>
+							</select>
+						</td>
+						<th>{:L('证件ID')}</th>
+						<td><input type="text" id="regidcard" class="select-1"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td colspan="3" style="padding-top:20px;">
+							<div class="Tips">
+								<div class="icons">
+									<h3 style="line-height: 40px;">{:L('重要提示：')}</h3>
+								</div>
+								<div class="TextContent">
+									<p>1. {:L('请填写本人真实身份信息，否则无法正常提现')}</p>
+									<p>4. {:L('遇到问题联系客服')} <b style="color: #4f64dc;">admin@1993.MOBI</b></p>
+								</div>
+							</div>
+							<p><a class="btns" href="javascript:void(0)" onclick="Update()">{:L('提交')}</a></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+function Update(){
+	var idnationality = $("#regidnationality").val();
+	var idtype = $("#regidtype").val();
+	var truename = $("#regtruename").val();
+	var idcard = $("#regidcard").val();
+
+	if(idnationality == "" || idnationality == null) {
+		layer.tips('{:L(' 请输入国籍 ')}', '#regidnationality', { tips: 3 });
+		return false;
+	}
+	if(idtype == "" || idtype == null) {
+		layer.tips('{:L(' 请选择证件类型 ')}', '#regidtype', { tips: 3 });
+		return false;
+	}
+	if(truename == "" || truename == null) {
+		layer.tips('{:L(' 请输入姓名 ')}', '#regtruename', { tips: 3 });
+		return false;
+	}
+	if(idcard == "" || idcard == null) {
+		layer.tips('{:L(' 请输入证件ID ')}', '#regidcard', { tips: 3 });
+		return false;
+	}
+
+	$.post("{:U('User/kyc1_Handle')}",{ idnationality: idnationality, idtype: idtype, truename: truename, idcard: idcard },function(data){
+		if(data.status == 1){
+			layer.msg(data.info, { icon: 1 });
+			window.setTimeout('window.location="{:U('User/index')}"',1000);
+		}else{
+			layer.msg(data.info, { icon: 2 });
+			if (data.url) {
+				window.location = data.url;
+			}
+		}
+	},"json");
+}
+</script>
+<script>
+$("title").html("{:L('实名认证')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

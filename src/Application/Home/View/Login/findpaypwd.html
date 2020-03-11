@@ -1,0 +1,220 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/intel/css/intlTelInput.css">
+<script src="__PUBLIC__/intel/js/intlTelInput.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/pass.css">
+
+<div class="logsbox" style="margin-top:100px;margin-bottom:50px;">
+	<h2>{:L('找回交易密码')}</h2>
+	<div class="form-group">
+		<input type="tel" autocomplete="off" id="mobile" placeholder="{:L('请输入您的手机号')}" onblur="regmobile()" />
+	</div>
+	<div class="form-group">
+		<input type="text" autocomplete="off" id="verify" placeholder="{:L('图形验证码')}" onblur="regverify()" />
+		<div class="imgcode">
+			<img src="{:U('Verify/code')}" title="{:L('换一张')}" onclick="this.src=this.src+'?t='+Math.random()" id="verifycode">
+		</div>
+	</div>
+	<div class="form-group">
+		<input type="text" autocomplete="off" id="mobile_verify" placeholder="{:L('动态验证码')}" />
+		<a class="code-num" id="regBtn" onclick="SendCode()">{:L('获取验证码')}</a>
+	</div>
+
+	<div class="form-group">
+		<input type="password" autocomplete="off" id="password" onblur="password()" placeholder="{:L('新交易密码')}" />
+	</div>
+	<div class="form-group">
+		<input type="password" autocomplete="off" id="repassword" onblur="repassword()" placeholder="{:L('确认交易密码')}" />
+	</div>
+	<div class="form-button">
+		<input type="button" name="index_submit" id="loginSubmin" onclick="Update();" class="btn btn-primary" value="{:L('提交')}">
+	</div>
+</div>
+<script type="text/javascript">
+function regmobile() {
+	var mobile = $('#mobile').val();
+	var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+	var isValid = $("#mobile").intlTelInput("isValidNumber");//验证手机号码是否正确
+
+	// console.log(isValid)
+	// console.log(intlNumber['dialCode'])
+
+	if (mobile == "" || mobile == null) {
+		layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+		return false;
+	}
+	if (isValid!=true) {
+		layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+		return false;
+	}
+}
+	
+function regverify() {
+    var verify = $('#verify').val();
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请输入图形验证码 }', '#verify', { tips: 3 });
+        return false;
+    }
+}
+$("#mobile").intlTelInput({
+  allowDropdown: true,
+  // autoHideDialCode: true,
+  // autoPlaceholder: "off",
+  dropdownContainer: "body",
+  // excludeCountries: ["us"],
+  // formatOnDisplay: true,
+  // geoIpLookup: function(callback) {
+  //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+  //     var countryCode = (resp && resp.country) ? resp.country : "";
+  //     callback(countryCode);
+  //   });
+  // },
+  initialCountry: "cn",
+  nationalMode: true,
+  // onlyCountries: ['us', 'fr', 'ca', 'jp','kr','de','cn','ru'],
+  // placeholderNumberType: "MOBILE",
+  // preferredCountries: ['cn', 'jp'],
+  separateDialCode: true,
+  utilsScript: "/Public/intel/js/utils.js"
+});
+</script>
+<script>
+var mbTest_username = /^(?![^a-zA-Z]+$)(?!\D+$).{5,15}$/;
+var mbTest_password = /^[a-zA-Z0-9_]{5,15}$/;
+	
+function password() {
+    var password = $('#password').val();
+    if (password == "" || password == null) {
+        layer.tips('{$Think.lang.请输入登录密码 }', '#password', { tips: 3 });
+        return false;
+    } else {
+        if (!mbTest_password.test(password)) {
+            layer.tips('{$Think.lang.密码格式为6~16 位， 不含特殊符号！ }', '#password', { tips: 3 });
+            return false;
+        }
+    }
+}
+
+function repassword() {
+    var password = $('#password').val();
+    var repassword = $('#repassword').val();
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认密码 }', '#repassword', { tips: 3 });
+        return false;
+    } else {
+        if (!mbTest_password.test(repassword)) {
+            layer.tips('{$Think.lang.密码格式为6~16 位， 不含特殊符号！ }', '#repassword', { tips: 3 });
+            return false;
+        } else {
+            if (password != repassword) {
+                layer.tips('{$Think.lang.两次输入的密码不一致 }', '#repassword', { tips: 3 });
+                return false;
+            }
+        }
+    }
+}
+	
+
+function SendCode(){
+	var mobile = $("#mobile").val();
+	var verify = $("#verify").val();
+	var intlNumber = $("#mobile").intlTelInput("getSelectedCountryData");//获取国家代码
+	var intnum = intlNumber['dialCode'];//获取国家代码
+	var isValid = $("#mobile").intlTelInput("isValidNumber");//验证手机号码是否正确
+
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码}', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (isValid!=true) {
+        layer.tips('{$Think.lang.手机号码不正确}', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请先输入图形验证码}', '#verify', { tips: 3 });
+        return false;
+    }
+	
+	layer.load(0, {shade: [0.5,'#8F8F8F']});
+	$.post("{:U('Verify/findpaypwd')}",{mobile:mobile,verify:verify,intnum:intnum},function(data){
+		layer.closeAll();
+		if(data.status==1){
+			$('#regBtn').removeAttr('onclick');
+			layer.msg(data.info,{icon:1});
+            var obj = $('#regBtn');
+            var wait = 60;
+            var interval = setInterval(function() {
+                obj.css('color', '#a7a7a7');
+                obj.css('cursor', 'default');
+                obj.removeAttr('onclick');
+                obj.text(wait + '{$Think.lang.秒再次发送 }');
+
+                wait--;
+                if (wait < 1) {
+                    //obj.removeAttr("disabled");
+                    obj.css('color', '#00a7e1');
+                    obj.css('cursor', 'pointer');
+                    obj.attr("onclick","SendCode();");
+                    clearInterval(interval);
+                    obj.text('{$Think.lang.获取验证码 }');
+                };
+            }, 1000);
+		}else{
+            $("#verifycode").click();
+			$('#regBtn').attr("onclick","SendCode();");
+			layer.msg(data.info,{icon:2});
+		}
+	},"json");
+}
+function Update(){
+	var username = $("#mobile").val();
+	var mobile = $("#mobile").val();
+	var verify = $("#verify").val();
+	var mobile_verify = $("#mobile_verify").val();
+	var password = $("#password").val();
+	var repassword = $("#repassword").val();
+
+    if (username == "" || username == null) {
+        layer.tips('{$Think.lang.请输入手机号码 }', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (mobile == "" || mobile == null) {
+        layer.tips('{$Think.lang.请输入手机号码 }', '#mobile', { tips: 3 });
+        return false;
+    }
+    if (verify == "" || verify == null) {
+        layer.tips('{$Think.lang.请输入图形验证码 }', '#verify', { tips: 3 });
+        return false;
+    }
+    if (mobile_verify == "" || mobile_verify == null) {
+        layer.tips('{$Think.lang.请输入手机验证码 }', '#mobile_verify', { tips: 3 });
+        return false;
+    }
+	
+    if (password == "" || password == null) {
+        layer.tips('{$Think.lang.请输入新交易密码 }', '#password', { tips: 3 });
+        return false;
+    }
+    if (repassword == "" || repassword == null) {
+        layer.tips('{$Think.lang.请输入确认交易密码 }', '#repassword', { tips: 3 });
+        return false;
+    }
+    if (password != repassword) {
+        layer.tips('{$Think.lang.两次输入的密码不一致 }', '#repassword', { tips: 3 });
+        return false;
+    }
+
+	$.post("{:U('Login/findpaypwd')}",{username:username,mobile:mobile,mobile_verify:mobile_verify,verify:verify,password:password,repassword:repassword},function(data){
+		if(data.status==1){
+			layer.msg(data.info,{icon:1});
+			window.setTimeout("window.location='/'",1000);
+		}else{
+			layer.msg(data.info,{icon:2});
+		}
+	},"json");
+}
+</script>
+<script>
+$('#menu_top_index').addClass('current');
+$('title').html('{:L('找回交易密码')} - '+'{:L(C('web_title'))}');
+</script>
+<include file="Public:footer_pass"/>

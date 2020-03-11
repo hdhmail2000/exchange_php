@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/cityselect.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {$Money['name']}
+        </div>
+        <div class="logbot">
+            <form>
+
+                <style type="text/css">
+                    .gtctable{width: 96%;margin:0 auto;border-collapse: collapse;margin-top:15px;}
+                    .gtctable tr td{border:1px solid rgba(255,255,255, .3);font-size:16px;color: #fff;padding:8px 5px;}
+                    .gtctable tr td img{vertical-align: middle;}
+                </style>
+
+                <!-- 币种 账户信息 -->
+                <table class="gtctable">
+                    <tr>
+                        <td valign="middle">
+                            <img src="__UPLOAD__/coin/{$coin_info['img']}" alt="" style="width: 22px; margin-right: 5px;"/> {$coin_info['title']}
+                        </td>
+                        <td> {:L('可用')}{$user_coin[$coin]} </td>
+                    </tr>
+                </table>
+
+                <!-- 存入数量 -->
+                <input type="text" placeholder="{:L('存入数量')}" class="logipt" name="nums"  id="nums">
+                <p id="nums-msg" style="display: none;font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;" data-explain="{:L('请输入存币数量')}<em></em>">{:L('请输入存币数量')}<em></em></p>
+
+                <!-- 交易密码 -->
+                <input  name="name" id="paypassword" type="password" class="logipt" placeholder="{:L('交易密码')}">
+                <a href="{:U('Login/findpaypwd')}" class="reg_floatr" style="color:#ff8800;font-size: 14px;line-height: 20px;">{:L('忘记密码？')}</a>
+                <p id="paypassword-msg" style="display: none;font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;" data-explain="{:L('请输入交易密码')}<em></em>">{:L('请输入交易密码')}<em></em></p>
+
+                <!-- 提交操作 -->
+                <input type="button" class="logbut" value="{:L('立即存币')}" name="index_submit" id="loginSubmin" onclick="Update()">
+            </form>
+        </div>
+    </div>
+<script>
+
+//输入框消息
+function formMsg(o, status, msg){
+	$('#'+o+'-msg').attr('class', 'form_explain_'+(status?'pass':'error')).html((typeof msg == 'undefined'? '': msg)+'<em></em>').show();
+	return true;
+}
+
+function Update() {
+	var ids ='{$ids}';
+	var num = $("#nums").val();
+	var paypassword = $("#paypassword").val();
+
+	if (num == "" || num == null) {
+		// layer.tips('请输入转出数量', '#nums', {tips: 3});
+		formMsg('nums', 0, '{:L('请输入存币数量')}');
+		return false;
+	}
+	if (paypassword == "" || paypassword == null) {
+		// layer.tips('请输入交易密码', '#paypassword', {tips: 3});
+		formMsg('paypassword', 0, '{:L('请输入交易密码')}');
+		return false;
+	}
+	
+	$.post("{:U('Financing/index')}", {id: ids,num: num,paypassword: paypassword}, function (data) {
+		if (data.status == 1) {
+			layer.msg(data.info, {icon: 1});
+			window.setTimeout("window.location.reload()",1000);
+		} else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+		}
+	}, "json");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('认购中心')}
+        </div>
+        <ul class="tdlist">
+            <volist name="list" id="vo">
+                <li>
+                    <eq name="vo.status" value="1">
+                        <a href="{:U('Issue/buy_detail',array('id'=>$vo['id']))}">
+                    <else/>
+                        <a href="#">
+                    </eq>
+                        <div class="xsltop">
+                            <img src="/upload/coin/{$vo['img']}">{$vo['name']}
+                        <switch name="vo.status">
+                            <case value="2">（{:L('尚未开始）')}</case>
+                            <case value="1">（{:L('正在认购中）')}</case>
+                            <default>（{:L('已结束）')}</default>
+                        </switch>
+
+
+
+
+                        </div>
+                    </a>
+                </li>
+            </volist>
+        </ul>
+        <div class="pages">{$page}</div>
+    </div>
+<include file="Public:footer" />
+</body>
+</html>

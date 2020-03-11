@@ -1,0 +1,421 @@
+<include file="Public:header_new" />
+<script src="__PUBLIC__/Home/js/datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/ico.css" />
+<div class="usernewout">
+    <p class="titlenotice"><a style="color:#73bee4;" href="/Article/detail/id/{$notice_info['id']}">{:L('公告：')}{$notice_info['title']|msubstr=0,100,'utf-8',false}</a>
+    </p>
+    <div class="usncont">
+        <!-- 左侧导航 -->
+        <include file="Issue:left" />
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>ICO{:L('认购记录')}</h1>
+            <div class="cont1_main">
+                <div class="title">
+                    <p class="tit_p2" style="font-size:20px;"><span></span>{:L('您的ICO认购记录')}</p>
+                </div>
+                <!-- --------------------------项目主页----------------- -->
+                <div class="crowd_con clear">
+                    <div class="autobox">
+                        <div class="assets_center clear po_re zin70">
+                            <!--右侧内容-->
+                            <div class="recharge_list nmt" style="width: 100%">
+                                <table>
+                                    <tr>
+                                        <th width="120px">{:L('购买时间')}</th>
+                                        <th width="120px">{:L('下次解冻时间')}</th>
+                                        <th width="100px" class="last">{:L('认购名称')}</th>
+                                        <th width="80px">{:L('认购价格')}</th>
+                                        <th width="100px">{:L('认购数量')}</th>
+                                        <th width="100px">{:L('认购总价')}</th>
+                                        <th width="110px" class="last">{:L('解冻次数')}</th>
+                                        <th width="110px" class="last">{:L('剩余冻结')} </th>
+                                        <th width="110px" class="last">{:L('状态')}</th>
+                                        <th width="80px" class="last"> {:L('操作')} </th>
+                                    </tr>
+                                    <volist name="list" id="vo" key="k">
+                                        <tr <if condition="$k%2 eq 0"> style="background-color:#eee;" </if>>
+                                            <td>{$vo.addtime|date='Y/m/d',###}</td>
+                                            <td>{$vo.endtime|date='Y/m/d',###}</td>
+                                            <td>{$vo['name']}</td>
+                                            <td>{$vo['price'] * 1}</td>
+                                            <td>{$vo['num'] * 1}</td>
+                                            <td>{$vo['mum']*1}</td>
+                                            <td>{$vo['unlock']}/{$vo['ci']}</td>
+                                            <td>{$vo['shen'] * 1}</td>
+                                            <td>
+                                                <eq name="vo.status" value="1">
+                                                    <font color="#0096dd">{:L('已完成')}</font>
+                                                    <else/>
+                                                    <font color="#23a800">{:L('解冻中')}</font>
+                                                </eq>
+                                            </td>
+                                            <td>
+                                                <eq name="vo.status" value="0">
+                                                    <div class="mywallet_btn_box222" style="width:90px;height:30px;margin-top:20px;cursor:pointer;background:none;margin-left: 40px;">
+                                                        <a class="unlock" id="{$vo.id}" href="javascript:void(0)" />{:L('解冻')}</a>
+                                                    </div>
+                                                    <!-- <a class="unlock" id="{$vo.id}" href="javascript:void(0)">解冻</a> -->
+                                                </eq>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                </table>
+                                <div class="pages">{$page}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+            var hints = "0";
+            if (hints == 1) {
+                $('#hints').show();
+            }
+            $('#Issue_box').addClass('active');
+
+            function goumai(_this) {
+                window.location = "/issue/buy/id/" + $(_this).attr('data');
+            }
+            </script>
+        </div>
+        <script>
+        window.onload = function() {
+            var Lheight = $(".usnc_left").outerHeight();
+            var Rheight = $(".usnc_right").outerHeight();
+            var Tall = Lheight > Rheight ? Lheight : Rheight
+            $(".usnc_left").outerHeight(Tall);
+            $(".usnc_right").outerHeight(Tall);
+        }
+        $('#Issue_box').addClass('on');
+        $('#Issue_log').addClass('on');
+        </script>
+        <script>
+        $('.unlock').click(function() {
+            $.post("{:U('Issue/unlock')}", { id: $(this).attr('id'), }, function(data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, { icon: 1 });
+                    window.location = "{:U('Issue/log')}";
+                } else {
+                    layer.msg(data.info, { icon: 2 });
+                }
+            });
+        });
+        </script>
+        <style>
+        .modal-open {
+            overflow: hidden;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10000;
+            display: none;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+            outline: 0;
+        }
+
+        .modal.fade .modal-dialog {
+            -webkit-transition: -webkit-transform .3s ease-out;
+            -o-transition: -o-transform .3s ease-out;
+            transition: transform .3s ease-out;
+            -webkit-transform: translate(0, -25%);
+            -ms-transform: translate(0, -25%);
+            -o-transform: translate(0, -25%);
+            transform: translate(0, -25%);
+        }
+
+        .modal.in .modal-dialog {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -o-transform: translate(0, 0);
+            transform: translate(0, 10%);
+            /*transform: translate(0, 0);*/
+        }
+
+        .modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 10px;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #000;
+        }
+
+        .modal-backdrop.fade {
+            filter: alpha(opacity=0);
+            opacity: 0;
+        }
+
+        .modal-backdrop.in {
+            filter: alpha(opacity=50);
+            opacity: .5;
+        }
+
+        .modal-header {
+            min-height: 16.42857143px;
+            padding: 15px;
+        }
+
+        .modal-header .close {
+            margin-top: -2px;
+        }
+
+        .modal-title {
+            margin: 0;
+            line-height: 1.42857143;
+        }
+
+        .modal-body {
+            position: relative;
+            padding: 15px;
+        }
+
+        .modal-footer {
+            padding: 5px 0 20px 0;
+            text-align: center;
+        }
+
+        .modal-footer .btn+.btn {
+            margin-bottom: 0;
+            margin-left: 5px;
+        }
+
+        .modal-footer .btn-group .btn+.btn {
+            margin-left: -1px;
+        }
+
+        .modal-footer .btn-block+.btn-block {
+            margin-left: 0;
+        }
+
+        .modal-scrollbar-measure {
+            position: absolute;
+            top: -9999px;
+            width: 50px;
+            height: 50px;
+            overflow: scroll;
+        }
+
+        @media (min-width: 768px) {
+            .modal-dialog {
+                width: 600px;
+                margin: 0px auto;
+            }
+
+            .modal-content {
+                -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+            }
+
+            .modal-sm {
+                width: 300px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .modal-lg {
+                width: 900px;
+            }
+        }
+
+        .modal-footer:before,
+        .modal-footer:after {
+            display: table;
+            content: " ";
+        }
+
+        .modal-footer:after {
+            clear: both;
+        }
+
+        .crowd_center {
+            font-family: tahoma, Microsoft YaHei, Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .crowd_con {
+            background: #FFF;
+            padding: 25px 30px;
+            border-radius: 8px;
+            height: 400px;
+        }
+
+        .crowd_con_l {
+            width: 67%;
+            border-right: 1px solid #EEE;
+            float: left;
+            height: 320px;
+        }
+
+        .crowd_con_r {
+            width: 30%;
+            height: 320px;
+            float: left;
+        }
+
+        .crowd_bi {
+            margin-bottom: 10px;
+        }
+
+        .crowd_bi span {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-size: 50px;
+            margin-right: 10px;
+            float: left;
+        }
+
+        .crowd_bi span.crowd_bi_ytc {
+            background-position: 0 -50px;
+        }
+
+        .crowd_bi h2 {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 50px;
+            display: inline-block;
+        }
+
+        .crowd_con_lp {
+            font-size: 14px;
+            height: 30px;
+            line-height: 30px;
+            color: #333;
+        }
+
+        .crowd_con_lp2 {
+            line-height: 46px;
+            height: 46px;
+        }
+
+        .crowd_con_lp3 {
+            font-size: 12px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        .crowd_time {
+            width: 457px;
+            height: 50px;
+            background: #F9F3DD;
+            border-radius: 3px;
+            margin-top: 120px;
+            padding: 5px 15px;
+            border-radius: 6px;
+        }
+
+        .crowd_time span {
+            display: inline-block;
+            width: 24px;
+            height: 35px;
+            line-height: 35px;
+            margin-right: 10px;
+            background: #FFF;
+            border-radius: 3px;
+            font-size: 24px;
+            color: #e75600;
+            text-align: center;
+        }
+
+        .crowd_time em {
+            font-style: normal;
+            font-size: 14px;
+            line-height: 35px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .crowd_pro {
+            width: 490px;
+            margin: 15px 0;
+        }
+
+        .crowd_pro progress {
+            width: 530px;
+            height: 8px;
+            margin-top: 5px;
+            -webkit-appearance: none;
+        }
+
+        .crowd_pro ::-webkit-progress-bar {
+            border: none;
+            background: #EDEDED;
+            border-radius: 30px;
+        }
+
+        .crowd_pro ::-webkit-progress-value {
+            background: #e75600;
+            border-radius: 30px;
+        }
+
+        .crowd_rule_t {
+            font-size: 24px;
+            font-weight: 400;
+            border-left: 3px solid #e75600;
+            height: 20px;
+            margin-bottom: 20px;
+            line-height: 20px;
+            padding-left: 10px;
+        }
+
+        .crowd_subscribe {
+            margin: 25px 0 20px;
+        }
+
+        .crowd_subscribe li {
+            float: left;
+            padding-right: 100px;
+        }
+
+        .crowd_subscribe li:last-child {
+            padding-right: 0;
+        }
+
+        .crowd_subscribe li span {
+            font-size: 16px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .blue {
+            color: #000;
+        }
+        </style>
+        <include file="Public:footer" />

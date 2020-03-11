@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            帮助中心
+        </div>
+        <!-- qq号 -->
+        <volist name="list" id="vo">
+            <span class="layout">
+                <if condition="$vo['is_shang'] eq 1 ">
+                    <a href="{:U('Article/help_list',array('id'=>$vo['id']))}">{$vo.title}</a>
+                <else />
+                    <a href="{:U('Article/notice',array('name'=>$vo['name']))}">{$vo.title}</a>
+                </if>
+
+            </span>
+        </volist>
+    </div>
+<include file="Public:footer" />
+</body>
+</html>

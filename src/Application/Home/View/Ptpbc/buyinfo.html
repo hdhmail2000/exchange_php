@@ -1,0 +1,74 @@
+<include file="Public:header_new" />
+<link href="__PUBLIC__/layui/css/layui.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/layui/layui.js"></script>
+<style>
+    .layui-form-label{width: 150px;}
+    .botinfo{padding: 20px 0px;}
+</style>
+
+	<ul class="main-advert m-top100">
+		<volist name="news_list1" id="vo">
+			<li><a href="{:U('Article/detail','id='.$vo['id'])}">{$vo['title']|msubstr=0,17,'utf-8'}</a></li>
+			<span>/</span>
+		</volist>
+		<li><a href="#">{:L("更多公告")}</a></li>
+	</ul>
+<div class="usernewout">
+    
+    <div class="usncont">
+        <!-- 左侧导航 -->
+        <include file="Ptpbc:left" />
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>{:L('购买')}</h1>
+            <div class="layui-form-mid layui-word-aux">{:L('您正在购买的卖家USDT已被锁定，此交易已被担保，请在30分钟内按照下面付款方式完成支付。')}</div>
+            <div class="botinfo layui-form">
+                <table>
+                    <tr><td style="width: 200px; color: #F00;">{$data.price} {$data.unit}</td><td></td></tr>
+                    <tr><td style="width: 200px;">{:L('付款方式')}：</td><td>{$data.payment}</td></tr>
+                    <tr><td>{:L('收款账号')}：</td><td>{$data.receive}</td></tr>
+                    <tr><td>{:L('收款人姓名')}：</td><td>{$data.merchant}</td></tr>
+                    <tr><td colspan="2" style="color:#F00">{:L('重要：付款时请务必备注您的会员手机号。')}</td></tr>
+                </table>
+            </div>
+            <div style="width: 320px;text-align: center; float: right;">
+            <lt name="data.status" value="1">
+                <form action="" method="post"><input type="hidden" name="id" value="{$data.id}"><input type="hidden" name="status" value="1"><button class="layui-btn" lay-submit lay-filter="formDemo">{:L('我已付款')}</button></form>
+            </lt>
+            <eq name="data.status" value="1">
+                    <h1 style="line-height: 180%;">{:L('待卖家确定收到款项，即将释放币')}</h1>
+                    <div>{:L('疑问联系平台')}：support@artschain.com</div>
+            </eq>
+            </div>
+        </div>
+
+        <script>
+            layui.use('form',function () {
+                var form=layui.form;
+            })
+            window.onload = function(){
+                var Lheight = $(".usnc_left").outerHeight();
+                var Rheight = $(".usnc_right").outerHeight();
+                var Tall = Lheight > Rheight ? Lheight:Rheight
+                $(".usnc_left").outerHeight(Tall);
+                $(".usnc_right").outerHeight(Tall);
+            }
+            $('#finance_box').addClass('on');
+            $('#finance_index').addClass('on');
+
+            $(function($) {
+                $(".ptpbc_list_contact_merchant").hover(function () {
+                    // console.info($(this).attr('mid'));
+                    layer.tips(' <img src="__PUBLIC__/Home/images/3c459279-6da6-46df-94c0-0c6dade905b9.png" width="120">',this,{
+                        tips: [2, '#3595CC']
+                    });
+                });
+            });
+            
+        </script>
+    </div>
+</div>
+
+</div>
+
+<include file="Public:footer" />

@@ -1,0 +1,149 @@
+<include file="Public:header"/>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title"><a href="{:U('Config/smss')}">设置</a> >></span>
+            <span class="h1-title">短信群发
+             </span>
+
+        </div>
+        <div class="tab-wrap">
+
+            <div class="tab-content">
+                <form id="form" action="{:U('Config/sendsmsall')}" method="post" class="form-horizontal"
+                      enctype="multipart/form-data">
+                    <div id="tab" class="tab-pane in tab">
+                        <div class="form-item cf">
+                            <table>
+                                <tr class="controls">
+                                    <td class="item-label">发送内容 :</td>
+                                    <td><textarea  class="form-control input-10x" name="smscontent"   rows="3" cols="20"></textarea>
+                                    </td>
+                                    <td class="item-note">请填写群发短信内容,无需填写短信签名.发送记录请到短信平台查看</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label"></td>
+                                    <td>
+                                        <div class="form-item cf">
+                                            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">发送</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                        </form>
+                    <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr>
+                                <th class="">发送时间 </th>
+                                    <th class="">发送内容 </th>
+                                    <th class="">发送用户数 </th>
+                                    <th class="">发送状态 </th>
+                                    <th class="">操作 </th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="list">
+                    <volist name="list" id="vo">
+                        <tr>
+                            <td>{$vo.sendtime|addtime}</td>
+                            <td>{$vo.nr}</td>
+                            <td>{$vo.users}</td>
+                            <td>
+                                <eq name="vo.status" value="1">成功
+                                    <else/>失败
+                                </eq>
+                            </td>
+                            <td>
+                                 <eq name="vo.status" value="0">
+                                    <a href="{:U('Config/resendsms?id='.$vo['id'])}" class="btn btn-primary btn-xs">重发</a>
+                                    <else/>
+                                    无需操作
+                                </eq>
+                            </td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <td colspan="12" class="text-center empty-info"><i class="glyphicon glyphicon-exclamation-sign"></i>暂无数据</td>
+                </notempty>
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+
+                <script type="text/javascript">
+                    //提交表单
+                    $('#submit').click(function () {
+                        $('#form').submit();
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //响应文件添加成功事件
+        $("#inputfile").change(function () {
+            //创建FormData对象
+            var data = new FormData();
+            //为FormData对象添加数据
+            $.each($('#inputfile')[0].files, function (i, file) {
+                data.append('upload_file' + i, file);
+            });
+
+
+            //发送数据
+            $.ajax({
+                url: '/Admin/Config/coinImage',
+                type: 'POST',
+                data: data,
+                cache: false,
+                contentType: false,		//不可缺参数
+                processData: false,		//不可缺参数
+                success: function (data) {
+                    if (data) {
+                        $('#up_img').attr("src", '/Upload/coin/' + data);
+                        $('#img').val(data);
+                        $('#up_img').show();
+                    }
+                },
+                error: function () {
+                    alert('上传出错');
+                    $(".loading").hide();	//加载失败移除加载图片
+                }
+            });
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('textarea', {
+            width: '500px',
+            height: '100px',
+            items: ['source', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|', 'emoticons', 'link', 'fullscreen'],
+            afterBlur: function () {
+                this.sync();
+            }
+        });
+    });
+</script>
+<include file="Public:footer"/>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:U('Config/smss')}");
+    </script>
+</block>

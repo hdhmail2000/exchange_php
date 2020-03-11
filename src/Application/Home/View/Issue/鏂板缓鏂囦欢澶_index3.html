@@ -1,0 +1,237 @@
+<include file="Public:header_new"/>
+<style>
+	body {background:#eceff0;}
+</style>
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/financing.css')}">
+<style>
+	.banner{
+		background: url('__PUBLIC__/Home/ecshe_img/app_banner3.jpg') no-repeat center;
+	}
+</style>
+
+<div class="banner">
+	<div class="boxs">
+		<div class="font_title">
+			<h3>{:L('新币预热')}</h3>
+			<p>{:L('致力于帮助区块链项目募集资金，找到支持者，让新鲜有趣的好创意成为现实。')}</p>	
+		</div>
+	</div>
+</div>
+
+<div class="main_boxs">
+	<ul class="list_financing">
+		<volist name="list" id="vo">
+			<li>
+				<div class="fin-title">
+					<img src="__UPLOAD__/coin/{:C('coin')[$vo['coinname']]['img']}" style="height:25px;vertical-align:middle;margin-right:3px;">
+					<b>{$vo['name']}</b>
+				</div>
+				<div class="fl fin-box">
+					<div class="fin-box-li">
+						<b>{$vo['coinname']}</b>
+						<p>{:L('存入币种')}</p>
+					</div>
+					<div class="fin-box-li">
+						<b class="orange">{$vo['fee']}%</b>
+						<p>{:L('周期性利率')}</p>
+					</div>
+					<div class="fin-box-li">
+						<b>{$vo['tian']}</b>
+						<p>{:L('存入期限')}</p>
+					</div>
+					<div class="fin-box-li">
+						<b>{$vo['stnum']}<span class="unit">{$vo['coinname']}</span></b>
+						<p>{:L('起存数量')}</p>
+					</div>
+					<div class="fin-box-li">
+						<b class="orange">{$vo['shengyu']}<span class="unit">{$vo['coinname']}</span></b>
+						<p>{:L('剩余额度')}</p>
+					</div>
+				</div>
+				<div class="fr fin-btn">
+					<a href="javascript:licai_run('{$vo[\'id\']}')" class="opens">{:L('存币')}</a>
+				</div>
+				<div class="process-bar">
+					<div class="process-bar-hover" style="width:{$vo['bili']}%"></div>
+				</div>
+			</li>
+		</volist>
+	</ul>
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="SettingRight" style="width: 100%;">
+		<div class="titles">
+			<h3 class="fl">{:L('存币明细')}</h3>
+		</div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="">{:L('项目标题')}</th>
+					<th width="">{:L('存币模式')}</th>
+					<th width="">{:L('存币类型')}</th>
+					<th width="">{:L('存币数量')}</th>
+					<th width="">{:L('利率')}</th>
+					<th width="">{:L('存入期限')}</th>
+					<th width="">{:L('累计次数')}</th>
+					<th width="">{:L('累计获利')}</th>
+					<th width="">{:L('存币时间')}</th>
+					<th width="">{:L('状态')}</th>
+					<th width="">{:L('操作')}</th>
+				</tr>
+				<volist name="log_list" id="vos">
+					<tr>
+						<td>{$vos['money']['name']}</td>
+						<td>{$vos['money']['type']}</td>
+						<td style="text-transform:uppercase;">{$vos['money']['coinname']}</td>
+						<td>{$vos['num']*1}</td>
+						<td>{$vos['money']['fee']}%</td>
+						<td>{$vos['money']['tian']}</td>
+						<td>{$vos['times']}</td>
+						<td>{$vos['allfee']*1}</td>
+						<td>{$vos.addtime|addtime}</td>
+						<td>
+							<eq name="vos.status" value="0"> 
+								<font color="#0096dd">{:L('已完成')}</font> 
+							<else />
+								<font color="#23a800">{:L('涨息中')}</font>
+							</eq>
+							| <a href="{:U('Financing/dlog',array('id'=>$vos['id']))}">{:L('详细记录')}</a>
+						</td>
+						<td>
+							<eq name="vos['money']['type']" value="1">
+								<eq name="vos['status']" value="0">
+									<font title="定期项目不可提前取出">--</font>
+								<else/>
+									<a href="javascript:beforeGet('{$vos[\'id\']}','{$vos[\'money\'][\'fee\']}')" style="color: green;" title="活期项目可提前取出">{:L('提前取出')}</a>
+								</eq>
+							<else/>
+								<font title="定期项目不可提前取出">--</font>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$log_page}</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="float_win_pay" id="licai_mask" style="display:none;">
+    <div class="tan_title">
+        <h4 id="licai_title">{:L('标题')}</h4>
+        <span class="close-btn" onclick="closeCharge();">x</span>
+    </div>
+    <div class="payment_content" id="dialog_content_CnyAddress">
+		<ul>
+			<li>
+				<span class="label-1">{:L('理财模式')}</span>
+				<input type="text" autocomplete="off" class="input-2" id="licai_type" readonly />
+			</li>
+			<li>
+				<span class="label-1">{:L('存入数量')}</span>
+				<input type="text" autocomplete="off" class="input-1" id="licai_jine" />
+			</li>
+			<li style="margin:-10px 0 10px 0;font-size:14px;text-transform:uppercase;color:#097DF7;">
+				<span class="label-1">&nbsp;</span> <span>{:L('可用')}</span> <span id="licai_yue"></span> <span id="licai_coinname"></span>
+			</li>
+			<li>
+				<span class="label-1">{:L('交易密码')}</span>
+				<input type="password" autocomplete="off" class="input-1" id="paypassword" />
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="Update()" class="btns" id="btn">{:L('立即存币')}</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+<script>
+$('#wrap').css('min-height',$(window).height() - 260);
+$("title").html("{:L('新币预热')} - {:C('web_title')}");
+
+var cur_id = '';
+function licai_run(id){
+	$('#licai_jine').val('0');
+	$('#paypassword').val(null);
+	
+	$.get("/Financing/info/id/" + id,function(ret){
+		cur_id = id;
+		if(ret.status == 1){
+			var money = ret.info.Money;
+			$('#licai_title').html(money.name);
+			$('#licai_type').val(money.type);
+			$('#licai_coinname').html(money.coinname);
+			$('#licai_yue').html(parseFloat(money.yue * 1).toFixed(4));
+			
+			layer.open({
+				type: 1,
+				title: false,
+				closeBtn: 0,
+				area: 'autos',
+				skin: 'layui-layer-nobg',
+				shadeClose: true,
+				content: $('#licai_mask')
+			});
+		}else{
+			layer.msg(ret.info);
+            if (ret.url) {
+                window.location = ret.url;
+            }
+		}
+	},'json')
+}
+
+function Update(){
+	var licai_jine = $('#licai_jine').val();
+	var paypassword = $('#paypassword').val();
+	
+	if(!licai_jine || typeof licai_jine == "undefined" || licai_jine <= 0){
+		layer.tips('数量不正确', '#licai_jine', {tips: 1});
+		return false;
+	}
+	if(!paypassword || typeof paypassword == "undefined"){
+		layer.tips('交易密码必须填写', '#paypassword', {tips: 1});
+		return false;
+	}
+	
+    $.post("{:U('Financing/index')}", { id:cur_id, num:licai_jine, paypassword:paypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout("window.location.reload()",1000);
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+	
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+
+function beforeGet(id,fee){
+	var msg = fee ?  '提前取出本金需要支付' + fee + '% 的利息,确定提前取出?' : '确定提前提取本金?'
+	layer.confirm(msg, {
+		btn: ['确定','取消'] //按钮
+	}, function(){
+		$.post('{:U(\'/Financing/beforeGet\')}',{id:id},function(ret){
+			if(ret.status){
+				layer.msg(ret.info);
+				window.setTimeout("window.location.reload()",1000);
+			}else{
+				layer.msg(ret.info);
+			}
+		},'json');
+		layer.closeAll();
+	}, function(){
+		layer.closeAll();
+	});
+}
+</script>
+<include file="Public:footer"/>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('实名认证')}
+        </div>
+        <div class="logbot">
+            <form>
+
+                <!-- 真实姓名 -->
+                <input type="text" placeholder="{:L('真实姓名')}" onblur="truenames()" class="logipt" id="regtruename" value="" >
+                <span style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;" >{:L('认证完成不得修改，请认真填写本人真实姓名')}</span>
+
+
+                <!-- 身份证号 -->
+                <input type="text" id="regidcard" placeholder="{:L('身份证号')}" class="logipt" onblur="idcards()">
+                <span style="font-size:14px;line-height:24px;color:#ff8800;padding-left:10px;">{:L('每个身份证号只能注册一个平台账号，认证完成不得修改，请认真填写。')}</span>
+
+                <input type="button" class="logbut" value="{:L('下一步')}" onclick="Update();" >
+            </form>
+        </div>
+    </div>
+<script>
+
+    // 检测真实姓名
+    function truenames(){
+        var truename=$("#regtruename").val();
+        if(truename==""||truename==null){
+            layer.tips('{:L('请输入真实姓名')}','#regtruename',{tips:3});
+            return false;
+        }
+    }
+
+    // 检测身份证号
+    function idcards(){
+        var idcard=$("#regidcard").val();
+        if(idcard==""||idcard==null){
+            layer.tips('{:L('请输入身份证号')}','#regidcard',{tips:3});
+            return false;
+        }
+    }
+
+    function Update(){
+        var truename=$("#regtruename").val();
+        var idcard=$("#regidcard").val();
+
+        if(truename==""||truename==null){
+            layer.tips('{:L('请输入真实姓名')}','#regtruename',{tips:3});
+            return false;
+        }
+
+        if(idcard==""||idcard==null){
+            layer.tips('{:L('请输入身份证号')}','#regidcard',{tips:3});
+            return false;
+        }
+
+        $.post("{:U('Login/upregister3')}",{truename:truename,idcard:idcard},function(data){
+            if(data.status==1){
+                layer.msg(data.info,{icon:1});
+                window.location='/Login/register4';
+            }else{
+                layer.msg(data.info,{icon:2});
+                if(data.url){
+                    window.location=data.url;
+                }
+            }
+        },"json");
+    }
+</script>
+</body>
+</html>

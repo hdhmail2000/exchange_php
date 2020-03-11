@@ -1,0 +1,144 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/fin.css">
+
+<div class="infoBox">
+	<include file="Finance:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles">
+			<h3 class="fl">{:L('转入资产')} <span>{$coin_list[$xnb]['name']}</span></h3>
+			
+			<div class="select fr">
+				<img src="__UPLOAD__/coin/{$coin_list[$xnb]['img']}">
+				<select name="type" id="qianbao_type" class="selul">
+					<volist name="coin_list" id="vos">
+						<eq name="xnb" value="$key">
+							<option value="{$vos['name']}" selected="selected">{$vos.title} ({$vos['name']|strtoupper})</option>
+						<else/>
+							<option value="{$vos['name']}">{$vos.title} ({$vos['name']|strtoupper})</option>
+						</eq>
+					</volist>
+				</select>
+			</div>
+		</div>
+
+		<div class="Column_Coins">
+			<div class="AssetInfo">
+				<php>$xnbd = $xnb.'d';</php>
+				<div>{:L('可用')}<span>{$xnb_c} {$coin_list[$xnb]['name']}</span></div>
+				<div>{:L('冻结')}<span>{$xnbd_c} {$coin_list[$xnb]['name']}</span></div>
+			</div>
+			
+			<div class="rech_bd" style="padding-bottom:30px;">
+				<div class="shiftto">
+					<p class="walletadres">{$coin_list[$xnb]['name']} {:L('钱包充币地址')}</p>
+					<p id="wallet">{$qianbao}</p>
+					<eq name="state_coin" value="0">
+						<div id="qrcode-wallet">
+							<div style="width:100px;margin:0 auto;"><saon id="codeaa"></saon></div>
+							<p>{:L('扫码充币')}</p>
+						</div>
+					</eq>
+				</div>
+			</div>
+			
+			<div class="recharge_atten_text">
+				<h5>{:L('安全提示')}</h5>
+				<p style="margin-bottom:5px;color:red;font-size:16px;">
+					<b style="font-weight: 500;">{:L('向此地址充值非此类型币种将导致您的资产无法找回')}</b>
+				</p>
+				<p>* 1. {:L('往该地址充值，汇款完成，等待网络自动确认（')}<b> {$coin_list[$xnb]['zr_dz']} </b>{:L('个确认）后系统自动到账')}</p>
+				<p>* 2. {:L('为了快速到账，充值时可以适当提高网络手续费')}</p>
+				<p>* 3. {:L('遇到问题请发邮件到')} <b style="margin-left:10px;color:#FF8702;text-transform:lowercase;">{:C('contact_myzr')}</b></p>
+			</div>
+		</div>
+		
+		<div class="titles"><h3>{:L('资产转入记录')}</h3></div>
+		<div class="Column_Coins_LIST">	
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th width="130px">{:L('转入时间')}</th>
+					<th width="100px">{:L('币种类型')}</th>
+					<th width="260px">{:L('转入地址')}</th>
+					<th width="120px">{:L('转入数量')}</th>
+					<!--<th width="100px">转入赠送</th>-->
+					<th width="120px">{:L('到账数量')}</th>
+					<th>{:L('状态')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$vo.addtime|addtime}</td>
+						<td>{$vo.coinname}</td>
+						<td>{$vo.username}</td>
+						<td>{$vo['num']}</td>
+						<!--<td>{$vo['fee']|NumToStr}</td>-->
+						<td>{$vo['mum']}</td>
+						<td>
+							<eq name="vo.status" value="1">
+								<font color="#e75600">{:L('转入成功')} </font>
+								<else/>
+								<font color="red">{:L('等待处理,还需要')}{$vo.status|abs}{:L('个确认')}</font>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+$('#codeaa').qrcode({
+    render: "table",
+    width: 100,
+    height: 100,
+    text: '{$qianbao}'
+});
+
+$("#qianbao_type").change(function() {
+    var coin = $("#qianbao_type option:selected").val();
+    window.location = '/Finance/myzr/coin/' + coin + '.html';
+});
+
+$('#btn-submit').click(function() {
+    var mbTest_num = /^([1-9]{1}\d*)(\.(\d){1,2})?$/;
+    var mbTest_remark = /^(\w|[\u4E00-\u9FA5])*$/;
+    var type = $('#mycz_type option:selected').val();
+    var num = $("#mycz_amount").val();
+    if (type == "" || type == null) {
+        layer.tips('{:L('请选择充值方式')}', '#mycz_type', { tips: 3 });
+        return false;
+    }
+    if (num == "" || num == null) {
+        layer.tips('{:L('请输入充值金额')}', '#mycz_amount', { tips: 3 });
+        return false;
+    }
+    if (!mbTest_num.test(num)) {
+        layer.tips('{:L('充值金额格式错误(本位币格式)')}', '#mycz_amount', { tips: 3 });
+        return false;
+    }
+    $.post("{:U('Mycz/index')}", {
+        type: type,
+        num: num
+    }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout("window.location='{:U('Mycz/log')}'", 3000);
+        } else {
+            layer.msg(data.info, { icon: 2 });
+        }
+    }, "json");
+});
+</script>
+<script>
+$("title").html("{:L('转入资产')} - {:C('web_title')}");
+$('#menu_1').addClass('on');
+</script>
+<include file="Public:footer" />

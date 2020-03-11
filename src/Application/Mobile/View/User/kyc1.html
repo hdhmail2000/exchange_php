@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <style>
+        .kyc_form {
+            margin-top: 20px;
+        }
+        .kyc_form li{
+            width: 80%;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+        .tab_title {
+            display: inline-block;
+            width: 80px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .select-1 {
+            display: inline-block;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 5px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        tr {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body class="blackbg">
+<div id="container" class="logbg">
+<div class="Column_identity">
+    <div class="log_title">
+        <span class="back"><a href="javascript:history.go(-1)"></a></span>
+        {:L('初级认证')}
+    </div>
+    <ul class="kyc_form">
+        <li>
+            <span class="tab_title">国籍：</span>
+            <span>
+                <input type="text" id="regidnationality" class="select-1">
+            </span>
+        </li>
+        <li>
+            <span class="tab_title">姓名：</span>
+            <span><input type="text" id="regtruename" class="select-1"></span>
+        </li>
+        <li>
+            <span class="tab_title">证件类型：</span>
+            <span style="display:inline-block;width: 100%;padding-right: 5px;">
+                <select name="type" id="regidtype" class="select-1" style="">
+                    <option value="1" selected="selected">身份证</option>
+                    <option value="2">护照</option>
+                    <option value="3">驾驶证</option>
+                </select>
+            </span>
+        </li>
+        <li>
+            <span class="tab_title">证件ID：</span>
+            <span><input type="text" id="regidcard" class="select-1"></span>
+        </li>
+        <li>
+            <div  style="padding-top:20px;font-size: 14px;">
+                <div class="Tips">
+                    <div class="icons">
+                        <h3 style="line-height: 40px;font-size: 16px;">重要提示：</h3>
+                    </div>
+                    <div class="TextContent">
+                        <p>请填写本人真实身份信息，否则无法正常提现！</p>                       
+                    </div>
+                </div>
+                <p style="height: 30px;line-height: 30px;text-align: center;color: #fff;font-size: 14px;background-color: #0a6ec8;border-radius: 5px;margin-top: 10px;"><a style="color: #fff;width: 100%;display:inline-block " class="btns" href="javascript:void(0)" onclick="Update()">提交</a></p>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+    function Update(){
+        var idnationality = $("#regidnationality").val();
+        var idtype = $("#regidtype").val();
+        var truename = $("#regtruename").val();
+        var idcard = $("#regidcard").val();
+
+        if(idnationality == "" || idnationality == null) {
+            layer.tips('{:L(' 请输入国籍 ')}', '#regidnationality', { tips: 3 });
+            return false;
+        }
+        if(idtype == "" || idtype == null) {
+            layer.tips('{:L(' 请选择证件类型 ')}', '#regidtype', { tips: 3 });
+            return false;
+        }
+        if(truename == "" || truename == null) {
+            layer.tips('{:L(' 请输入姓名 ')}', '#regtruename', { tips: 3 });
+            return false;
+        }
+        if(idcard == "" || idcard == null) {
+            layer.tips('{:L(' 请输入证件ID ')}', '#regidcard', { tips: 3 });
+            return false;
+        }
+
+        $.post("{:U('User/kyc1_Handle')}",{ idnationality: idnationality, idtype: idtype, truename: truename, idcard: idcard },function(data){
+            if(data.status == 1){
+                layer.msg(data.info, { icon: 1 });
+                window.setTimeout('window.location="{:U('User/index')}"',1000);
+            }else{
+                layer.msg(data.info, { icon: 2 });
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        },"json");
+    }
+</script>
+<script>
+    $("title").html("{:L('实名认证')} - {:C('web_title')}");
+</script>
+</html>

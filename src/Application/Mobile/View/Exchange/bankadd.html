@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<title>银行卡设置</title>
+	<include file="Public:head" />
+</head>
+<body>
+<header class="mui-bar mui-bar-bg mui-bar-nav">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:U('Exchange/bank')}"></a>
+	<h1 class="mui-title color_white">银行卡设置</h1>
+</header>
+
+<div class="mui-content" style="margin-top:20px;">
+	<div class="mui-control-content form-bank mui-active">
+		<div class="mui-input-row mui-input-row-g">
+			<label>开户姓名</label>
+			<input type="text" autocomplete="off" placeholder="请输入开户姓名" value="{$truename}" readonly>
+		</div>
+		<p class="tc tips">提示：只可添加本人名下的银行卡</p>
+		<div class="mui-input-row mui-input-row-g">
+			<label>开户银行</label>
+			<select class="xzbank" name="bank" id="bank_bank">
+				<option value="0">--{:L('选择银行')}--</option>
+				<volist name="UserBankType" id="voy">
+					<option value="{$voy['title']}">{$voy['title']}</option>
+				</volist>
+			</select>
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>开户支行</label>
+			<input type="text" autocomplete="off" placeholder="请输入开户支行" id="bank_bankaddr">
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>银行卡号</label>
+			<input type="text" autocomplete="off" placeholder="请输入银行卡号" id="bank_bankcard">
+		</div>
+		<div class="mui-input-row mui-input-row-g">
+			<label>交易密码</label>
+			<input type="password" autocomplete="off" placeholder="请输入交易密码" id="bank_paypassword">
+		</div>
+		<button type="button" class="mui-btn mui-btn-default" href="javascript:void(0)" onclick="Update()">添加银行卡</button>
+	</div>
+</div>
+
+<script>
+function Update() {
+    //var name = $('#bank_name').val();
+    var bank = $('#bank_bank option:selected').val();
+    var bankprov = '';
+    var bankcity = '';
+    var bankaddr = $('#bank_bankaddr').val();
+    var bankcard = $('#bank_bankcard').val();
+    var paypassword = $('#bank_paypassword').val();
+
+/*	if(name==""||name==null){
+		layer.tips("{:L('请输入备注名称')}",'#bank_name',{tips:3});
+		return false;
+	}*/
+	if(bank=="" || bank==null || bank==0){
+		layer.tips("{:L('请选择开户银行')}",'#bank_bank',{tips:3});
+		return false;
+	}
+	if(bankaddr=="" || bankaddr==null){
+		layer.tips("{:L('请输入开户支行')}",'#bank_bankaddr',{tips:3});
+		return false;
+	}
+	if(bankcard=="" || bankcard==null){
+		layer.tips("{:L('请输入银行账号')}",'#bank_bankcard',{tips:3});
+		return false;
+	}
+	if(paypassword=="" || paypassword==null){
+		layer.tips("{:L('请输入交易密码')}",'#bank_paypassword',{tips:3});
+		return false;
+	}
+
+    $.post("{:U('Exchange/upbank')}", { type: 1, bank: bank, bankprov: bankprov, bankcity: bankcity, bankaddr: bankaddr, bankcard: bankcard, paypassword: paypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.location = "{:U('Exchange/bank')}";
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+</script>
+</body>
+</html>

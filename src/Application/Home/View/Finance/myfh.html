@@ -1,0 +1,30 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Finance:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Finance:left2" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles"><h3>{:L('我的分红')}</h3></div>
+		<div class="Column_Security">
+			<div class="fl sc_status">
+				<h3>{:L('交易挖矿')}</h3>
+				<p><a class="btnson" href="{:U('Finance/myfh_jywk')}">{:L('查看')}</a></p>
+			</div>
+			<div class="fl sc_status">
+				<h3>{:L('持币分红')}</h3>
+				<p><a class="btnson" href="{:U('Finance/myfh_cbfh')}">{:L('查看')}</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$("title").html("{:L('我的分红')} - {:C('web_title')}");
+$('#menu_7').addClass('on');
+</script>
+<include file="Public:footer" />

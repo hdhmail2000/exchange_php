@@ -1,0 +1,36 @@
+<footer class="footer">
+	<div class="footer-inner"><a href="#">{:C('help_footer')}</a></div>
+</footer>
+		
+<script>
+	$(function() {
+		var isShowLanguage= false;
+
+		$(".language").click(function() {
+			if(isShowLanguage) {
+				$(".language-box").hide();
+				isShowLanguage = false;
+				return false;
+			}
+			$(".language-box").show();
+			isShowLanguage = true;
+		})
+
+		$(".header .language-box p").click(function() {
+			$(".language-box").hide();
+			isShowLanguage = false;
+		})
+
+		document.getElementsByTagName("body")[0].addEventListener("click", function() {
+			if($(".header .language-box").css("display")=="block") {
+				$(".language-box").hide();
+				setTimeout(function() {
+					isShowLanguage = false;
+				},300)
+			}
+		}, true);
+
+	})
+</script>
+</body>
+</html>

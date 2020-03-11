@@ -1,0 +1,366 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/backstage.css">
+
+<div class="infoBox">
+	<include file="Finance:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="Backstage:left2" />
+	</div>
+	<div class="fr SettingRight" style="min-height:auto;background:no-repeat;border: none;padding:0;">
+		<div class="Column_Count">
+			<section>
+				<p>{:L('累积C2C充值（元）')}</p>
+				<b style="color:#687df3;">0</b>
+			</section>
+			<section>
+				<p>{:L('今日新增用户')}</p>
+				<b>{$user_info.count_jt}</b>
+			</section>
+			<section>
+				<p>{:L('注册用户数量')}</p>
+				<b>{$user_info.count}</b>
+			</section>
+		</div>
+		
+		<div class="Column_Count_list">
+			<div class="class-title">
+				<h3 class="fl">{:L('用户注册统计')}</h3>
+			</div>
+			
+			<ul class="lists">
+				<li>
+					<div>
+						<p>{:L('今日新增')}</p>
+						<b>{$user_info.count_jt}</b>	
+					</div>
+				</li>
+				<li>
+					<div>
+						<p>{:L('昨日新增')}</p>
+						<b>{$user_info.count_zt}</b>	
+					</div>
+				</li>
+				<li>
+					<div>
+						<p>{:L('已实名认证')}</p>
+						<b>{$user_info.renzheng_yrz}</b>	
+					</div>
+				</li>
+				<li style="margin-right:0;">
+					<div>
+						<p>{:L('未实名认证')}</p>
+						<b>{$user_info.renzheng_wrz}</b>	
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="Column_Count_list">
+			<div class="class-title">
+				<h3 class="fl">{:L('用户充提、持币统计')}</h3>
+			</div>
+			
+			<div class="lists2">
+				<ul>
+					<li style="background-color: #efefef;">
+						<div>
+							<p style="text-transform:uppercase;">{:Anchor_CNY} {:L('持币数量')}</p>
+							<b>{$coins[Anchor_CNY]}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日C2C充值')}</p>
+							<b>{$times['cnc_cz_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日C2C提现')}</p>
+							<b>{$times['cnc_tx_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p style="text-transform:uppercase;">{:Anchor_CNY} {:L('持币人数')}</p>
+							<b>{$people[Anchor_CNY]}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日C2C充值')}</p>
+							<b>{$times['cnc_cz_zt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日C2C提现')}</p>
+							<b>{$times['cnc_tx_zt']}</b>	
+						</div>
+					</li>
+				</ul>
+				
+				<ul style="border: 1px solid #ffefc1;margin-top: 21px;">
+					<li style="background-color: #fff5d8;color: #977101;">
+						<div>
+							<p>RT {:L('持币数量')}</p>
+							<b style="color: #977101;">{$coins['rt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日RT充值')}</p>
+							<b>{$times['rt_cz_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日RT提现')}</p>
+							<b>{$times['rt_tx_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p>RT {:L('持币人数')}</p>
+							<b>{$people['rt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日RT充值')}</p>
+							<b>{$times['rt_cz_zt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日RT提现')}</p>
+							<b>{$times['rt_tx_zt']}</b>	
+						</div>
+					</li>
+				</ul>
+				
+				<ul style="border: 1px solid #ffefc1;margin-top: 21px;">
+					<li style="background-color: #fff5d8;color: #977101;">
+						<div>
+							<p>ETH {:L('持币数量')}</p>
+							<b style="color: #977101;">{$coins['eth']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日ETH充值')}</p>
+							<b>{$times['eth_cz_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日ETH提现')}</p>
+							<b>{$times['eth_tx_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p>ETH {:L('持币人数')}</p>
+							<b>{$people['eth']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日ETH充值')}</p>
+							<b>{$times['eth_cz_zt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日ETH提现')}</p>
+							<b>{$times['eth_tx_zt']}</b>	
+						</div>
+					</li>
+				</ul>
+				
+				<ul style="border: 1px solid #ffefc1;margin-top: 21px;">
+					<li style="background-color: #fff5d8;color: #977101;">
+						<div>
+							<p>SUF {:L('持币数量')}</p>
+							<b style="color: #977101;">{$coins['suf']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日SUF充值')}</p>
+							<b>{$times['suf_cz_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日SUF提现')}</p>
+							<b>{$times['suf_tx_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p>SUF {:L('持币人数')}</p>
+							<b>{$people['suf']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日SUF充值')}</p>
+							<b>{$times['suf_cz_zt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日SUF提现')}</p>
+							<b>{$times['suf_tx_zt']}</b>	
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+		
+		<div class="Column_Count_list">
+			<div class="class-title">
+				<h3 class="fl">{:L('用户交易统计')}</h3>
+			</div>
+			
+			<div class="lists2">
+				<ul style="border: 1px solid #c7e9fe;">
+					<li style="background-color: #d8f0ff;color: #0f659a;">
+						<div>
+							<p>RT {:L('累计交易额')}</p>
+							<b style="color: #0f659a;">{$trades['rt_mum']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日买入RT')}</p>
+							<b>{$trades['rt_buy_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日卖出RT')}</p>
+							<b>{$trades['rt_sell_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p>RT {:L('累积交易量')}</p>
+							<b>{$trades['rt_num']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日买入RT')}</p>
+							<b>{$trades['rt_buy_zt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日卖出RT')}</p>
+							<b>{$trades['rt_sell_zt']}</b>	
+						</div>
+					</li>
+				</ul>
+				
+				<ul style="border: 1px solid #c7e9fe;margin-top: 21px;">
+					<li style="background-color: #d8f0ff;color: #0f659a;">
+						<div>
+							<p>ETH {:L('累计交易额')}</p>
+							<b style="color: #0f659a;">{$trades['eth_mum']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日买入ETH')}</p>
+							<b>{$trades['eth_buy_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日卖出ETH')}</p>
+							<b>{$trades['eth_sell_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p>ETH {:L('累积交易量')}</p>
+							<b>{$trades['eth_num']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日买入ETH')}</p>
+							<b>{$trades['eth_buy_zt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日卖出ETH')}</p>
+							<b>{$trades['eth_sell_zt']}</b>	
+						</div>
+					</li>
+				</ul>
+
+				<ul style="border: 1px solid #c7e9fe;margin-top: 21px;">
+					<li style="background-color: #d8f0ff;color: #0f659a;">
+						<div>
+							<p>SUF {:L('累计交易额')}</p>
+							<b style="color: #0f659a;">{$trades['suf_mum']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日买入SUF')}</p>
+							<b>{$trades['suf_buy_jt']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('今日卖出SUF')}</p>
+							<b>{$trades['suf_sell_jt']}</b>	
+						</div>
+					</li>
+					
+					<li>
+						<div>
+							<p>SUF {:L('累积交易量')}</p>
+							<b>{$trades['suf_num']}</b>	
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日买入SUF')}</p>
+							<b>{$trades['suf_buy_zt']}</b>		
+						</div>
+					</li>
+					<li>
+						<div>
+							<p>{:L('昨日卖出SUF')}</p>
+							<b>{$trades['suf_sell_zt']}</b>		
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+		
+	</div>
+</div>
+
+<script>
+$("title").html("{:L('我的后台')} - {:C('web_title')}");
+$('#menu_0').addClass('on');
+</script>
+<include file="Public:footer" />

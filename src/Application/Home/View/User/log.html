@@ -1,0 +1,58 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="User:left" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles"><h3>{:L('登录日志')}</h3></div>
+		<div class="Column_LogonLog">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="title">
+					<th>{:L('操作时间')}</th>
+					<th>{:L('操作类型')}</th>
+					<th>{:L('操作备注')}</th>
+					<th>{:L('操作')}ip</th>
+					<th>{:L('操作地址')}</th>
+					<th>{:L('状态')}</th>
+				</tr>
+				<volist name="list" id="vo">
+					<tr>
+						<td>{$vo.addtime|addtime}</td>
+						<td>{:L($vo['type'])}</td>
+						<td>{:L($vo['remark'])}</td>
+						<td>{$vo.addip}</td>
+						<td>{:L($vo['addr'])}</td>
+						<td>
+							<eq name="vo.status" value="0">
+								<font color="violet">{:L('出错')}</font>
+							</eq>
+							<eq name="vo.status" value="1"> {:L('正常')}</eq>
+							<eq name="vo.status" value="2">
+								<font color="red">{:L('异常')}</font>
+							</eq>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pages">{$page}</div>
+		</div>
+	</div>
+</div>
+<script>
+$("#type-selectTest,#market-selectTest").change(function() {
+    var type = $("#type-selectTest option:selected").val();
+    var market = $("#market-selectTest option:selected").val();
+    window.location = '/Finance/mycj/type/' + type + '/market/' + market + '.html';
+});
+</script>
+<script>
+$("title").html("{:L('登录日志')} - {:C('web_title')}");
+$('#menu_3').addClass('on');
+</script>
+<include file="Public:footer" />

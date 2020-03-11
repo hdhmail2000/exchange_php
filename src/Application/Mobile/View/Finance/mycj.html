@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('成交查询')}/{$coin_info.title}({$coin_info.name|strtoupper=###})
+        </div>
+        <div class="logbot" id="button">
+        <button type="button" class="layout" style="border:none;width: 100%;" onclick="bianhua()">{:L('筛选')}</button>
+        </div>
+        <div class="logbot" style="display:none" id="check">
+            <form action="" method="get">
+      <!-- 开始时间： -->
+      <input type="text" name="time1" class="search-input form-control" value="{$info['time1']}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="{:L('开始时间')}" style="width:100%;height: 40px;font-size: 14px;color:rgba(255,255,255, .4);background:rgba(0,0,0, .5);text-indent:10px;margin-top: 15px;">
+
+      <!-- -结束时间： -->
+      <input type="text" name="time2" class="search-input form-control" value="{$info['time2']}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="{:L('截止时间')}" style="width:100%;height: 40px;font-size: 14px;color:rgba(255,255,255, .4);background:rgba(0,0,0, .5);text-indent:10px;margin-top: 15px;">
+      <button type="submit" class="layout" style="border:none;width: 100%;">{:L('查询')}</button>
+      <button type="button" class="layout" style="border:none;width: 100%;background:rgba(255,255,255, .5)" onclick="bianhua1()">{:L('收起')}</button>
+    </form>
+    </div>
+        <div class="chgbox">
+            <ul>
+
+            <empty name="list">
+                <li>
+                    <div class="chglist_top" style="text-align: center;">
+                        <span class="state wait" style="float: none;color:#B7B6B6">
+                            {:L('暂无成交数据')}
+                        </span>
+                    </div>
+                </li>
+            <else />
+                <volist name="list" id="vo">
+                    <li>
+                        <table class="cj_table">
+                            <tr>
+                                <td class="bankid" colspan="3">
+                                    {$vo.addtime|date='m-d H:i:s',###}&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {:L('成交价格')}：<b style="color: #ff0000;">{$vo['price']|NumToStr}</b>
+
+                                    <span style="float: right;">
+                                        <eq name="vo['userid']" value="$vo['peerid']"> <font class="buy">{:L('自买')}</font><font class="sell">{:L('自卖')}</font> <else /> <if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 1)"> <font class="buy" color="#ff0000">{:L('买入')}</font> </if> <if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 2)"> <font class="buy" color="#ff0000">{:L('买入')}</font> </if> <if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 1)"> <font class="sell" color="01a46d">{:L('卖出')}</font> </if> <if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 2)"> <font class="sell" color="01a46d">{:L('卖出')}</font> </if> </eq>
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <th>成交时间</th>
+                                <th>买入卖出</th>
+                                <th>成交价格</th>
+                            </tr>
+                            <tr>
+                                <td>{$vo.addtime|date='m-d H:i:s',###}</td>
+                                <td>
+                                    <eq name="vo['userid']" value="$vo['peerid']"> <font class="buy">自买</font><font class="sell">自卖</font> <else /> <if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 1)"> <font class="buy">买入</font> </if> <if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 2)"> <font class="buy">买入</font> </if> <if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 1)"> <font class="sell">卖出</font> </if> <if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 2)"> <font class="sell">卖出</font> </if> </eq>
+                                </td>
+                                <td>{$vo['price']|NumToStr}</td>
+                            </tr> -->
+                            <tr>
+                                <th>{:L('成交数量')}</th>
+                                <th>{:L('总金额')}</th>
+                                <th>{:L('手续费')}</th>
+                            </tr>
+                            <tr>
+                                <td><b>{$vo['num']|NumToStr}</b></td>
+                                <td><b>{$vo['mum']|NumToStr}</b></td>
+                                <td><b><eq name="vo['userid']" value="$vo['peerid']">
+                                     {:L('卖出')}{$vo['fee_sell']}<br/>{:L('买入')}{$vo['fee_buy']}
+                                    <else />
+                                    <if condition="($vo['userid'] eq $userid)"> {$vo['fee_buy']} <else /> {$vo['fee_sell']} </if>
+                                    </eq></b>
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                </volist>
+            </empty>
+            </ul>
+            <div class="pages">{$page}</div>
+        </div>
+    </div>
+<!-- <script>
+    $("#type-selectTest,#market-selectTest").change(function(){
+        var type=$("#type-selectTest option:selected").val();
+        var market=$("#market-selectTest option:selected").val();
+        window.location='/Finance/mycj/type/'+type+'/market/'+market+'.html';
+    });
+</script> -->
+<script>
+    function bianhua(){
+        $("#check").show();
+        $("#button").hide();
+    }
+    function bianhua1(){
+        $("#button").show();
+        $("#check").hide();
+    }
+</script>
+</body>
+</html>

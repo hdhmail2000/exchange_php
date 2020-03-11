@@ -1,0 +1,85 @@
+<include file="Public:header_new" />
+<link rel="stylesheet" href="__PUBLIC__/Home/ecshe_css/user.css">
+
+<div class="infoBox">
+	<include file="Public:top" />
+</div>
+
+<div class="UserBox" style="margin-top:20px;margin-bottom:40px;">
+	<div class="fl SettingLeft">
+		 <include file="User:left" />
+	</div>
+	<div class="fr SettingRight">
+		<div class="titles"><h3>{:L('账户信息')} &gt; {:L('实名认证')} </h3></div>
+		<div class="Column_Security">
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon0.png" width="45" height="45">
+				<h3>{:L('初级认证')}</h3>
+				<eq name="user.kyc_lv" value="2">
+					<p style="color:#24D328;"><b>{:L('已通过')}</b></p>
+					<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+				<else/>
+					<eq name="user.kyc_lv" value="1">
+						<if condition="$user.idstate eq 8" >
+							<p style="color:#FF0004;"><b>{:L('未通过')}</b></p>
+							<p><a class="btnson" href="{:U('User/kyc1')}">{:L('重新认证')}</a></p>
+						<elseif condition="$user.idstate eq 1"/>
+							<p><b>{:L('审核中')}</b></p>
+							<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+						<elseif condition="$user.idstate eq 2"/>
+							<p style="color:#24D328;"><b>{:L('已通过')}</b></p>
+							<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+						<else />
+							<p>{:L('未认证')}</p>
+							<p><a class="btnson" href="{:U('User/kyc1')}">{:L('立即认证')}</a></p>
+						</if>
+					<else/>
+						<p>{:L('未认证')}</p>
+						<p><a class="btnson" href="{:U('User/kyc1')}">{:L('立即认证')}</a></p>
+					</eq>
+				</eq>
+
+			</div>
+			<div class="fl sc_status">
+				<img src="__PUBLIC__/Home/ecshe_img/user_icon/m-icon0.png" width="45" height="45">
+				<h3>{:L('高级认证')}</h3>
+				<eq name="user.kyc_lv" value="0">
+					<p>{:L('先通过初级认证')}</p>
+					<p><a class="btnjz" href="#">{:L('等待')}</a></p>
+				<else/>
+					<if condition="$user.kyc_lv eq 1" >
+						<eq name="user.idstate" value="2">
+							<p>{:L('未认证')}</p>
+							<p><a class="btnson" href="{:U('User/kyc2')}">{:L('立即认证')}</a></p>
+						<else/>
+							<p>{:L('先通过初级认证')}</p>
+							<p><a class="btnjz" href="#">{:L('等待')}</a></p>
+						</eq>
+					<elseif condition="$user.kyc_lv eq 2"/>
+						<if condition="$user.idstate eq 8" >
+							<p style="color:#FF0004;"><b>{:L('未通过')}</b></p>
+							<p><a class="btnson" href="{:U('User/kyc2')}">{:L('重新认证')}</a></p>
+						<elseif condition="$user.idstate eq 1"/>
+							<p><b>{:L('审核中')}</b></p>
+							<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+						<elseif condition="$user.idstate eq 2"/>
+							<p style="color:#24D328;"><b>{:L('已通过')}</b></p>
+							<p><a class="btnjz" href="#">{:L('已提交')}</a></p>
+						<else />
+							<p>{:L('未认证')}</p>
+							<p><a class="btnson" href="{:U('User/kyc2')}">{:L('立即认证')}</a></p>
+						</if>
+					<else />
+						<p>{:L('未认证')}</p>
+						<p><a class="btnson" href="{:U('User/kyc2')}">{:L('立即认证')}</a></p>
+					</if>
+				</eq>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$("title").html("{:L('实名认证')} - {:C('web_title')}");
+</script>
+<include file="Public:footer" />

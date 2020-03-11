@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+    <script src="__PUBLIC__/Home/js/jquery.copy.js"></script>
+    <script src="__PUBLIC__/Home/js/qrcode.js"></script>
+    <style>
+		.payment_content{
+			padding: 0 10px;
+			margin-top: 20px;
+			color: #fff;
+		}
+		.payment_content p {
+			font-size: 14px;
+			line-height: 25px;
+		}
+		.payment_content table{
+			font-size: 14px;
+			border-spacing: 0;
+			border-collapse: collapse;
+			margin: 15px 0;
+		}
+		.payment_content table td{
+			border: 1px solid #f3da91;
+			background-color: #fff;
+			text-align: left;
+			height: 40px;
+			line-height: 40px;
+			padding-left: 15px;
+			color: #666;
+		}
+		.payment_content table th{
+			border: 1px solid #f3da91;
+			background-color: #fffbef;
+			text-align: right;
+			height: 40px;
+			line-height: 40px;
+			padding-right: 15px;
+			color: #666;
+		}
+	</style>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="{:U('Exchange/index')}"></a></span>
+            {:L('C2C付款信息')}
+        </div>
+
+		<div class="payment_content">
+			<p>1.请按提示信息向该卖家汇款；</p>
+			<table width="100%">
+				<tbody id="payment">
+					<tr>
+						<th>收款人</th>
+						<td>{$data['agent']['name']}</td>
+					</tr>
+					<tr>
+						<th>银行名称</th>
+						<td>{$data['agent']['bank']}</td>
+					</tr>
+					<tr>
+						<th>收款方开户行</th>
+						<td>{$data['agent']['bankprov']} {$data['agent']['bankcity']} {$data['agent']['bankaddr']}</td>
+					</tr>
+					<tr>
+						<th>收款方账号</th>
+						<td>
+							<span id="invite-copy1">{$data['agent']['bankcard']}</span>
+							<input type="button" value="复制" data-clipboard-action="copy" data-clipboard-target="#invite-copy1" class="copy_button" id="copy_button1">
+						</td>
+					</tr>
+					<tr>
+						<th>转账金额</th>
+						<td><b class="red">{$data['order']['num']}</b></td>
+					</tr>
+					<tr>
+						<th>转账备注</th>
+						<td>
+							<b class="red" id="invite-copy2">{$data['order']['remarks']}</b> (请务必填写)
+							<input type="button" value="复制" data-clipboard-action="copy" data-clipboard-target="#invite-copy2" class="copy_button" id="copy_button2">
+						</td>
+					</tr>
+					<tr>
+						<th>状态</th>
+						<td>{$data['order']['status']}</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>2.转账时请一定要填写备注信息；</p>
+			<p>3.卖家确认收到款后，自动充值CNC。如超过24小时未收到币，请向客服反馈解决。</p>
+			<p class="red">4.请务必使用本人绑定的银行卡通过手机银行或网银进行转账。</p>
+			<p class="red">5.请在30分钟之内完成转账，否则随时订单会被系统取消</p>
+		</div>
+    </div>
+    
+<script src="__PUBLIC__/Home/js/clipboard.min.js"></script>
+<script>
+var clipboard = new Clipboard('#copy_button1');
+clipboard.on('success', function(e) {
+	layer.msg('{:L('复制成功！')}');
+	// console.log(e);
+});
+clipboard.on('error', function(e) {
+	layer.msg('{:L('复制失败！')}');
+	console.log(e);
+});
+	
+var clipboard2 = new Clipboard('#copy_button2');
+clipboard2.on('success', function(e) {
+	layer.msg('{:L('复制成功！')}');
+	// console.log(e);
+});
+clipboard2.on('error', function(e) {
+	layer.msg('{:L('复制失败！')}');
+	console.log(e);
+});
+</script>
+<include file="Public:footer" />
+</body>
+</html>

@@ -1,0 +1,53 @@
+<include file="Public:header"/>
+
+<div class="main">
+	<div class="container-divider"></div>
+</div>
+
+<div class="container">
+	<nav class="sub-nav">
+		<ol>
+			{:GetPosStr()}
+			<li><span>&gt;</span>{:L('搜索结果')}</li>
+		</ol>
+		
+		<form role="search" class="search" method="get" action="{:U('Support/index/search/')}">
+			<img class="icon" src="__PUBLIC__/Home/ecshe_img/soso.png" />
+			<input type="search" name="so" placeholder="{:L('搜索')}" autocomplete="off" value="{$keyword}">
+		</form>
+	</nav>
+
+	<div class="category-content wdh100">
+		<header class="page-header">
+        	<h1>{:L('搜索结果')}</h1>
+        	<if condition="LANG_SET heq 'en-us'">
+        		<p class="page-header-description">{$count} results fo "{$keyword}"</p>
+			<else />
+				<p class="page-header-description">"{$keyword}" 的结果'：{$count}条</p>
+			</if>
+        	
+		</header>
+		
+		<div class="section-tree" style="flex-direction:column;border-top:1px solid #ddd;">
+			<section class="section">
+				<ul>
+					<volist name="list" id="vo" empty="$empty">
+						<li>
+							<eq name="vo.recommend" value="1"><img src="__PUBLIC__/Home/ecshe_img/recommend.png" /></eq>
+							<a href="{:U('Support/index/articles/cid/'.$vo['pid'].'/id/'.$vo['id'])}">{$vo['title']}</a>
+							<div class="meta-group">{$vo['classname']} &middot; {:L('文章更新时间：')}{$vo.endtime|date="Y-m-d H:i:s",###}</div>
+							<div class="search-result-description">{$vo['abstract']}</div>
+						</li>
+					</volist>
+				</ul>
+			</section>
+			<div class="pages">{$page}</div>
+		</div>
+		
+	</div>
+</div>
+
+<script>
+$("title").html("{:L('搜索结果')} - {:L('帮助中心')}");
+</script>
+<include file="Public:footer" />

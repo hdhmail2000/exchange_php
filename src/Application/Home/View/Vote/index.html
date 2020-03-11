@@ -1,0 +1,215 @@
+<include file="Public:header_new"/>
+<style>
+	body {background:#eceff0;}
+</style>
+<link rel="stylesheet" href="{:stamp('__PUBLIC__/Home/ecshe_css/apps.css')}">
+<style>
+	.banner{
+		background: url('__PUBLIC__/Home/ecshe_img/app_banner2.jpg') no-repeat center;
+	}
+	.list_financing li {
+		height: 100px;
+	}
+</style>
+
+<div class="banner">
+	<div class="boxs">
+		<div class="font_title">
+			<h3>{:L('投票上币，由你做主')}</h3>
+			<p>{:L('聚集真正有潜力的项目')}</p>	
+		</div>
+	</div>
+</div>
+
+<div class="main_boxs">
+	<div class="introduce">
+		<div class="tc" style="margin-top:25px;margin-right:25px;">
+			<a class="btn" href="{$text}">投票规则</a>
+			<a class="btn" href="{:U('Vote/log')}">我的投票</a>
+		</div>
+	</div>
+
+	<ul class="list_financing">
+		<volist name="list" id="vo">
+			<li>
+				<div class="fl fin-box">
+					<div class="fin-sort-li">
+						<span id="SortColors_{$i}">{$i}</span>
+					</div>
+					<div class="fin-title-li">
+						<img src="__UPLOAD__/coin/{:C('coin')[$vo['name']]['img']}">
+						<div style="display:inline-block;"><h3>{$vo['name']}</h3><span>{$vo['title']}</span></div>
+					</div>
+					<div class="fin-box-li">
+						<b>{$vo['zhichi']} <span class="unit">{:L('票')}</span></b>
+						<p>{:L('支持票数')}</p>
+					</div>
+					<div class="fin-box-li">
+						<b>{$vo['fandui']} <span class="unit">{:L('票')}</span></b>
+						<p>{:L('反对票数')}</p>
+					</div>
+					<div class="fin-box-li">
+						<b class="orange">{$vo['zongji']} <span class="unit">{:L('票')}</span></b>
+						<p>{:L('总票数')}</p>
+					</div>
+				</div>
+				<div class="fr fin-btn">
+					<a href="javascript:licai_run('{$vo[\'id\']}')" class="opens">{:L('投票')}</a>
+				</div>
+			</li>
+		</volist>
+	</ul>
+</div>
+
+
+<div class="float_win_pay white_style" id="licai_mask" style="display:none;">
+    <div class="tan_title">
+        <h4>{:L('投票')}</h4>
+        <span class="close-btn" onclick="closeCharge();"><img src="__PUBLIC__/Home/ecshe_img/btn_close.png" width="14" height="14"></span>
+    </div>
+    <div class="payment_content" id="dialog_content_CnyAddress" style="min-width:400px;">
+		<ul>
+			<li class="imgname">
+				<img id="licai_img" src="__UPLOAD__/coin/" width="20" height="20">
+				<div style="display:inline-block;"><h3 id="licai_coin">--</h3><span id="licai_title">--</span></div>
+			</li>
+			<li>
+				<select class="xzbank" id="support_type">
+					<option value="1">{:L('支持')}</option>
+					<option value="2">{:L('反对')}</option>
+				</select>
+			</li>
+			<li class="input100">
+				<label>{:L('票')}</label>
+				<input type="text" autocomplete="off" class="input-1" id="licai_num" oninput="if(value>10000)value=10000;if(value.length>5)value=value.slice(0,5);if(value<1)value=1" />
+			</li>
+			<li>
+				<span class="label-1" style="text-align:left;">{:L('交易密码')}</span>
+				<input type="password" autocomplete="off" class="input-1" id="paypassword" style="width:68.8%;" />
+			</li>
+			<li class="explain">
+				<p class="vhide"><b class="bx">*</b>投票数（ 最少 <b>1</b> 票，最多 <b>10000</b> 票 ）</p>
+				<p class="vhide"><b class="bx">*</b>每投一票燃烧 <b id="licai_votecoininfo">--</b>，从账户自动扣除</p>
+				<p id="free"><b class="bx">*</b>{:L('免费票最多可投1票')}</p>
+				<p><b class="bx">*</b>{:L('投票不可退票')}</p>
+			</li>
+			<li style="margin-top:30px;">
+				<a href="javascript:void(0)" onclick="Update()" class="btns" id="btn">{:L('确认投票')}</a>
+				<p style="display:none;" id="licai_id"></p>
+			</li>
+		</ul>
+    </div>
+</div>
+<div id="dialogBoxShadow" style="position: absolute; top: 0px; left: 0px; z-index: 100; background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; background-position: initial initial; background-repeat: initial initial; display: none;"></div>
+
+<script>
+$('#wrap').css('min-height',$(window).height() - 260);
+$("title").html("{:L('投票上币')} - {:C('web_title')}");
+$('#SortColors_1').css('background-color','#ffa30b').css('color','#fff');
+$('#SortColors_2').css('background-color','#febe52').css('color','#fff');
+$('#SortColors_3').css('background-color','#fcc972').css('color','#fff');
+	
+var cur_id = '';
+
+function licai_run(id){
+	$('#licai_num').val(null);
+	$('#paypassword').val(null);
+	
+	$.get("/Vote/info/id/"+id,function(ret){
+		cur_id = id;
+		if (ret.status == 1) {
+			var data = ret.info.data;
+			$('#licai_id').html(cur_id);
+			$('#licai_img').attr("src",data.coinimg);
+			$('#licai_coin').html(data.coinname);
+			$('#licai_title').html(data.title);
+			$('#licai_votecoininfo').html(data.votecoininfo);
+
+/*			$('#licai_type').val(data.type);
+			$('#licai_coinname').html(data.coinname);
+			$('#licai_yue').html(parseFloat(data.yue * 1).toFixed(4));*/
+			
+			if (data.assumnum == 0) { 
+				$('.vhide').hide();
+				$('#free').show();
+				$('#licai_num').val(1);
+				$('#licai_num').attr("readonly",true);
+				$('#licai_num').css('background-color','#f3f3f3');
+			} else { 
+				$('.vhide').show();
+				$('#free').hide();
+				$('#licai_num').attr("readonly",false);
+				$('#licai_num').css('background-color','#fff');
+			}
+			
+			layer.open({
+				type: 1,
+				title: false,
+				closeBtn: 0,
+				area: 'autos',
+				skin: 'layui-layer-nobg',
+				shadeClose: true,
+				content: $('#licai_mask')
+			});
+		} else {
+			layer.msg(ret.info);
+            if (ret.url) {
+                window.location = ret.url;
+            }
+		}
+	},'json')
+}
+
+function Update(){
+	var licai_id = $('#licai_id').html();
+	var support_type = $('#support_type').val();
+	var licai_num = $('#licai_num').val();
+	var paypassword = $('#paypassword').val();
+	
+	if(!licai_num || typeof licai_num == "undefined" || licai_num <= 0){
+		layer.tips("{:L('票数必须大于0')}", '#licai_num', {tips: 1});
+		return false;
+	}
+	if(!paypassword || typeof paypassword == "undefined"){
+		layer.tips("{:L('交易密码必须填写')}", '#paypassword', {tips: 1});
+		return false;
+	}
+	
+    $.post("{:U('Vote/index')}", { cid:licai_id, type:support_type, num:licai_num, paypassword:paypassword }, function(data) {
+        if (data.status == 1) {
+            layer.msg(data.info, { icon: 1 });
+            window.setTimeout("window.location.reload()",1000);
+        } else {
+            layer.msg(data.info, { icon: 2 });
+            if (data.url) {
+                window.location = data.url;
+            }
+        }
+    }, "json");
+}
+
+function closeCharge() {
+    layer.closeAll();
+	window.location.reload();
+}
+
+function beforeGet(id,fee){
+	var msg = fee ?  '提前取出本金需要支付' + fee + '% 的利息,确定提前取出?' : '确定提前提取本金?'
+	layer.confirm(msg, {
+		btn: ['确定','取消'] //按钮
+	}, function(){
+		$.post('{:U(\'/Financing/beforeGet\')}',{id:id},function(ret){
+			if(ret.status){
+				layer.msg(ret.info);
+				window.setTimeout("window.location.reload()",1000);
+			}else{
+				layer.msg(ret.info);
+			}
+		},'json');
+		layer.closeAll();
+	}, function(){
+		layer.closeAll();
+	});
+}
+</script>
+<include file="Public:footer"/>

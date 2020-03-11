@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('委托管理')}
+        </div>
+        <ul class="tdlist">
+            <volist name="coin_list" id="vo">
+                <li>
+                    <a href="/Finance/mywt/market/{$vo['name']}">
+                        <div class="xsltop">
+                            <img src="/Upload/coin/{$vo['img']}">{$vo['title']}
+                        </div>
+                    </a>
+                </li>
+            </volist>
+        </ul>
+    </div>
+<include file="Public:footer" />
+</body>
+</html>

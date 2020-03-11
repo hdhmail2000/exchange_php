@@ -1,0 +1,126 @@
+<include file="Public:header"/>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('Config/daohang')}">前端导航管理</a> >></span>
+            <span class="h1-title"><empty name="data">新增导航<else/>编辑导航</empty></span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('Config/daohangEdit')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">所属语言 :</td>
+									<td>
+										<select name="lang" class="form-control input-10x">
+											<volist name="__LANG__" id="v">
+												<option value="{$key}"
+												<eq name="data['lang']" value="$key">selected</eq>
+												>{$v}</option>
+											</volist>
+										</select></td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">链接名称 :</td>
+									<td><input type="text" class="form-control input-10x" name="name" value="{$data.name}"></td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">链接标题 :</td>
+									<td><input type="text" class="form-control input-10x" name="title" value="{$data.title}"></td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">链接地址 :</td>
+									<td><input type="text" class="form-control input-10x" name="url" value="{$data.url}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label">是否需要登录访问 :</td>
+									<td>
+										<select name="get_login" class="form-control input-10x">
+											<option value="0"
+											<eq name="data.get_login" value="0">selected</eq>
+											>不需要</option>
+											<option value="1"
+											<eq name="data.get_login" value="1">selected</eq>
+											>需要登录</option>
+										</select>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">是否开放访问 :</td>
+									<td><select name="access" class="form-control input-10x">
+										<option value="0"
+										<eq name="data.access" value="0">selected</eq>
+										>开放</option>
+										<option value="1"
+										<eq name="data.access" value="1">selected</eq>
+										>不开放</option>
+									</select></td>
+									<td class="item-note"></td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label">排序 :</td>
+									<td><input type="text" class="form-control input-10x" name="sort" value="{$data.sort}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">状态 :</td>
+									<td><select name="status" class="form-control input-10x">
+										<option value="1"
+										<eq name="data.status" value="1">selected</eq>
+										>显示</option>
+										<option value="0"
+										<eq name="data.status" value="0">selected</eq>
+										>隐藏</option>
+									</select></td>
+									<td class="item-note"></td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">提交
+											</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/>
+											</notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+					//提交表单
+					$('#submit').click(function () {
+						$('#form').submit();
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:U('Config/daohang')}");
+		$('title').html('配置导航-'+'__WEBTITLE__');
+	</script>
+</block>

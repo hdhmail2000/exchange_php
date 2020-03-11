@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <circle id="russia-a" cx="12" cy="12" r="12"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="russia-b" fill="#fff">
+      <use xlink:href="#russia-a"/>
+    </mask>
+    <use fill="#D8D8D8" xlink:href="#russia-a"/>
+    <g mask="url(#russia-b)">
+      <g transform="translate(-6.192 -.283)">
+        <polygon fill="#FFF" points="0 12.142 36.425 12.142 36.425 0 0 0"/>
+        <polygon fill="#D52B1E" points="0 24.283 36.425 24.283 36.425 12.142 0 12.142"/>
+        <polygon fill="#0039A6" points=".192 16.283 36.192 16.283 36.192 8.283 .192 8.283"/>
+      </g>
+    </g>
+  </g>
+</svg>

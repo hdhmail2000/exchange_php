@@ -1,0 +1,42 @@
+<include file="Public:header_new" />
+<div class="usernewout">
+    <p class="titlenotice"><a  style="color:#73bee4;" href="/Article/detail/id/{$notice_info['id']}">{:L('公告：')}<empty name="notice_info.id">{:L('暂无公告')}<else/>{$notice_info['title']|msubstr=0,100,'utf-8',false}</empty></a></p>
+    <div class="usncont">
+        <!-- 左侧导航 -->
+        <include file="Ptpbc:left" />
+        <!-- 右侧内容 -->
+        <div class="usnc_right">
+            <h1>{:L('ptpbc_index_desc')}</h1>
+            <div class="botinfo">
+                <table>
+                    <tr>
+                        <th width="120px" colspan="2">{:L('trading_nationality')}</th>
+                        <th width="130px">{:L('payments')}</th>
+                        <th width="110px">{:L('price')}</th>
+                        <th width="130px">{:L('trading_limits')}</th>
+                        <th class="last">{:L('operation')}</th>
+                    </tr>
+                    <volist name="data.merchants" id="vo" key="k" >
+                        <tr <if condition="$k%2 eq 0"> style="background-color:#eee;" </if>>
+                        <td style="width: 40px;"><img src="/Public/New/{$vo['nation']}.svg" style="height: 24px;"> </td>
+                        <td>{$vo['merchant']}</td>
+                        <td>{$vo['payments']}</td>
+                        <td>{$vo['price']} {$vo['unit']}</td>
+                        <td>{$vo['quota']}</td>
+                        <td class="last" >
+                            <div class="mywallet_btn_box222" style="width:70px;height:30px;margin-top:20px;cursor:pointer;background:none;margin-left: auto;margin-right: auto; text-align: center;">
+                                <!--a class="ptpbc_list_contact_merchant"  style="background: #73bee4;color: #fff;" id="contact_merchant_{$k}" mid="{$k}"  />{:L('contact_merchant')}</a-->
+                                <a class="ptpbc_list_contact_merchant"  style="background: #73bee4;color: #fff;" href="{:U('buy',['mid'=>$vo['id']])}" mid="{$vo['id']}"  />{:L('出售')}</a>
+                            </div>
+                        </td>
+                        </tr>
+                    </volist>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<include file="Public:footer" />

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            帮助中心
+        </div>
+        <div class="helpmain">
+            <volist name="list" id="vo">
+                <div
+                    <if condition="$vo['is_shang'] eq 1 ">
+                    class="helplist nwlist"
+                    <else />
+                    class="helplist"
+                    </if>
+                >
+                    <if condition="$vo['is_shang'] eq 1 ">
+                    <a href="#">
+                    <else />
+                    <a href="{:U('Article/notice',array('name'=>$vo['name']))}">
+                    </if>
+                        <span class="imgbox"><img src="/Public/Mobile/images/helpicon3.png"></span>
+                         {$vo.title}
+                    </a>
+                </div>
+
+                <if condition="$vo['is_shang'] eq 1 ">
+                    <div class="nwlistbot">
+                        <ul>
+                            <volist name="list_z" id="av">
+                                <if condition="$av['shang'] eq $vo['name']">
+                                    <li><a href="{:U('Article/notice',array('name'=>$av['name']))}">{$av.title}</a></li>
+                                </if>
+                            </volist>
+                        </ul>
+                    </div>
+                </if>
+
+
+            </volist>
+
+            <div class="helplist mt30">
+                <a href="{:U('Article/notice',array('name'=>'notice'))}">
+                    <span class="imgbox"><img src="/Public/Mobile/images/helpicon4.png"></span>
+                     官方公告
+                </a>
+            </div>
+        </div>
+
+        <script>
+            window.onload=function(){$(".nwlist").click(function() {
+               if($(this).next(".nwlistbot").css("display")=="none"){
+                    $(this).addClass('open');
+                    $(this).next(".nwlistbot").slideDown();
+               }else{
+                    $(this).removeClass('open');
+                    $(this).next(".nwlistbot").slideUp();
+               }
+            });
+        }
+        </script>
+
+    </div>
+<include file="Public:footer" />
+</body>
+</html>

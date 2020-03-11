@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:header2" />
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookies.2.2.0.js"></script>
+</head>
+<body class="blackbg">
+    <div id="container" class="logbg">
+        <div class="log_title">
+            <span class="back"><a href="javascript:history.go(-1)"></a></span>
+            {:L('设置交易密码')}
+        </div>
+        <div class="logbot">
+            <form>
+                <!-- 交易密码 -->
+                <input type="password" placeholder="{:L('交易密码')}" class="logipt" id="paypassword" value="" onblur="regpassword1()" >
+
+                <!-- 重复密码 -->
+                <input type="password" placeholder="{:L('重复密码')}" class="logipt" id="repaypassword" value="" onblur="regrepassword1()" >
+
+                <input type="button" class="logbut" value="{:L('下一步')}" onclick="Update();" >
+            </form>
+        </div>
+    </div>
+<script>
+
+    // 检测交易密码
+    var mbTest_password=/^[a-zA-Z0-9_]{5,15}$/;
+    function regpassword1(){
+        var password = $('#paypassword').val();
+        if(password==""||password==null){
+            layer.tips('{:L('请输入交易密码，交易密码不能与登录密码相同')}','#paypassword',{tips:3});
+            return false;
+        }else{
+            if(!mbTest_password.test(password)){
+                layer.tips('{:L('密码格式为6~16位，不含特殊符号！')}','#paypassword',{tips:3});
+                return false;
+            }else{
+                return true;
+            }
+        }
+    }
+
+
+    // 检测确认密码
+    function regrepassword1(){
+        var password = $('#paypassword').val();
+        var repassword = $('#repaypassword').val();
+        if(repassword==""||repassword==null){
+            layer.tips('{:L('请输入确认密码')}','#repaypassword',{tips:3});
+            return false;
+        }else{
+            if(!mbTest_password.test(repassword)){
+                layer.tips('{:L('密码格式为6~16位，不含特殊符号！')}','#repaypassword',{tips:3});
+                return false;
+            }else{
+                if(password!=repassword){
+                    layer.tips('{:L('两次输入的密码不一致！')}','#repaypassword',{tips:3});
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+    }
+
+    function Update(){
+        var paypassword=$("#paypassword").val();
+        var repaypassword=$("#repaypassword").val();
+
+        if(paypassword==""||paypassword==null){
+            layer.tips('{:L('请输入交易密码')}','#paypassword',{tips:3});
+            return false;
+        }
+        if(repaypassword==""||repaypassword==null){
+            layer.tips('{:L('请输入确认密码')}','#repaypassword',{tips:3});
+            return false;
+        }
+        if(paypassword!=repaypassword){
+            layer.tips('{:L('两次输入的密码不一致！')}','#repaypassword',{tips:3});
+            return false;
+        }
+
+        $.post("{:U('Login/upregister2')}",{paypassword:paypassword,repaypassword:repaypassword},function(data){
+            if(data.status==1){
+                layer.msg(data.info,{icon:1});
+                window.location.href='/Login/register3';
+            }else{
+                layer.msg(data.info,{icon:2});
+                if(data.url){
+                    window.location.href=data.url;
+                }
+            }
+        },"json");
+    }
+</script>
+</body>
+</html>
